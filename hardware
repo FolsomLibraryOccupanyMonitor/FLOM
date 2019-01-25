@@ -1,0 +1,16 @@
+IR sensors for reading heat data
+Links:
+
+Ultrasonics for detecting motion as a backup to IR falesities
+Links:
+
+Room data collector
+Links:
+  Raspberry Pi (3, zero)
+
+  Arduino (Uno, Mega)
+
+Power Delivery:
+  transformer: 3.3V at 500 mA
+  Links:
+  
