@@ -1,0 +1,26 @@
+1/25/19 Meeting
+
+Software:
+________________________________________________________________
+Front End:
+	- Framework: Django
+	- Draw every page with caption
+	- Tabs of different floor(each tab has own map)
+		- Each floor has top-down view of entire floor
+		- Stats in corner giving stats of rooms open/occ
+		- Rooms are highlighted (Green/Open) (Red/Occ)
+
+Back End:
+	- PostrgreSQL for database
+	- Receive data
+	- Need to mock up data before to mimick hardware signals
+
+Notes:
+	- Drew up moch front end of web app
+	- General outlining of breaking up the problem
+		- Front End
+		- Back End
+		- Database
+		- Server
+		- 
+________________________________________________________________
