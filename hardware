@@ -1,6 +1,7 @@
 IR sensors for reading heat data
-Links:
-
+Links: 
+(Pretty good size, review says 15-20 feet, Not wireless pretty sure) https://www.amazon.com/Qunqi-HC-SR501-Pyroelectric-Infrared-Microcontrollers/dp/B0140WFNYQ/ref=sr_1_1_sspa?ie=UTF8&qid=1548797385&sr=8-1-spons&keywords=wireless+infrared+sensor+microcontroller&psc=1
+Good video for product above) https://www.youtube.com/watch?v=ZC_sEW3_694
 Ultrasonics for detecting motion as a backup to IR falesities
 Links:
 
@@ -17,3 +18,6 @@ Power Delivery:
   transformer: 3.3V at 500 mA
   Links:
   
+  
+Topics to learn: Rasbian and Debian OS. Command Line Interface of Raspberry Pi with Rasbian or Debian.
+
