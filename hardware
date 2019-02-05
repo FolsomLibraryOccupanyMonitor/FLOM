@@ -1,16 +1,24 @@
 IR sensors for reading heat data
-Links:
-
+Links: 
+(Pretty good size, review says 15-20 feet, Not wireless pretty sure) https://www.amazon.com/Qunqi-HC-SR501-Pyroelectric-Infrared-Microcontrollers/dp/B0140WFNYQ/ref=sr_1_1_sspa?ie=UTF8&qid=1548797385&sr=8-1-spons&keywords=wireless+infrared+sensor+microcontroller&psc=1
+Good video for product above) https://www.youtube.com/watch?v=ZC_sEW3_694
 Ultrasonics for detecting motion as a backup to IR falesities
+Links:
+(Don't know how far we want the range to be.)
+https://www.amazon.com/SainSmart-HC-SR04-Ranging-Detector-Distance/dp/B004U8TOE6/ref=asc_df_B004U8TOE6/?tag=hyprod-20&linkCode=df0&hvadid=312127837151&hvpos=1o1&hvnetw=g&hvrand=15515581616235584724&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9060217&hvtargid=aud-466346483690:pla-459285090715&psc=1&tag=&ref=&adgrpid=57636291530&hvpone=&hvptwo=&hvadid=312127837151&hvpos=1o1&hvnetw=g&hvrand=15515581616235584724&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9060217&hvtargid=aud-466346483690:pla-459285090715
+Pressure sensors since they are cheap and have low data rates
 Links:
 
 Room data collector
 Links:
-  Raspberry Pi (3, zero)
+  Raspberry Pi (3, zero) - Think we should go with a Raspberry Pi
 
   Arduino (Uno, Mega)
 
 Power Delivery:
-  transformer: 3.3V at 500 mA
+  transformer: 3.3V at 500 mA    (We should figure out how we are going to power everything)
   Links:
   
+  
+Topics to learn: Rasbian and Debian OS. Command Line Interface of Raspberry Pi with Rasbian or Debian.
+
