@@ -11,12 +11,12 @@ Links:
 
 Room data collector
 Links:
-  Raspberry Pi (3, zero)
+  Raspberry Pi (3, zero) - Think we should go with a Raspberry Pi
 
   Arduino (Uno, Mega)
 
 Power Delivery:
-  transformer: 3.3V at 500 mA
+  transformer: 3.3V at 500 mA    (We should figure out how we are going to power everything)
   Links:
   
   
