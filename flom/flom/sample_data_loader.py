@@ -73,8 +73,6 @@ def insert_occupancy(config):
         if conn is not None:
             conn.close()
  
-
-
 def create_tables(config):
     """ create tables in the PostgreSQL database"""
     commands = (
