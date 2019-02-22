@@ -27,6 +27,7 @@ if config['DEVELOPMENT'] == "True":
     print("IN DEV MODE")
     from . import sample_data_loader as sdl
     sdl.create_tables(config['DATABASES']['default'])
+    sdl.insert_occupancy(config['DATABASES']['default'])
     print('finished sdl')
 
 # SECURITY WARNING: keep the secret key used in production secret!
