@@ -11,16 +11,26 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+CONFIG_FILE = 'config.ini'
+config = {}
+with open(CONFIG_FILE) as f:
+    config = json.load(f)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+if config['DEVELOPMENT'] == "True":
+    print("IN DEV MODE")
+    from . import sample_data_loader as sdl
+    sdl.create_tables(config['DATABASES']['default'])
+    print('finished sdl')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o5hiz*jl^_s&$y(%ey^1ua!edyk*l!45m5vyr&21c&ukd=0w3y'
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -73,16 +83,7 @@ WSGI_APPLICATION = 'flom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'flom',
-        'USER': 'flom_admin',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+DATABASES = config['DATABASES']
 
 
 # Password validation
