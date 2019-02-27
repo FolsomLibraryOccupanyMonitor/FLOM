@@ -23,12 +23,12 @@ with open(CONFIG_FILE) as f:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-if config['DEVELOPMENT'] == "True":
-    print("IN DEV MODE")
-    from . import sample_data_loader as sdl
-    sdl.create_tables(config['DATABASES']['default'])
-    sdl.insert_occupancy(config['DATABASES']['default'])
-    print('finished sdl')
+# if config['DEVELOPMENT'] == "True":
+#     print("IN DEV MODE")
+#     from . import sample_data_loader as sdl
+#     sdl.create_tables(config['DATABASES']['default'])
+#     sdl.insert_occupancy(config['DATABASES']['default'])
+#     print('finished sdl')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['SECRET_KEY']
