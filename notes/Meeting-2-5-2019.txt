@@ -1,0 +1,21 @@
+2/5/19 Meeting
+
+Software:
+
+Meeting objective: Further develope roles and discuss organization of tasks.
+________________________________________________________________
+General Roles:
+- Wixby - Design of web-app
+- Kaijan/Jing - Working with hardware to set up receiver
+- Benji - creating mock data sets/security of web-app
+- Alex - Database
+- Joe - Organizing/General Oversight
+
+Most finished Django tutorial and have good understanding of how to apply
+framework to our application.
+
+Completed Django tutorial web-app pushed to FLOM github.
+
+First weekly individual reports due Friday 2/8/19
+
+________________________________________________________________

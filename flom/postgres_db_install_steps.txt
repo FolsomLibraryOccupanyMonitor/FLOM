@@ -1,0 +1,22 @@
+1. Install Postgres on machine - google instal steps for your operating system
+
+2. start the postgres server show on the link below:
+https://tableplus.io/blog/2018/10/how-to-start-stop-restart-postgresql-server.html
+
+3. create database:
+CREATE DATABASE flom;
+
+4. Create a user named flom:
+linux command below:
+sudo -u postgres createuser <flom_admin>
+or
+SQL command below:
+CREATE USER flom_admin;
+
+5. grant user privledges:
+SQL:
+GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;
+
+
+for more help:
+https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
