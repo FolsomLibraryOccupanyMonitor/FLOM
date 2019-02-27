@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.core.cache import cache
+import json
 
 
 # Create your views here.
@@ -14,6 +15,6 @@ def leave(request, room_id):
 
 
 def check(request, floor_id):
-    rooms = cache.get(floor_id)
-    return HttpResponse(cache.get_many(rooms))
+    rooms = cache.get('floor_' + str(floor_id))
+    return cache.get_many(rooms)
 
