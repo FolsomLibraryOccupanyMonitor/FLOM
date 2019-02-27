@@ -13,6 +13,7 @@ def leave(request, room_id):
     return HttpResponse(f"You're leaving room {room_id}.")
 
 
-def check(request, room_id):
-    return HttpResponse(f"room {room_id} is " +
-                        'occupied' if cache.get(room_id) else 'unoccupied')
+def check(request, floor_id):
+    rooms = cache.get(floor_id)
+    return HttpResponse(cache.get_many(rooms))
+
