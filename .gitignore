@@ -36,5 +36,5 @@ Thumbs.db
 
 flom/.idea/
 .idea/
-
+*.cpython-36.pyc
 *.pyc
