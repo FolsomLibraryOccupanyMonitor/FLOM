@@ -122,5 +122,4 @@ def create_tables(config):
         if conn is not None:
             conn.close()
 
-
 '''
