@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.core.cache import cache
-
+from django.template import loader
 from django.shortcuts import render
 import json
 
@@ -17,7 +17,8 @@ def leave(request, room_id):
 
 
 def check(request, floor_id):
-    template_name = 'library_monitor/index.html'
+    template = loader.get_template('library_monitor/index.html')
     rooms = cache.get('floor_' + str(floor_id))
     floor = cache.get_many(rooms)
-    return render(request, 'library_monitor/index.html', floor)
+    floor = {'floor': floor}
+    return HttpResponse(template.render(floor, request))
