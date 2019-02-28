@@ -1,4 +1,4 @@
-# create table in db
+'''# create table in db
 # fill with sample test data
 
 import psycopg2
@@ -122,5 +122,4 @@ def create_tables(config):
         if conn is not None:
             conn.close()
 
-
-
+'''
