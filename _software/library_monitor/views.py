@@ -7,6 +7,7 @@ import json
 
 # Create your views here.
 def enter(request, room_id):
+    
     cache.set(room_id, True, None)
     return HttpResponse(f"You're entering room {room_id}.")
 
