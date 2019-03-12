@@ -1,8 +1,6 @@
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.template import loader
-from django.shortcuts import render
-import json
 
 
 # Create your views here.
