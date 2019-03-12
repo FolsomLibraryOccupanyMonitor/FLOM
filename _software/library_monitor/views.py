@@ -1,16 +1,28 @@
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.template import loader
+import datetime
+from _software.library_monitor.models import Log
 
 
 # Create your views here.
 def enter(request, room_id):
-    cache.set(room_id, True, None)
+    cache.set(room_id, datetime.datetime.now(), None)
     return HttpResponse(f"You're entering room {room_id}.")
 
 
 def leave(request, room_id):
-    cache.set(room_id, False, None)
+    enter_time = cache.get(room_id)
+
+    if enter_time is None:
+        return HttpResponse('wut?')
+
+    Log.objects.create(room_id=room_id, enter_time=enter_time,
+                       leave_time=datetime.datetime.now())
+
+    cache.set(room_id, None, None)
+    Log.save()
+
     return HttpResponse(f"You're leaving room {room_id}.")
 
 
