@@ -32,15 +32,3 @@ def check(request, floor_id):
     floor = cache.get_many(rooms)
     floor = {'floor': floor}
     return HttpResponse(template.render(floor, request))
-
-
-def crypto_middleware(get_response):
-
-    def middleware(request):
-        # TODO: add some crypto stuff to the middleware
-
-        response = get_response(request)
-
-        return response
-
-    return middleware
