@@ -5,9 +5,11 @@ from django.shortcuts import render
 import json
 
 
-# Create your views here.
+def flr3(request):
+    return render(request, 'library_monitor/floor3.html')
+
+
 def enter(request, room_id):
-    
     cache.set(room_id, True, None)
     return HttpResponse(f"You're entering room {room_id}.")
 
