@@ -5,7 +5,10 @@ import datetime
 from _software.library_monitor.models import Log
 
 
-# Create your views here.
+def flr3(request):
+    return render(request, 'library_monitor/floor3.html')
+
+
 def enter(request, room_id):
     cache.set(room_id, datetime.datetime.now(), None)
     return HttpResponse(f"You're entering room {room_id}.")

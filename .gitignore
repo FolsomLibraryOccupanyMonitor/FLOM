@@ -34,7 +34,7 @@ ehthumbs.db
 Thumbs.db
 
 
-flom/.idea/
-.idea/
+**/.idea/
+**/__pycache__/
 *.cpython-36.pyc
 *.pyc

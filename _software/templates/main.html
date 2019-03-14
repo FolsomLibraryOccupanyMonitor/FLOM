@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{# main.html #}
+{# This is the main file / big kahuna / dad for the map homepage #}
+
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        {# The default page title is FLOM #}
+        <title>{% block title %}FLOM{% endblock %}</title>
+        {# main.css #}
+        <link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" />
+        {# Bootstrap #}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        {# jQuery #}
+        <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+        {# Navbar styles #}
+        <link rel="stylesheet" href="{% static 'library_monitor/navbar.css' %}" type="text/css"/>
+        {# More stylesheets as needed #}
+        {% block styles %}{% endblock %}
+        {% include "library_monitor/navbar.html" %}
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
+

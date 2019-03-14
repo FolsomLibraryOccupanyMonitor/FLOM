@@ -123,4 +123,3 @@ def create_tables(config):
             conn.close()
 
 '''
-
