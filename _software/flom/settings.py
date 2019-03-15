@@ -132,3 +132,10 @@ for floor in config['FLOOR']:
     cache.set('floor_' + floor, list(map(int, rooms)), None)
     for room_id in rooms:
         cache.set(int(room_id), False, None)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# collectstatic directory
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
