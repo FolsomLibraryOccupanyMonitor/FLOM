@@ -10,5 +10,5 @@ sudo raspi-config and select Yes for vnc
 4. Make a VNC viewer account and you should be connected. You should be able to access
 the raspberry pi on your laptop and even some mobile devices.
 
-You can set up a free vnc viewer account at the link below:
+You can set up a free vnc viewer account at this link:
 https://www.realvnc.com/en/
