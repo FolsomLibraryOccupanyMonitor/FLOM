@@ -35,11 +35,12 @@ def leave(request, room_id, secret_key):
     except enter_time is None:
         raise Http404("Nobody is in the room!")
 
-    Log.objects.create(room_id=room_id, enter_time=enter_time,
+    log = Log(room_id=room_id, enter_time=enter_time,
                        leave_time=datetime.datetime.now())
 
+    log.save()
     cache.set(room_id, None, None)
-    Log.save()
+
 
     return HttpResponse(f"You're leaving room {room_id}.")
 
