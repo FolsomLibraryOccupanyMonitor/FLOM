@@ -5,6 +5,27 @@
         
  IR Sensor Pseudocode for Main()
  
+ Initialize Sensor
+ Initialize I2C components
+ 
+ 
+ While(on)
+        Call CreateBaseline() (Need to establish a baseline on testing an empty room)
+        Call ReadSensor() //Use I2C Function Calls within this function        
+        Compare baseline and reading
+ 
+         while (not empty)
+        
+                Call ReadSensor()
+                Check for any changes from baseline
+                        if yes make sure it is not an error
+                        if no continue
+                        
+                Store output data into container (matrix of vectors?)
+                ParseFunction() //Parse Data and organize it for delivery to webserver
+                
+ 
+ 
  
         
         
