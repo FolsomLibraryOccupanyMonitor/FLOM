@@ -1,0 +1,33 @@
+{# stats.html #}
+{# template for displaying the 3rd floor of the library #}
+{% extends "main.html" %}
+{% load static %}
+{% block body %}
+{% with titles=available_stats.titles rooms=available_stats.rooms%}     
+<table class="table table-dark table-hover stats_table">
+	<thead>
+	    <tr>
+	    	{% for title in titles %} 
+	    		<th scope="col">{{title}}</th>
+	    	{%endfor%}
+	    </tr>
+    </thead>
+    {% for room_num, obj in rooms.items %} 
+    	{% if obj.occupied == 'Yes' %}
+			<tr class='text-danger'>
+		{% else %}
+			<tr class='text-success'>
+		{%endif%}
+			<td>{{ obj.floor }}</td>
+			<td>{{ obj.number }}</td>
+			<td >{{ obj.occupied }}</td>
+			<td>{{ obj.t_entered }}</td>
+			<td>{{ obj.t_exited }}</td>
+			<td>{{ obj.dao }}</td>
+			<td>{{ obj.dau }}</td>
+		</tr>
+    {% endfor %}
+ </table>
+{% endwith %}
+
+{% endblock %}
