@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.core.cache import cache
 from django.template import loader
-from django.shortcuts import render
-import json
+from django.http import Http404
+import datetime
+from library_monitor.models import Log
 
 
 def flr3(request):
@@ -13,13 +14,31 @@ def flr3(request):
     return HttpResponse(template.render(floor, request))
 
 
-def enter(request, room_id):
-    cache.set(room_id, True, None)
+def enter(request, room_id, secret_key):
+
+    if secret_key != 'ok':
+        return HttpResponse('You are not one of us!')
+
+    cache.set(room_id, datetime.datetime.now(), None)
     return flr3(request)
 
 
-def leave(request, room_id):
-    cache.set(room_id, False, None)
+def leave(request, room_id, secret_key):
+
+    if secret_key != 'ok':
+        return HttpResponse('You are not one of us!')
+
+    try:
+        enter_time = cache.get(room_id)
+    except enter_time is None:
+        raise Http404("Nobody is in the room!")
+
+    Log.objects.create(room_id=room_id, enter_time=enter_time,
+                       leave_time=datetime.datetime.now())
+
+    cache.set(room_id, None, None)
+    Log.save()
+
     return flr3(request)
 
 
