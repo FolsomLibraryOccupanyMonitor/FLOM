@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE' : 'django.db.backends.postgresql',
         'NAME' : 'FLOM',
         'USER' : 'FLOM',
-        'PASSWORD' : 't7ZsHPj7W4gC5Fy',
+        'PASSWORD' : '',
         'HOST' : 'flom.chko6eajdpxb.us-east-1.rds.amazonaws.com',
         'PORT' : '5432'
     }
