@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'database'
 ]
 
 MIDDLEWARE = [
@@ -91,7 +92,7 @@ DATABASES = {
         'ENGINE' : 'django.db.backends.postgresql',
         'NAME' : 'FLOM',
         'USER' : 'FLOM',
-        'PASSWORD' : '',
+        'PASSWORD' : 't7ZsHPj7W4gC5Fy',
         'HOST' : 'flom.chko6eajdpxb.us-east-1.rds.amazonaws.com',
         'PORT' : '5432'
     }
