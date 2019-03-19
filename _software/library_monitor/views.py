@@ -30,10 +30,10 @@ def leave(request, room_id, secret_key):
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
 
-    try:
-        enter_time = cache.get(room_id)
-    except enter_time is None:
-        raise Http404("Nobody is in the room!")
+    enter_time = cache.get(room_id)
+
+    if enter_time is None:
+        return HttpResponse("Nobody is in the room!")
 
     log = Log(room_id=room_id, enter_time=enter_time,
                        leave_time=datetime.datetime.now())
