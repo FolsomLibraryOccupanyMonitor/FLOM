@@ -14,15 +14,18 @@
         Call ReadSensor() //Use I2C Function Calls within this function        
         Compare baseline and reading
  
-         while (not empty)
+         while (not empty) //Comes from comparing baseline and reading
         
-                Call ReadSensor()
+                Call ReadSensor()  //Error Checking to make sure someone is actually in the room
                 Check for any changes from baseline
                         if yes make sure it is not an error
                         if no continue
                         
                 Store output data into container (matrix of vectors?)
                 ParseFunction() //Parse Data and organize it for delivery to webserver
+                               - Create a function within parse function to send data
+                               
+                
                 
  
  
