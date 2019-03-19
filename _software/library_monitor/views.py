@@ -12,8 +12,11 @@ def flr3(request):
 
 def enter(request, room_id, secret_key):
 
-    if secret_key != 'ok':
-        return HttpResponse('You are not one of us!')
+    try:
+        if secret_key not in cache.get("SECRET_KEYs"):
+            return HttpResponse('You are not one of us!')
+    except cache.get("SECRET_KEYs") is None:
+        raise KeyError
 
     cache.set(room_id, datetime.datetime.now(), None)
     return HttpResponse(f"You're entering room {room_id}.")
@@ -21,8 +24,11 @@ def enter(request, room_id, secret_key):
 
 def leave(request, room_id, secret_key):
 
-    if secret_key != 'ok':
-        return HttpResponse('You are not one of us!')
+    try:
+        if secret_key not in cache.get("SECRET_KEYs"):
+            return HttpResponse('You are not one of us!')
+    except cache.get("SECRET_KEYs") is None:
+        raise KeyError
 
     try:
         enter_time = cache.get(room_id)

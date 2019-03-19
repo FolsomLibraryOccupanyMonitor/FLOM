@@ -121,11 +121,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+# SESSION_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
 
 for floor in config['FLOOR']:
     rooms = json.loads(config['FLOOR'][floor])
