@@ -15,16 +15,25 @@ def flr3(request):
 
 
 def enter(request, room_id, secret_key):
-    if secret_key != 'ok':
-        return HttpResponse('You are not one of us!')
+
+    try:
+        if secret_key not in cache.get("SECRET_KEYs"):
+            return HttpResponse('You are not one of us!')
+    except cache.get("SECRET_KEYs") is None:
+        raise KeyError
 
     cache.set(room_id, datetime.datetime.now(), None)
     return flr3(request)
 
 
 def leave(request, room_id, secret_key):
-    if secret_key != 'ok':
-        return HttpResponse('You are not one of us!')
+
+    try:
+        if secret_key not in cache.get("SECRET_KEYs"):
+            return HttpResponse('You are not one of us!')
+    except cache.get("SECRET_KEYs") is None:
+        raise KeyError
+
     try:
         enter_time = cache.get(room_id)
     except enter_time is None:
@@ -53,11 +62,12 @@ def stats_page(request):
     available_stats = {'available_stats' : available_stats}
     return HttpResponse(template.render(available_stats, request))
 
-    Log.objects.create(room_id=room_id, enter_time=enter_time,
+    log = Log(room_id=room_id, enter_time=enter_time,
                        leave_time=datetime.datetime.now())
 
+    log.save()
     cache.set(room_id, None, None)
-    Log.save()
+
 
     return flr3(request)
 

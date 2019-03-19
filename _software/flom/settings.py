@@ -121,17 +121,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+# SESSION_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
 
+cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
+
 for floor in config['FLOOR']:
-    rooms = json.loads(config['FLOOR'][floor])
-    cache.set('floor_' + floor, list(map(int, rooms)), None)
+    rooms = config['FLOOR'][floor]
+    cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
-        cache.set(int(room_id), False, None)
+        cache.set(room_id, False, None)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
