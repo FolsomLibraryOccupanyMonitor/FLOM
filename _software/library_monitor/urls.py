@@ -10,4 +10,6 @@ urlpatterns = [
     path('<int:room_id>/enter/<secret_key>', views.enter, name='enter'),
     # ex: /library_monitor/5/leave/
     path('<int:room_id>/leave/<secret_key>', views.leave, name='leave'),
+    # ex: /library_monitor/stats/
+    path('stats/', views.stats_page, name='stats'),
 ]
