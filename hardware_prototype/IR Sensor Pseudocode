@@ -8,12 +8,14 @@
  Initialize Sensor
  Initialize I2C components
  
- 
+ //Different cases to consider
+ Someone walking in while someone walking out
+ Temperature differences at different times of the day(sunlight?)
+ Soemone leaving to use the bathroom or etc. 
  While(on)
         Call CreateBaseline() (Need to establish a baseline on testing an empty room)
         Call ReadSensor() //Use I2C Function Calls within this function        
         Compare baseline and reading
- 
          while (not empty) //Comes from comparing baseline and reading
         
                 Call ReadSensor()  //Error Checking to make sure someone is actually in the room
@@ -25,7 +27,7 @@
                 ParseFunction() //Parse Data and organize it for delivery to webserver
                                - Create a function within parse function to send data
                                
-                
+       
                 
  
  
