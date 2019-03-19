@@ -7,10 +7,9 @@ urlpatterns = [
     # ex: /library_monitor/5/
     path('<int:floor_id>/', views.check, name='check'),
     # ex: /library_monitor/5/enter/
-    path('<int:room_id>/enter/', views.enter, name='enter'),
+    path('<int:room_id>/enter/<secret_key>', views.enter, name='enter'),
     # ex: /library_monitor/5/leave/
-    path('<int:room_id>/leave/', views.leave, name='leave'),
+    path('<int:room_id>/leave/<secret_key>', views.leave, name='leave'),
     # ex: /library_monitor/stats/
     path('stats/', views.stats_page, name='stats'),
-
 ]
