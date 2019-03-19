@@ -7,7 +7,11 @@ from library_monitor.models import Log
 
 
 def flr3(request):
-    return render(request, 'library_monitor/floor3.html')
+    template = loader.get_template('library_monitor/floor3.html')
+    rooms = cache.get('floor_3')
+    floor = cache.get_many(rooms)
+    floor = {'floor': floor}
+    return HttpResponse(template.render(floor, request))
 
 
 def enter(request, room_id, secret_key):
@@ -16,7 +20,7 @@ def enter(request, room_id, secret_key):
         return HttpResponse('You are not one of us!')
 
     cache.set(room_id, datetime.datetime.now(), None)
-    return HttpResponse(f"You're entering room {room_id}.")
+    return flr3(request)
 
 
 def leave(request, room_id, secret_key):
@@ -35,7 +39,7 @@ def leave(request, room_id, secret_key):
     cache.set(room_id, None, None)
     Log.save()
 
-    return HttpResponse(f"You're leaving room {room_id}.")
+    return flr3(request)
 
 
 def check(request, floor_id):
