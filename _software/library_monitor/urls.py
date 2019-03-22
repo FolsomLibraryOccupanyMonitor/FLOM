@@ -10,9 +10,9 @@ urlpatterns = [
     # ex: /5/
     path('<int:floor_id>/', views.check, name='check'),
     # ex: /5/enter/
-    path('<int:room_id>/enter/<secret_key>', views.enter, name='enter'),
+    path('<room_id>/enter/<secret_key>', views.enter, name='enter'),
     # ex: /5/leave/
-    path('<int:room_id>/leave/<secret_key>', views.leave, name='leave'),
+    path('<room_id>/leave/<secret_key>', views.leave, name='leave'),
     # ex: /stats/
     path('stats/', views.stats_page, name='stats'),
     # ex: /about/
