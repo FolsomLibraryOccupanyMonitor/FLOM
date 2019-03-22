@@ -1,7 +1,20 @@
 {# floor3.html #}
 {# template for displaying the 3rd floor of the library #}
-
 {% extends "main.html" %}
 {% load static %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'library_monitor/styles/map.css' %}" type="text/css" />
+{% endblock %}
+
+{% block body %}
+    <img src="{% static 'library_monitor/images/f3_nobg.png' %}" alt="Floor3" class="map"/>
+    {% for room, occup in floor.items %}
+    {% if room == 305 and occup %}
+        <img src="{% static 'library_monitor/images/353b_red.png' %}" alt="Floor3" class="room"/>"
+    {% else %}
+        <img src="{% static 'library_monitor/images/353b.png' %}" alt="Floor3" class="room"/>"
+    {% endif %}
+    {% endfor %} }}
+{% endblock %}
 
