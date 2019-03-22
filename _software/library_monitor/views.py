@@ -5,15 +5,6 @@ from django.http import Http404
 import datetime
 from library_monitor.models import Log
 
-
-def flr3(request):
-    template = loader.get_template('library_monitor/floor3.html')
-    rooms = cache.get('floor_3')
-    floor = cache.get_many(rooms)
-    floor = {'floor': floor}
-    return HttpResponse(template.render(floor, request))
-
-
 def enter(request, room_id, secret_key):
 
     try:
@@ -23,7 +14,7 @@ def enter(request, room_id, secret_key):
         raise KeyError
 
     cache.set(room_id, datetime.datetime.now(), None)
-    return flr3(request)
+    return check(request,'3')
 
 
 def leave(request, room_id, secret_key):
@@ -38,7 +29,7 @@ def leave(request, room_id, secret_key):
         enter_time = cache.get(room_id)
     except enter_time is None:
         raise Http404("Nobody is in the room!")
-    return flr3(request)
+    return check(request,'3')
   
 
 def stats_page(request):
@@ -73,8 +64,14 @@ def stats_page(request):
 
 
 def check(request, floor_id):
+    if floor_id == None:
+        floor_id = '3'
     template = loader.get_template('library_monitor/floor'+str(floor_id)+'.html')
     rooms = cache.get('floor_' + str(floor_id))
     floor = cache.get_many(rooms)
     floor = {'floor': floor}
     return HttpResponse(template.render(floor, request))
+
+def about(request):
+    template = loader.get_template('library_monitor/about.html')
+    return HttpResponse(template.render({}, request))

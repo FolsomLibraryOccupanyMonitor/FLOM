@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import json
 from django.core.cache import cache
+import ast
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -135,6 +136,7 @@ cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
 
 for floor in config['FLOOR']:
     rooms = config['FLOOR'][floor]
+    rooms = ast.literal_eval(rooms)
     cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
         cache.set(room_id, False, None)
