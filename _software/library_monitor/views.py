@@ -5,11 +5,6 @@ from django.http import Http404
 import datetime
 from library_monitor.models import Log
 
-
-def flr3(request):
-    return render(request, 'library_monitor/floor3.html')
-
-
 def enter(request, room_id, secret_key):
 
     try:
@@ -19,7 +14,7 @@ def enter(request, room_id, secret_key):
         raise KeyError
 
     cache.set(room_id, datetime.datetime.now(), None)
-    return HttpResponse(f"You're entering room {room_id}.")
+    return check(request,'3')
 
 
 def leave(request, room_id, secret_key):
@@ -30,10 +25,33 @@ def leave(request, room_id, secret_key):
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
 
-    enter_time = cache.get(room_id)
+    try:
+        enter_time = cache.get(room_id)
+    except enter_time is None:
+        raise Http404("Nobody is in the room!")
+    return check(request,'3')
+  
 
-    if enter_time is None:
-        return HttpResponse("Nobody is in the room!")
+def stats_page(request):
+    template = loader.get_template('library_monitor/stats.html')
+    available_stats = {}
+    available_stats['titles'] = ['Floor','Room #', 'Occupied', 'Last Entered', 'Last Exited', 'Daily Average occupation', 'Daily Average usage']
+    available_stats['rooms'] = {}
+    floors = ['3','4']
+    for floor_n in floors: 
+        rooms = cache.get('floor_' + floor_n)
+        floor = cache.get_many(rooms)
+        for room, occupy in floor.items():
+            occupancy = 'No'
+            if occupy == True:
+                occupancy = 'Yes'
+            available_stats['rooms'][room] = {'floor' : floor_n, 'number' : room, 'occupied' : occupancy}
+            available_stats['rooms'][room]['t_entered'] = 'NONE'
+            available_stats['rooms'][room]['t_exited'] = 'NONE'
+            available_stats['rooms'][room]['dao'] = 'NONE'
+            available_stats['rooms'][room]['dau'] = 'NONE'
+    available_stats = {'available_stats' : available_stats}
+    return HttpResponse(template.render(available_stats, request))
 
     log = Log(room_id=room_id, enter_time=enter_time,
                        leave_time=datetime.datetime.now())
@@ -46,8 +64,14 @@ def leave(request, room_id, secret_key):
 
 
 def check(request, floor_id):
-    template = loader.get_template('library_monitor/index.html')
+    if floor_id == None:
+        floor_id = '3'
+    template = loader.get_template('library_monitor/floor'+str(floor_id)+'.html')
     rooms = cache.get('floor_' + str(floor_id))
     floor = cache.get_many(rooms)
     floor = {'floor': floor}
     return HttpResponse(template.render(floor, request))
+
+def about(request):
+    template = loader.get_template('library_monitor/about.html')
+    return HttpResponse(template.render({}, request))
