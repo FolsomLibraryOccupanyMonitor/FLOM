@@ -1,0 +1,24 @@
+{# navbar.html #}
+{# The menu bar seen on all pages #}
+{% load static %}
+
+<base href="http://127.0.0.1:8000/" />
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">Folsom Library Occupancy Monitor</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" id="main-menu" href="/3/">Floor 3</a>
+      <a class="nav-item nav-link" id="main-menu" href="/4/">Floor 4</a>
+      <a class="nav-item nav-link" id="main-menu" href="/about/">About</a>
+      <a class="nav-item nav-link" id="main-menu" href="/stats/">Room Usage</a>
+    </div>
+      <form class="form-inline my-2 my-lg-0" id="room-search">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Room" aria-label="Search">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+      </form>
+  </div>
+</nav>
