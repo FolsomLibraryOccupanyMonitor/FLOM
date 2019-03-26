@@ -149,7 +149,7 @@ for floor in config['FLOOR']:
     rooms = ast.literal_eval(rooms)
     cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
-        cache.set(room_id, False, None)
+        cache.set(room_id, (False,None), None)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
