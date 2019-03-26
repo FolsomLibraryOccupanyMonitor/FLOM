@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
-
+cache.set('dev',config['DEVELOPMENT'])
 for floor in config['FLOOR']:
     rooms = config['FLOOR'][floor]
     rooms = ast.literal_eval(rooms)
