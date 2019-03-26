@@ -35,7 +35,9 @@ def leave(request, room_id, secret_key):
 def stats_page(request):
     template = loader.get_template('library_monitor/stats.html')
     available_stats = {}
-    available_stats['titles'] = ['Floor','Room #', 'Occupied', 'Last Entered', 'Last Exited', 'Daily Average occupation', 'Daily Average usage']
+    available_stats['titles'] = ['Floor','Room #', 'Occupied', 'Last Entered', \
+                                 'Last Exited', 'Daily Average occupation', \
+                                 'Daily Average usage']
     available_stats['rooms'] = {}
     floors = ['3','4']
     for floor_n in floors: 
@@ -45,7 +47,9 @@ def stats_page(request):
             occupancy = 'No'
             if occupy == True:
                 occupancy = 'Yes'
-            available_stats['rooms'][room] = {'floor' : floor_n, 'number' : room, 'occupied' : occupancy}
+            available_stats['rooms'][room] = {'floor' : floor_n, \
+                                              'number' : room, \
+                                              'occupied' : occupancy}
             available_stats['rooms'][room]['t_entered'] = 'NONE'
             available_stats['rooms'][room]['t_exited'] = 'NONE'
             available_stats['rooms'][room]['dao'] = 'NONE'
@@ -59,14 +63,14 @@ def stats_page(request):
     log.save()
     cache.set(room_id, None, None)
 
-
     return HttpResponse(f"You're leaving room {room_id}.")
 
 
 def check(request, floor_id):
     if floor_id == None:
         floor_id = '3'
-    template = loader.get_template('library_monitor/floor'+str(floor_id)+'.html')
+    template = loader.get_template('library_monitor/floor'+\
+                                   str(floor_id)+'.html')
     rooms = cache.get('floor_' + str(floor_id))
     floor = cache.get_many(rooms)
     floor = {'floor': floor}
