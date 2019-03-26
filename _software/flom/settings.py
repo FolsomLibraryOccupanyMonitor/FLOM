@@ -143,13 +143,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
-
+cache.set('dev',config['DEVELOPMENT'])
 for floor in config['FLOOR']:
     rooms = config['FLOOR'][floor]
     rooms = ast.literal_eval(rooms)
     cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
-        cache.set(room_id, False, None)
+        cache.set(room_id, (False,None), None)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
