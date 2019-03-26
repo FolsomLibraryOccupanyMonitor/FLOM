@@ -11,13 +11,21 @@ import pytz
 
 # onetime load of rooms into db
 def load_rooms(request):
-    floors = ['3','4']
-    for floor_n in floors: 
-        rooms = cache.get('floor_' + floor_n)
-        floor = cache.get_many(rooms)
-        for room, tup in floor.items():
-            room_d = Room(room_name=room,room_floor=floor_n)
-            room_d.save()
+    if cache.get('dev') == "True":
+        floors = ['3','4']
+        for floor_n in floors: 
+            rooms = cache.get('floor_' + floor_n)
+            floor = cache.get_many(rooms)
+            for room, tup in floor.items():
+                room_d = Room(room_name=room,room_floor=floor_n)
+                try:
+                    room_db = Room.objects.get(room_name=room,room_floor=floor_n)
+                except ObjectDoesNotExist:
+                    room_d.save()
+                except Exception as e: 
+                    print('ERROR Unexpected')
+                    print(e)
+                    
     return check(request,'3')
 
 
