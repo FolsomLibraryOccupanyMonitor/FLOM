@@ -23,6 +23,14 @@
                         if yes make sure it is not an error
                         if no continue
                         
+                        take 2d array of values from sensor
+                        find the mode of the of the values below a certain threshold to compare against
+                        compare all values to mode
+                        function to find where specific people are (hotspots on the IR array)
+                        //for testing purposes
+                        output visual of sensor array
+                        
+                        
                 Store output data into container (matrix of vectors?)
                 ParseFunction() //Parse Data and organize it for delivery to webserver
                                - Create a function within parse function to send data
