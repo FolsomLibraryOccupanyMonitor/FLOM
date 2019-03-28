@@ -38,3 +38,5 @@ Thumbs.db
 **/__pycache__/
 *.cpython-36.pyc
 *.pyc
+
+flomenv/
