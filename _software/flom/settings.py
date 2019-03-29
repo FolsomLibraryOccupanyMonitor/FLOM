@@ -88,16 +88,7 @@ WSGI_APPLICATION = 'flom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE' : 'django.db.backends.postgresql',
-        'NAME' : 'FLOM',
-        'USER' : 'FLOM',
-        'PASSWORD' : 't7ZsHPj7W4gC5Fy',
-        'HOST' : 'flom.chko6eajdpxb.us-east-1.rds.amazonaws.com',
-        'PORT' : '5432'
-    }
-}
+DATABASES = config['DATABASES']
 
 
 # Password validation
