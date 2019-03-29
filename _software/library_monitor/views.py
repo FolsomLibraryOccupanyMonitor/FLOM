@@ -23,8 +23,8 @@ def load_rooms(request):
             for room, stats in floor.items():
                 room_d = Room(room_name=room, room_floor=floor_n)
                 try:
-                    room_db = Room.objects.get(room_name=room,
-                                               room_floor=floor_n)
+                    Room.objects.get(room_name=room,
+                                     room_floor=floor_n)
                 except ObjectDoesNotExist:
                     room_d.save()
                 except Exception as e:
