@@ -19,6 +19,9 @@ int main(){
 	for(unsigned int x=0; a<(sizeof(grid)-1); a++){
 		grid[x] = xvals;
 	}
+	
+	//readdata();
+	//visualise(grid);
 }
 
 // function to output visualisation of the sensor array
@@ -35,4 +38,11 @@ int occupied(int map[], int lastmap[], int lastocc){
 	// recently entered the map
 	
 	// Return the value of how many people are occupying the room
+}
+
+void readdata(){
+	// Code to read data from the sensor using I2C
+
+	// Put output data into the grid variable
+	
 }
