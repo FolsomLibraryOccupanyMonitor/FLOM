@@ -8,3 +8,7 @@ class Log(models.Model):
 	room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
 	enter_time = models.DateTimeField('Enter Time')
 	leave_time = models.DateTimeField('Leave Time')
+
+class Occupy(models.Model):
+	room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+	time = models.DateTimeField('Time')

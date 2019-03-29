@@ -14,11 +14,11 @@ import datetime
 # onetime load of rooms into db
 def load_rooms(request):
     if cache.get('dev') == "True":
-        floors = ['3', '4']
+        floors = cache.get('floors')
         for floor_n in floors:
             rooms = cache.get('floor_' + floor_n)
             floor = cache.get_many(rooms)
-            for room, tup in floor.items():
+            for room, stats in floor.items():
                 room_d = Room(room_name=room, room_floor=floor_n)
                 try:
                     room_db = Room.objects.get(room_name=room,
@@ -34,37 +34,83 @@ def load_rooms(request):
 
 def enter(request, room_id, secret_key):
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
-            return HttpResponse('You are not one of us!')
+        if secret_key != cache.get("SECRET_KEYs")[room_id]:
+            if cache.get('dev') == "True":
+                if secret_key != 'aaaaaa':
+                    return HttpResponse('You are not one of us!')
+            else:
+                return HttpResponse('You are not one of us!')
+
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
-    cache.set(room_id, (True, timezone.now()), None)
+    stats = cache.get(room_id)
+    stats['occupied'] = True
+    stats['e_time'] = timezone.now()
+    cache.set(room_id, stats, None)
     return check(request, '3')
 
 
 def leave(request, room_id, secret_key):
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
-            return HttpResponse('You are not one of us!')
+        if secret_key != cache.get("SECRET_KEYs")[room_id]:
+            if cache.get('dev') == "True":
+                if secret_key != 'aaaaaa':
+                    return HttpResponse('You are not one of us!')
+            else:
+                return HttpResponse('You are not one of us!')
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
-    occupy, enter_time = cache.get(room_id)
-    if enter_time is None:
+    stats = cache.get(room_id)
+    if stats['e_time'] is None:
         return HttpResponse("Nobody is in the room!")
+    time = timezone.now()
+    try:
+        room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
 
-    # try:
+        log = Log(room_id=room, enter_time=stats["e_time"],
+                  leave_time=time)
+        log.save()
 
-    room = Room.objects.get(room_name=room_id, room_floor=room_id[0])
+    except ObjectDoesNotExist:
+        print('ERROR - RaspPi hit room that does not exist')
+        return HttpResponse("ERROR - not real room")
+    except Exception as e:
+        print('ERROR Unexpected')
+        print(e)
+        return HttpResponse("ERROR - Unexpected")
 
-    log = Log(room_id=room, enter_time=enter_time,
-              leave_time=timezone.now())
-    log.save()
-    cache.set(room_id, (False, None), None)
+    log_exists = True
+    dao = 'None'
+    dau = 'None'
+    stats['occupied'] = False
+    stats['last_enter'] = stats['e_time'].strftime('%c')
+    stats['last_leave'] = time.strftime('%c')
+    stats['e_time'] = None
+    try:
+        total_logs = Log.objects.filter(room_id=room)
+    except ObjectDoesNotExist:
+        log_exists = False
+    except Exception as e:
+        print('ERROR Unexpected')
+        print(e)
+        log_exists = False
 
-    # except:
+    if log_exists:
+        dau_calc = 0
+        day = []
+        for log_items in total_logs:
+            dau_calc += (
+                        log_items.leave_time - log_items.enter_time).total_seconds()
+            day.append(log_items.enter_time.timetuple().tm_yday)
+        day = set(day)
+        dau_calc /= len(total_logs)
+        dau = str(datetime.timedelta(seconds=int(dau_calc)))
+        dao = str(len(total_logs) // len(day))
+    stats['dao'] = dao
+    stats['dau'] = dau
+    cache.set(room_id, stats, None)
 
     return check(request, '3')
-
 
 def stats_page(request):
     template = loader.get_template('library_monitor/stats.html')
@@ -73,61 +119,21 @@ def stats_page(request):
                                  'Last Exited', 'Daily Average occupation',
                                  'Daily Average usage']
     available_stats['rooms'] = {}
-    floors = ['3', '4']
+    floors = cache.get('floors')
     for floor_n in floors:
         rooms = cache.get('floor_' + floor_n)
         floor = cache.get_many(rooms)
-        for room, tup in floor.items():
-            occupy, e_time = tup
+        for room, stats in floor.items():
+            
+            available_stats['rooms'][room] = stats.copy()
             occupancy = 'No'
-            if occupy:
+            if stats["occupied"]:
                 occupancy = 'Yes'
-            log_exists = True
-            # room_db = None
-            recent_log = None
-            t_entered = 'None'
-            t_exited = 'None'
-            total_logs = None
-            available_stats['rooms'][room] = {'floor': floor_n, 'number': room,
-                                              'occupied': occupancy}
-            dao = 'None'
-            dau = 'None'
-            try:
-                room_db = Room.objects.get(room_name=room, room_floor=floor_n)
-                recent_log = Log.objects.filter(room_id=room_db).latest('id')
-                total_logs = Log.objects.filter(room_id=room_db)
-            except ObjectDoesNotExist:
-                log_exists = False
-            except Exception as e:
-                print('ERROR Unexpected')
-                print(e)
-                log_exists = False
-            if occupy:
-                t_entered = e_time.strftime('%c')
-                t_exited = '---'
-            elif log_exists:
-                t_entered = recent_log.enter_time.strftime('%c')
-                t_exited = recent_log.leave_time.strftime('%c')
-
-            available_stats['rooms'][room]['t_entered'] = t_entered
-            available_stats['rooms'][room]['t_exited'] = t_exited
-
-            if log_exists:
-                # dao_calc = 0
-                dau_calc = 0
-                day = []
-                for log_items in total_logs:
-                    dau_calc += (
-                                log_items.leave_time - log_items.enter_time).total_seconds()
-                    day.append(log_items.enter_time.timetuple().tm_yday)
-                day = set(day)
-                dau_calc /= len(total_logs)
-                dau = str(datetime.timedelta(seconds=dau_calc))
-                dao = str(len(total_logs) // len(day))
-
-            available_stats['rooms'][room]['dao'] = dao
-            available_stats['rooms'][room]['dau'] = dau
-
+                available_stats['rooms'][room]['last_enter'] = stats['e_time'].strftime('%c')
+                available_stats['rooms'][room]['last_leave'] = '---'
+           # recent_log.enter_time.strftime('%c')
+            available_stats['rooms'][room]['occupancy'] = occupancy
+            available_stats['rooms'][room]['number'] = room
     available_stats = {'available_stats': available_stats}
     return HttpResponse(template.render(available_stats, request))
 
@@ -137,7 +143,7 @@ def check(request, floor_id):
     rooms = cache.get('floor_' + str(floor_id))
     floor = cache.get_many(rooms)
     floor = {'floor': floor}
-    print(floor)
+    # print(floor)
     return HttpResponse(template.render(floor, request))
 
 
