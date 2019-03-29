@@ -34,8 +34,13 @@ def load_rooms(request):
 
 def enter(request, room_id, secret_key):
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
-            return HttpResponse('You are not one of us!')
+        if secret_key != cache.get("SECRET_KEYs")[room_id]:
+            if cache.get('dev') == "True":
+                if secret_key != 'aaaaaa':
+                    return HttpResponse('You are not one of us!')
+            else:
+                return HttpResponse('You are not one of us!')
+
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
     stats = cache.get(room_id)
@@ -47,19 +52,23 @@ def enter(request, room_id, secret_key):
 
 def leave(request, room_id, secret_key):
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
-            return HttpResponse('You are not one of us!')
+        if secret_key != cache.get("SECRET_KEYs")[room_id]:
+            if cache.get('dev') == "True":
+                if secret_key != 'aaaaaa':
+                    return HttpResponse('You are not one of us!')
+            else:
+                return HttpResponse('You are not one of us!')
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
     stats = cache.get(room_id)
     if stats['e_time'] is None:
         return HttpResponse("Nobody is in the room!")
-
+    time = timezone.now()
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
 
         log = Log(room_id=room, enter_time=stats["e_time"],
-                  leave_time=timezone.now())
+                  leave_time=time)
         log.save()
 
     except ObjectDoesNotExist:
@@ -74,11 +83,11 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    stats['last_enter'] = stats['e_time']
-    stats['last_leave'] = timezone.now()
+    stats['last_enter'] = stats['e_time'].strftime('%c')
+    stats['last_leave'] = time.strftime('%c')
     stats['e_time'] = None
     try:
-        total_logs = Log.objects.filter(room_id=room_db)
+        total_logs = Log.objects.filter(room_id=room)
     except ObjectDoesNotExist:
         log_exists = False
     except Exception as e:
@@ -120,9 +129,9 @@ def stats_page(request):
             occupancy = 'No'
             if stats["occupied"]:
                 occupancy = 'Yes'
-                available_stats['rooms'][room]['last_enter'] = stats['e_time']
+                available_stats['rooms'][room]['last_enter'] = stats['e_time'].strftime('%c')
                 available_stats['rooms'][room]['last_leave'] = '---'
-           
+           # recent_log.enter_time.strftime('%c')
             available_stats['rooms'][room]['occupancy'] = occupancy
             available_stats['rooms'][room]['number'] = room
     available_stats = {'available_stats': available_stats}

@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'EST'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -142,7 +142,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
+cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
 cache.set('dev',config['DEVELOPMENT'])
 cache.set('floors',list(config['FLOOR'].keys()), None)
 for floor in config['FLOOR']:
