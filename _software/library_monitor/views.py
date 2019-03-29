@@ -6,6 +6,8 @@ from django.utils import timezone
 from database.models import Log, Room
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+
+
 # import pytz
 
 
@@ -45,7 +47,8 @@ def enter(request, room_id, secret_key):
         raise KeyError
     stats = cache.get(room_id)
     stats['occupied'] = True
-    stats['e_time'] = timezone.now()
+    stats['e_time'] = timezone.make_aware(datetime.datetime.now(),
+                                          timezone.get_current_timezone())
     cache.set(room_id, stats, None)
     return check(request, '3')
 
@@ -63,7 +66,8 @@ def leave(request, room_id, secret_key):
     stats = cache.get(room_id)
     if stats['e_time'] is None:
         return HttpResponse("Nobody is in the room!")
-    time = timezone.now()
+    time = timezone.make_aware(datetime.datetime.now(),
+                               timezone.get_current_timezone())
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
 
@@ -100,7 +104,7 @@ def leave(request, room_id, secret_key):
         day = []
         for log_items in total_logs:
             dau_calc += (
-                        log_items.leave_time - log_items.enter_time).total_seconds()
+                    log_items.leave_time - log_items.enter_time).total_seconds()
             day.append(log_items.enter_time.timetuple().tm_yday)
         day = set(day)
         dau_calc /= len(total_logs)
@@ -111,6 +115,7 @@ def leave(request, room_id, secret_key):
     cache.set(room_id, stats, None)
 
     return check(request, '3')
+
 
 def stats_page(request):
     template = loader.get_template('library_monitor/stats.html')
@@ -124,14 +129,15 @@ def stats_page(request):
         rooms = cache.get('floor_' + floor_n)
         floor = cache.get_many(rooms)
         for room, stats in floor.items():
-            
+
             available_stats['rooms'][room] = stats.copy()
             occupancy = 'No'
             if stats["occupied"]:
                 occupancy = 'Yes'
-                available_stats['rooms'][room]['last_enter'] = stats['e_time'].strftime('%c')
+                available_stats['rooms'][room]['last_enter'] = stats[
+                    'e_time'].strftime('%c')
                 available_stats['rooms'][room]['last_leave'] = '---'
-           # recent_log.enter_time.strftime('%c')
+            # recent_log.enter_time.strftime('%c')
             available_stats['rooms'][room]['occupancy'] = occupancy
             available_stats['rooms'][room]['number'] = room
     available_stats = {'available_stats': available_stats}
