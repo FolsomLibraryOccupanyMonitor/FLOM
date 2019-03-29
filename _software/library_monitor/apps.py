@@ -11,7 +11,7 @@ class LibraryMonitorConfig(AppConfig):
         # you must import your modules here 
         # to avoid AppRegistryNotReady exception
 
-        from database.models import Log, Room
+        from database.models import Log, Room, Occupy
         from django.core.exceptions import ObjectDoesNotExist
         from django.core.cache import cache
         from django.utils import timezone
@@ -24,6 +24,9 @@ class LibraryMonitorConfig(AppConfig):
             for room_id in rooms:
                 stats = cache.get(room_id)
                 log_exists = True
+                room_db = None
+                ocppy_log = None
+                ocuppied_currently = True
                 try:
                     room_db = Room.objects.get(room_name=room_id, room_floor=floor)
                     recent_log = Log.objects.filter(room_id=room_db).latest('id')
@@ -34,6 +37,11 @@ class LibraryMonitorConfig(AppConfig):
                     print('ERROR Unexpected')
                     print(e)
                     log_exists = False
+                try:
+                    ocppy_log = Occupy.objects.get(room_id=room_db)
+                except ObjectDoesNotExist:
+                    ocuppied_currently = False
+
                 if log_exists:
                     dau_calc = 0
                     day = []
@@ -47,6 +55,17 @@ class LibraryMonitorConfig(AppConfig):
                     stats['dao'] = str(len(total_logs) // len(day))
                     stats['last_enter'] = recent_log.enter_time.strftime('%c')
                     stats['last_leave'] = recent_log.leave_time.strftime('%c')
+                    if ocuppied_currently:
+                        if recent_log.leave_time < ocppy_log.time:
+                                stats['last_enter'] = ocppy_log.time.strftime('%c')
+                                stats['last_leave'] = '---'
+                                stats['e_time'] = ocppy_log.time
+                                stats['occupied'] = True
+                elif ocuppied_currently:
+                    stats['last_enter'] = ocppy_log.time.strftime('%c')
+                    stats['last_leave'] = '---'
+                    stats['e_time'] = ocppy_log.time
+                    stats['occupied'] = True
 
                 cache.set(room_id, stats, None)
 

@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.template import loader
 # from django.http import Http404
 from django.utils import timezone
-from database.models import Log, Room
+from database.models import Log, Room, Occupy
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
@@ -46,9 +46,27 @@ def enter(request, room_id, secret_key):
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
     stats = cache.get(room_id)
-    stats['occupied'] = True
-    stats['e_time'] = timezone.make_aware(datetime.datetime.now(),
+    time = timezone.make_aware(datetime.datetime.now(),
                                           timezone.get_current_timezone())
+    try:
+        room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
+        ocppy = None
+        try:
+            ocppy = Occupy.objects.get(room_id=room)
+            ocppy.time = time
+        except ObjectDoesNotExist:
+            ocppy = Occupy(room_id=room, time=time)
+        ocppy.save()
+    except ObjectDoesNotExist:
+        print('ERROR - RaspPi hit room that does not exist')
+        return HttpResponse("ERROR - not real room")
+    except Exception as e:
+        print('ERROR Unexpected')
+        print(e)
+        return HttpResponse("ERROR - Unexpected")
+
+    stats['occupied'] = True
+    stats['e_time'] = time
     cache.set(room_id, stats, None)
     return check(request, '3')
 
@@ -74,7 +92,6 @@ def leave(request, room_id, secret_key):
         log = Log(room_id=room, enter_time=stats["e_time"],
                   leave_time=time)
         log.save()
-
     except ObjectDoesNotExist:
         print('ERROR - RaspPi hit room that does not exist')
         return HttpResponse("ERROR - not real room")
@@ -87,6 +104,7 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
+    print(type(stats['e_time']))
     stats['last_enter'] = stats['e_time'].strftime('%c')
     stats['last_leave'] = time.strftime('%c')
     stats['e_time'] = None
@@ -112,6 +130,7 @@ def leave(request, room_id, secret_key):
         dao = str(len(total_logs) // len(day))
     stats['dao'] = dao
     stats['dau'] = dau
+
     cache.set(room_id, stats, None)
 
     return check(request, '3')
