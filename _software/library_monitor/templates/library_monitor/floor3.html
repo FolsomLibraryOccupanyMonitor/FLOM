@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-    <img src="{% static 'library_monitor/images/f3_nobg.png' %}" alt="Floor3" class="map"/>
+    <img src="{% static 'library_monitor/images/f3_nobg_s.png' %}" alt="Floor3" class="map"/>
     {% for room, stats in floor.items %}
         {% if room == '353B' and stats.occupied %}
             <img src="{% static 'library_monitor/images/353b_red.png' %}" alt="Floor3" class="map"/>
@@ -27,3 +27,4 @@
         {% endif %}
     {% endfor %}
 {% endblock %}
+
