@@ -41,7 +41,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['flom.ml','www.flom.ml','localhost','127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -85,11 +84,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'flom.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = config['DATABASES']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -108,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -134,18 +130,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
-cache.set('dev',config['DEVELOPMENT'])
-cache.set('floors',list(config['FLOOR'].keys()), None)
+cache.set('dev', config['DEVELOPMENT'])
+cache.set('floors', list(config['FLOOR'].keys()), None)
 for floor in config['FLOOR']:
     rooms = config['FLOOR'][floor]
     rooms = ast.literal_eval(rooms)
     cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
-        stats = {"occupied" : False, "e_time" : None, "last_enter" : None ,
-                "last_leave" : None, "dao" : None, "dau" : None, "floor" : floor }
-    
-        cache.set(room_id, stats, None)
+        stats = {"occupied": False, "e_time": None, "last_enter": None,
+                 "last_leave": None, "dao": None, "dau": None, "floor": floor}
 
+        cache.set(room_id, stats, None)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
