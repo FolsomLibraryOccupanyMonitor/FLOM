@@ -43,7 +43,7 @@ class LibraryMonitorConfig(AppConfig):
                         day.append(log_items.enter_time.timetuple().tm_yday)
                     day = set(day)
                     dau_calc /= len(total_logs)
-                    stats['dau'] = str(datetime.timedelta(seconds=dau_calc))
+                    stats['dau'] = str(datetime.timedelta(seconds=int(dau_calc)))
                     stats['dao'] = str(len(total_logs) // len(day))
                     stats['last_enter'] = recent_log.enter_time.strftime('%c')
                     stats['last_leave'] = recent_log.leave_time.strftime('%c')
