@@ -9,21 +9,21 @@
 
 {% block body %}
     <img src="{% static 'library_monitor/images/f3_nobg.png' %}" alt="Floor3" class="map"/>
-    {% for room, occup in floor.items %}
-        {% if room == '353B' and occup.0 %}
-            <img src="{% static 'library_monitor/images/353b_red.png' %}" alt="Floor3" class="map"/>"
+    {% for room, stats in floor.items %}
+        {% if room == '353B' and stats.occupied %}
+            <img src="{% static 'library_monitor/images/353b_red.png' %}" alt="Floor3" class="map"/>
         {% elif room == '353B' %}
-            <img src="{% static 'library_monitor/images/353b.png' %}" alt="Floor3" class="map"/>"
+            <img src="{% static 'library_monitor/images/353b.png' %}" alt="Floor3" class="map"/>
         {% endif %}
-        {% if room == '333' and occup.0 %}
-            <img src="{% static 'library_monitor/images/333_red.png' %}" alt="Floor3" class="map"/>"
+        {% if room == '333' and stats.occupied %}
+            <img src="{% static 'library_monitor/images/333_red.png' %}" alt="Floor3" class="map"/>
         {% elif room == '333' %}
-            <img src="{% static 'library_monitor/images/333.png' %}" alt="Floor3" class="map"/>"
+            <img src="{% static 'library_monitor/images/333.png' %}" alt="Floor3" class="map"/>
         {% endif %}
-        {% if room == '336' and occup.0 %}
-            <img src="{% static 'library_monitor/images/336_red.png' %}" alt="Floor3" class="map"/>"
+        {% if room == '336' and stats.occupied %}
+            <img src="{% static 'library_monitor/images/336_red.png' %}" alt="Floor3" class="map"/>
         {% elif room == '336' %}
-            <img src="{% static 'library_monitor/images/336.png' %}" alt="Floor3" class="map"/>"
+            <img src="{% static 'library_monitor/images/336.png' %}" alt="Floor3" class="map"/>
         {% endif %}
     {% endfor %}
 {% endblock %}
