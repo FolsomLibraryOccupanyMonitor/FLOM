@@ -144,12 +144,17 @@ STATIC_URL = '/static/'
 
 cache.set('SECRET_KEYs', set(config['SECRET_KEYs'].keys()), None)
 cache.set('dev',config['DEVELOPMENT'])
+cache.set('floors',list(config['FLOOR'].keys()), None)
 for floor in config['FLOOR']:
     rooms = config['FLOOR'][floor]
     rooms = ast.literal_eval(rooms)
     cache.set('floor_' + floor, rooms, None)
     for room_id in rooms:
-        cache.set(room_id, (False,None), None)
+        stats = {"occupied" : False, "e_time" : None, "last_enter" : None ,
+                "last_leave" : None, "dao" : None, "dau" : None, "floor" : floor }
+    
+        cache.set(room_id, stats, None)
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
