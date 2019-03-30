@@ -33,7 +33,8 @@ def load_rooms(request):
 def enter(request, room_id, secret_key):
 
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
+        if room_id not in cache.get("SECRET_KEYs"):
+            return HttpResponse(cache.get(room_id))
             return HttpResponse('You are not one of us!')
     except cache.get("SECRET_KEYs") is None:
         raise KeyError
@@ -43,11 +44,12 @@ def enter(request, room_id, secret_key):
 
 def leave(request, room_id, secret_key):
     try:
-        if secret_key not in cache.get("SECRET_KEYs"):
+        room_id = str(room_id)
+        if secret_key not in cache.get(room_id):
             return HttpResponse('You are not one of us!')
-    except cache.get("SECRET_KEYs") is None:
+    except cache.get(room_id) is None:
         raise KeyError
-    occupy, enter_time = cache.get(room_id)
+    occupy, enter_time = cache.get("SECRET_KEYs")
     if enter_time is None:
         return HttpResponse("Nobody is in the room!")
 
