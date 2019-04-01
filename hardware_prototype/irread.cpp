@@ -1,25 +1,32 @@
 // FLOM get IR values
 
+#include <iostream>
 #include <unistd.h>				//Needed for I2C port
 #include <fcntl.h>				//Needed for I2C port
 #include <sys/ioctl.h>			//Needed for I2C port
 #include <linux/i2c-dev.h>		//Needed for I2C port
-#include <MLX90640_I2C_Driver.cpp>
-#include <MLX90640_API.cpp>
-#include <MLX90640_SWI2C_Driver.cpp>
-#include <MLX90640_API.h>
-#include <MLX90640_I2C_Driver.h>
+include "MLX90640_I2C_Driver.cpp"
+include "MLX90640_API.cpp"
+include "MLX90640_SWI2C_Driver.cpp"
+#include "MLX90640_API.h"
+#include "MLX90640_I2C_Driver.h"
 
-int grid [24];
-int xvals [36];
+using namespace std;
+
+uint16_t grid [24];
+uint16_t xvals [36];
 int freq = 1000;
+int stopread = 0;
 
 int main(){
 	// initialise grid for processing
-	for(unsigned int x=0; a<(sizeof(grid)-1); a++){
-		grid[x] = xvals;
+	//for(unsigned int x=0; x<(sizeof(grid)-1); x++){
+	//	grid[x] = xvals;
+	//}
+	MLX90640_I2CInit();
+	while(stopread > -1){
+		stopread = MLX90640_I2CRead(0x33, 0x00, 0x00, grid);
 	}
-	
 	//readdata();
 	//visualise(grid);
 }

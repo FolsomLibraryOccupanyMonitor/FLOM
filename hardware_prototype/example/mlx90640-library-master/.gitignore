@@ -1,0 +1,16 @@
+*.swp
+*.o
+*.a
+*.so
+fbuf
+step
+test
+interp
+video
+sdlscale
+hotspot
+bcm2835-*
+*.egg-info
+*.py[cod]
+python/build
+python/dist
