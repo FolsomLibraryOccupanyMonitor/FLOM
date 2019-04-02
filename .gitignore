@@ -39,4 +39,5 @@ Thumbs.db
 *.cpython-36.pyc
 *.pyc
 
+run.sh
 flomenv/

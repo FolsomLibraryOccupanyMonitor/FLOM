@@ -1,24 +1,24 @@
 import requests
 import sys
-ADDR = "http://127.0.0.1:8000/library_monitor/"
+ADDR = "http://www.flom.ml/"
 
-def update(op, room):
+def update(op, room, secret):
 	if op == 'enter':
 		# Make a get request to get the latest position of the international space station from the opennotify api.
-		response = requests.get(ADDR+str(room)+"/enter")
+		response = requests.get(ADDR+str(room)+"/enter"+secret)
 		# Print the status code of the response.
 		print(response.text)
 	elif op == 'leave':
-		response = requests.get(ADDR+str(room)+"/leave")
+		response = requests.get(ADDR+str(room)+"/leave"+secret)
 		print(response.text)
-	elif op == 'check':
-		response = requests.get(ADDR+str(room))
-		print(response.text)
+	# elif op == 'check':
+	# 	response = requests.get(ADDR+str(room))
+	# 	print(response.text)
 	else:
 		print('Invalid Input')
 
 if sys.argv[1]=='test':
-	print('Available Input: [enter/leave/check] [room number/floor number]')
+	print('Available Input: [enter/leave] [room number/floor number] [secret key]')
 	while True:
 		uin = input('-------\n')
 		oplist = uin.split(' ')
