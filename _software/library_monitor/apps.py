@@ -70,19 +70,20 @@ class LibraryMonitorConfig(AppConfig):
                     stats['dao'] = str(len(total_logs) // len(day))
                     stats['last_enter'] = utc_to_local(
                         recent_log.enter_time).strftime(
-                        '%Y-%m-%d %H:%M %p')
+                        '%Y-%m-%d %I:%M %p')
                     stats['last_leave'] = utc_to_local(
                         recent_log.leave_time).strftime(
-                        '%Y-%m-%d %H:%M %p')
+                        '%Y-%m-%d %I:%M %p')
                     if ocuppied_currently:
                         if recent_log.leave_time < ocppy_log.time:
                             stats['last_enter'] = ocppy_log.time.strftime(
-                                '%Y-%m-%d %H:%M %p')
+                                '%Y-%m-%d %I:%M %p')
                             stats['last_leave'] = '---'
                             stats['e_time'] = ocppy_log.time
                             stats['occupied'] = True
                 elif ocuppied_currently:
-                    stats['last_enter'] = ocppy_log.time.strftime('%c')
+                    stats['last_enter'] = \
+                        ocppy_log.time.strftime('%Y-%m-%d %I:%M %p')
                     stats['last_leave'] = '---'
                     stats['e_time'] = ocppy_log.time
                     stats['occupied'] = True
