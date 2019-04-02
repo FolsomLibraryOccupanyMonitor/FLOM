@@ -39,7 +39,7 @@ SECRET_KEY = config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['flom.ml','www.flom.ml','localhost','127.0.0.1']
 
 # Application definition
 
@@ -128,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+# print(cache.get('initialized'))
 cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
 cache.set('dev', config['DEVELOPMENT'])
 cache.set('floors', list(config['FLOOR'].keys()), None)
@@ -139,7 +139,6 @@ for floor in config['FLOOR']:
     for room_id in rooms:
         stats = {"occupied": False, "e_time": None, "last_enter": None,
                  "last_leave": None, "dao": None, "dau": None, "floor": floor}
-
         cache.set(room_id, stats, None)
 
 STATICFILES_DIRS = [
