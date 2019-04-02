@@ -47,7 +47,7 @@ def enter_leave_allrooms(request):
                 enter(request,room,cache.get("SECRET_KEYs")[room])
                 time.sleep(1)
                 leave(request,room,cache.get("SECRET_KEYs")[room])
-                
+
     return check(request, '3')
 
 def enter(request, room_id, secret_key):
@@ -122,8 +122,8 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    stats['last_enter'] = stats['e_time'].strftime('%c')
-    stats['last_leave'] = time.strftime('%c')
+    stats['last_enter'] = stats['e_time'].strftime('%Y-%m-%d %H:%M %p')
+    stats['last_leave'] = time.strftime('%Y-%m-%d %H:%M %p')
     stats['e_time'] = None
     try:
         total_logs = Log.objects.filter(room_id=room)
@@ -166,23 +166,24 @@ def stats_page(request):
             rooms = cache.get('floor_' + floor_n)
             floor = cache.get_many(rooms)
             for room, stats in floor.items():
-
                 available_stats['rooms'][room] = stats.copy()
                 occupancy = 'No'
                 if stats["occupied"]:
                     occupancy = 'Yes'
                     available_stats['rooms'][room]['last_enter'] = stats[
-                        'e_time'].strftime('%c')
+                        'e_time'].strftime('%Y-%m-%d %H:%M %p')
                     available_stats['rooms'][room]['last_leave'] = '---'
                 # recent_log.enter_time.strftime('%c')
                 available_stats['rooms'][room]['occupancy'] = occupancy
                 available_stats['rooms'][room]['number'] = room
         available_stats = {'available_stats': available_stats}
         return HttpResponse(template.render(available_stats, request))
+
     except TemplateDoesNotExist:
         raise Http404()
     except:
         raise Http404("Unexpected ERROR")
+
 
 def check(request, floor_id):
     try:
