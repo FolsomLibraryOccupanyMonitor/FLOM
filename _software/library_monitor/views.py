@@ -23,8 +23,8 @@ def load_rooms(request):
             for room, stats in floor.items():
                 room_d = Room(room_name=room, room_floor=floor_n)
                 try:
-                    Room.objects.get(room_name=room,
-                                     room_floor=floor_n)
+                    room_db = Room.objects.get(room_name=room,
+                                               room_floor=floor_n)
                 except ObjectDoesNotExist:
                     room_d.save()
                 except Exception as e:
@@ -104,7 +104,6 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    print(type(stats['e_time']))
     stats['last_enter'] = stats['e_time'].strftime('%c')
     stats['last_leave'] = time.strftime('%c')
     stats['e_time'] = None
