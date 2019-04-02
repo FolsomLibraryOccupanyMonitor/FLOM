@@ -13,16 +13,16 @@
 	    </tr>
     </thead>
     {% for room_num, obj in rooms.items %} 
-    	{% if obj.occupied == 'Yes' %}
+    	{% if obj.occupancy == 'Yes' %}
 			<tr class='text-danger'>
 		{% else %}
 			<tr class='text-success'>
 		{%endif%}
 			<td>{{ obj.floor }}</td>
 			<td>{{ obj.number }}</td>
-			<td >{{ obj.occupied }}</td>
-			<td>{{ obj.t_entered }}</td>
-			<td>{{ obj.t_exited }}</td>
+			<td >{{ obj.occupancy }}</td>
+			<td>{{ obj.last_enter }}</td>
+			<td>{{ obj.last_leave }}</td>
 			<td>{{ obj.dao }}</td>
 			<td>{{ obj.dau }}</td>
 		</tr>
