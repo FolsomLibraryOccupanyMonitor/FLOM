@@ -6,8 +6,8 @@ class LibraryMonitorConfig(AppConfig):
     name = 'library_monitor'
 
     def ready(self):
-        if 'runserver' not in sys.argv:
-            return True
+        # if 'runserver' not in sys.argv:
+        #     return True
         # you must import your modules here 
         # to avoid AppRegistryNotReady exception
 
@@ -15,10 +15,11 @@ class LibraryMonitorConfig(AppConfig):
         from django.core.exceptions import ObjectDoesNotExist
         from django.core.cache import cache
         from django.utils import timezone
-        import datetime
+        import datetime, os
 
         # startup code here - LOADING CACHE
-
+        # if os.environ.get('RUN_MAIN', None) != 'true':
+        print("starting startup")
         for floor in cache.get('floors'):
             rooms = cache.get('floor_' +floor)
             for room_id in rooms:
@@ -41,7 +42,10 @@ class LibraryMonitorConfig(AppConfig):
                     ocppy_log = Occupy.objects.get(room_id=room_db)
                 except ObjectDoesNotExist:
                     ocuppied_currently = False
-
+                except Exception as e:
+                    print('ERROR Unexpected')
+                    print(e)
+                    ocuppied_currently = False
                 if log_exists:
                     dau_calc = 0
                     day = []
@@ -66,7 +70,9 @@ class LibraryMonitorConfig(AppConfig):
                     stats['last_leave'] = '---'
                     stats['e_time'] = ocppy_log.time
                     stats['occupied'] = True
-
                 cache.set(room_id, stats, None)
+        cache.set('initialized',True, None)
+        # print(cache.get('initialized'))
+        print("ended startup")
 
 
