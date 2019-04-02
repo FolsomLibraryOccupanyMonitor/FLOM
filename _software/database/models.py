@@ -18,5 +18,9 @@ class Occupy(models.Model):
 
 class Error(models.Model):
 	error_occur_time = models.DateTimeField('Error Cccur Time')
-	error_string = models.CharField('Error String', max_length=100, null=True,
+	error_string = models.CharField('Error String', max_length=255, null=True,
                                   default="", editable=False)
+
+class Login(models.model):
+	user_name = models.CharField('User Name', max_length=255)
+	user_password = models.CharField('User Password', max_length=255)
