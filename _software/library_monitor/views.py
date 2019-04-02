@@ -6,9 +6,7 @@ from django.utils import timezone
 from database.models import Log, Room
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
-
-
-# import pytz
+import pytz
 
 
 # from django.db import models
@@ -87,8 +85,8 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    stats['last_enter'] = stats['e_time'].strftime('%c')
-    stats['last_leave'] = time.strftime('%c')
+    stats['last_enter'] = stats['e_time'].strftime('%Y-%m-%d %H:%M %p')
+    stats['last_leave'] = time.strftime('%Y-%m-%d %H:%M %p')
     stats['e_time'] = None
     try:
         total_logs = Log.objects.filter(room_id=room)
@@ -135,7 +133,7 @@ def stats_page(request):
             if stats["occupied"]:
                 occupancy = 'Yes'
                 available_stats['rooms'][room]['last_enter'] = stats[
-                    'e_time'].strftime('%c')
+                    'e_time'].strftime('%Y-%m-%d %H:%M %p')
                 available_stats['rooms'][room]['last_leave'] = '---'
             # recent_log.enter_time.strftime('%c')
             available_stats['rooms'][room]['occupancy'] = occupancy
