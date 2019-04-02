@@ -187,7 +187,6 @@ def stats_page(request):
 
 def check(request, floor_id):
     try:
-
         template = loader.get_template('library_monitor/floor' + floor_id + '.html')
         rooms = cache.get('floor_' + str(floor_id))
         floor = cache.get_many(rooms)
@@ -195,7 +194,8 @@ def check(request, floor_id):
         return HttpResponse(template.render(floor, request))
     except TemplateDoesNotExist:
         raise Http404()
-    except:
+    except Exception as e:
+        print(e)
         raise Http404("Unexpected ERROR")
 
 
