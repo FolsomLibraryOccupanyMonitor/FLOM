@@ -9,8 +9,8 @@ class Room(models.Model):
 
 class Log(models.Model):
 	room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    enter_time = models.DateTimeField('Enter Time')
-    leave_time = models.DateTimeField('Leave Time')
+	enter_time = models.DateTimeField('Enter Time')
+	leave_time = models.DateTimeField('Leave Time')
 
 class Occupy(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -18,9 +18,8 @@ class Occupy(models.Model):
 
 class Error(models.Model):
 	error_occur_time = models.DateTimeField('Error Cccur Time')
-	error_string = models.CharField('Error String', max_length=255, null=True,
-                                  default="", editable=False)
+	error_string = models.CharField('Error String', max_length=255)
 
-class Login(models.model):
+class Login(models.Model):
 	user_name = models.CharField('User Name', max_length=255)
 	user_password = models.CharField('User Password', max_length=255)
