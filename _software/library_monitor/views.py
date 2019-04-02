@@ -166,24 +166,23 @@ def stats_page(request):
             rooms = cache.get('floor_' + floor_n)
             floor = cache.get_many(rooms)
             for room, stats in floor.items():
-
-            available_stats['rooms'][room] = stats.copy()
-            occupancy = 'No'
-            if stats["occupied"]:
-                occupancy = 'Yes'
-                available_stats['rooms'][room]['last_enter'] = stats[
-                    'e_time'].strftime('%Y-%m-%d %H:%M %p')
-                available_stats['rooms'][room]['last_leave'] = '---'
-            # recent_log.enter_time.strftime('%c')
-            available_stats['rooms'][room]['occupancy'] = occupancy
-            available_stats['rooms'][room]['number'] = room
+                available_stats['rooms'][room] = stats.copy()
+                occupancy = 'No'
+                if stats["occupied"]:
+                    occupancy = 'Yes'
+                    available_stats['rooms'][room]['last_enter'] = stats[
+                        'e_time'].strftime('%Y-%m-%d %H:%M %p')
+                    available_stats['rooms'][room]['last_leave'] = '---'
+                # recent_log.enter_time.strftime('%c')
+                available_stats['rooms'][room]['occupancy'] = occupancy
+                available_stats['rooms'][room]['number'] = room
         available_stats = {'available_stats': available_stats}
         return HttpResponse(template.render(available_stats, request))
 
     except TemplateDoesNotExist:
         raise Http404()
     except:
-        raise Http404("Unexpected ERROR")ilable_stats, request))
+        raise Http404("Unexpected ERROR")
 
 
 def check(request, floor_id):

@@ -60,8 +60,8 @@ class LibraryMonitorConfig(AppConfig):
                     dau_calc = 0
                     day = []
                     for log_items in total_logs:
-                        dau_calc += (
-                                    log_items.leave_time - log_items.enter_time).total_seconds()
+                        dau_calc += (log_items.leave_time -
+                                     log_items.enter_time).total_seconds()
                         day.append(log_items.enter_time.timetuple().tm_yday)
                     day = set(day)
                     dau_calc /= len(total_logs)
@@ -76,7 +76,8 @@ class LibraryMonitorConfig(AppConfig):
                         '%Y-%m-%d %H:%M %p')
                     if ocuppied_currently:
                         if recent_log.leave_time < ocppy_log.time:
-                            stats['last_enter'] = ocppy_log.time.strftime('%c')
+                            stats['last_enter'] = ocppy_log.time.strftime(
+                                '%Y-%m-%d %H:%M %p')
                             stats['last_leave'] = '---'
                             stats['e_time'] = ocppy_log.time
                             stats['occupied'] = True
@@ -87,6 +88,6 @@ class LibraryMonitorConfig(AppConfig):
                     stats['occupied'] = True
 
                 cache.set(room_id, stats, None)
-        cache.set('initialized',True, None)
+        cache.set('initialized', True, None)
         # print(cache.get('initialized'))
         print("ended startup")
