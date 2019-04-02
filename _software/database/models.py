@@ -15,3 +15,8 @@ class Log(models.Model):
 class Occupy(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     time = models.DateTimeField('Time')
+
+class Error(models.Model):
+	error_occur_time = models.DateTimeField('Error Cccur Time')
+	error_string = models.CharField('Error String', max_length=100, null=True,
+                                  default="", editable=False)
