@@ -2,7 +2,7 @@
 {# The menu bar seen on all pages #}
 {% load static %}
 
-<base href="http://127.0.0.1:8000/" />
+<!-- <base href="http://127.0.0.1:8000/" /> -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
   <a class="navbar-brand">Folsom Library Occupancy Monitor</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -16,5 +16,9 @@
       <a class="nav-item nav-link" id="main-menu" href="/about/">About</a>
       <a class="nav-item nav-link" id="main-menu" href="/stats/">Room Usage</a>
     </div>
+      <form class="form-inline my-2 my-lg-0" id="room-search">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Room" aria-label="Search">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+      </form>
   </div>
 </nav>
