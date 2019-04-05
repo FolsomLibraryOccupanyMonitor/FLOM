@@ -37,7 +37,7 @@ def load_rooms(request):
 def enter(request, room_id, secret_key):
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
-            if cache.get('dev') == "True":
+            if cache.get('dev') == "True" or cache.get('dev_login') == "True":
                 if secret_key != 'aaaaaa':
                     return HttpResponse('You are not one of us!')
             else:
