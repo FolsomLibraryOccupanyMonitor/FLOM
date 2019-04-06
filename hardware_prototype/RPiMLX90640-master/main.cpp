@@ -49,7 +49,7 @@ char            refesh_rate = '0';
 
 char            mlxFifo[] = "/var/run/mlx90640.sock";
 
-int             num, fd, sleepinsec;
+int             num, fd, sleepinsec, flag = 0, threshold = 250, pxover;
 
 pid_t           pid;
 
@@ -450,11 +450,11 @@ void display_Ima()
   }
   if (mytempfile.is_open())
     mytempfile.close();
-  printf("\n\r");
+  //printf("\n\r");
 	//*****************************************************************************************//
 
-  printf("************COLORIZED Data***********\n\r");
-  printf("PRINTING IMAGE FROM DISPALY IMAGE MAIN \n\n\r");
+  //printf("************COLORIZED Data***********\n\r");
+  //printf("PRINTING IMAGE FROM DISPALY IMAGE MAIN \n\n\r");
   COLORIZED = Colorise();
 
 
@@ -466,7 +466,7 @@ void display_Ima()
   dp = opendir(path);
   if (dp != NULL)
   {
-    printf("Dir content:\n");
+    //printf("Dir content:\n");
     while(ep = readdir(dp))
     {
       std::string name(ep->d_name);
@@ -483,11 +483,11 @@ void display_Ima()
 				  strcpy(filename, path); /* copy name into the new var */
 				  strcat(filename, ep->d_name); /* add the extension */
 
-				  printf("removing %s file name was: %s\n",ep->d_name, filename );
+                                  //printf("removing %s file name was: %s\n",ep->d_name, filename );
 				  if(remove(filename)!=0)
-					printf("file remove error\n");
+                                        //printf("file remove error\n");
 				  else
-					printf("file removed\n");
+                                        //printf("file removed\n");
 				}
 	//printf("%5s\t",name);
       }
@@ -497,7 +497,7 @@ void display_Ima()
 #endif
 //*******************************************************************************///
 
-  printf("\n\r");
+  //printf("\n\r");
   sleeper = 1000000*sleepinsec;
   if(sleeper > 1500000)
     sleeper-=1500000;
@@ -513,7 +513,7 @@ void display_Ima()
 
 void find_objects()
 {
-
+    pxover=0;
 
     // get cyclops values to start for averaging them
     Get_cyclops_val_init();
@@ -523,15 +523,27 @@ void find_objects()
 #ifdef CHESS_PAT
     // get the thermal image without de-interlace techniques
     Get_Image_Median_Chess(0);
-    printf("chess P\n\r");
+    //printf("chess P\n\r");
 #else
     Get_Image_Median(1);       // collect an full image using the odd and even frames wait for both odd and even image
-    printf("None chess P\n\r");
+    //printf("None chess P\n\r");
 #endif
-
+    //printf("something is getting printed");
     (void) display_Ima();
-
-    printf("REady to start\n\r");//GET_A_KEY();
+    pxover=0;
+    for (i=0; i<NROWS; i++) {
+        //pc.printf("D%2d:",i);
+        for (j=0; j<NCOLS; j++) {
+            //out+=IMA[i][j];
+            //ss <<"%5d;" << IMA[i][j];
+            if (IMA[i][j]>threshold){
+                pxover++;
+            }
+        }
+    }
+    printf("%3d\n\r",pxover);
+    if(pxover>38){printf("********THIS ROOM IS OCCUPIED***********\n\n\r");}
+    //printf("REady to start\n\r");//GET_A_KEY();
 
     Reset_New_Data_In_Ram2();
 
@@ -544,6 +556,21 @@ void find_objects()
 #endif
 
                (void) display_Ima();
+                pxover=0;
+                for (i=0; i<NROWS; i++) {
+                    //pc.printf("D%2d:",i);
+                    for (j=0; j<NCOLS; j++) {
+                        //out+=IMA[i][j];
+                        //ss <<"%5d;" << IMA[i][j];
+                        if (IMA[i][j]>threshold){
+                            pxover++;
+                        }
+                    }
+                }
+                printf("%3d\n\r",pxover);
+                if(pxover>38){
+                    printf("********THIS ROOM IS OCCUPIED***********\n\n\r");
+                }
                 //GET_A_KEY();
     } // end while
 
@@ -571,9 +598,9 @@ int main(int argc =2, const char* argv[] =defaults)
 
       if (!(ss >> sleepinsec)){
           std::cerr << "Invalid number " << argv[1] << '\n';
-          std::cerr << "Usage: " << argv[0] << " Sleep in secounds <-THIS MEANS NUMBERS ONLY !" << std::endl;
+          std::cerr << "Usage: " << argv[0] << " Sleep in seconds <-THIS MEANS NUMBERS ONLY !" << std::endl;
           return 1;
-        }
+      }
     }
     int x,y;
     if (!bcm2835_init())
@@ -586,8 +613,8 @@ int main(int argc =2, const char* argv[] =defaults)
     bcm2835_i2c_set_baudrate(25000);
 
     Prepaire_coeff();  // get and prepare all eeprom calibration coeff's
-    printf("Note: due to the slow To screen print of each pixel\n\r");
-    printf("Image sync is lost, fix speed in your application!\n\r");
+    //printf("Note: due to the slow To screen print of each pixel\n\r");
+    //printf("Image sync is lost, fix speed in your application!\n\r");
     //GET_A_KEY();
     find_objects();     // call to top level routine
     //End i2c

@@ -734,11 +734,12 @@ void read_mem(char A_MSB, char A_LSB,int cnt)     // cnt = number of bytes!
     usleep(5);
 #ifdef DEBUG_READ_MEM
     printf("MSB=%x,LSB=%x \r\n",A_MSB,A_LSB);
-    for (int a=0;a<cnt;a++)
+    for (int a=0;a<cnt;a++){
+    }
         //printf("Ram_store[%d]= %x\r\n",a,Ram_store[a]);
 #endif
-} //end read_mem
-
+    //end read_mem
+}
 
 
 // ***************************************
