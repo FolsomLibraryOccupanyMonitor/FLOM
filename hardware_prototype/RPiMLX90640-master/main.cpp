@@ -259,7 +259,7 @@ const std::string currentDateTime() {
     // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
     // for more information about date/time format
     strftime(buf, sizeof(buf), "%Y%m%d%H%M%S", &tstruct);
-    printf("time was: %s\n\r", &buf);
+    //printf("time was: %s\n\r", &buf);
     std::string stt(buf);
     return stt;
     //return buf;
@@ -277,7 +277,7 @@ const std::string OneHoureBackTime() {
     // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
     // for more information about date/time format
     strftime(buf, sizeof(buf), "%Y%m%d%H%M%S", &onhback);
-    printf("time was: %s\n\r", &buf);
+    //printf("time was: %s\n\r", &buf);
     std::string stt(buf);
     return stt;
     //return buf;
@@ -330,14 +330,14 @@ pixelArray* Colorise()
 	if (myRGBfile.is_open())
 	{
 		myRGBfile << "[";
-		printf("[");
+                //printf("[");
 	}
 	for (i=0; i<NROWS; i++) {
 			//pc.printf("D%2d:",i);
 			if (myRGBfile.is_open())
 			{
 				myRGBfile << "[";
-				printf("[");
+                                //printf("[");
 			}
 			for (j=0; j<NCOLS; j++) {
 				//out+=IMA[i][j];
@@ -347,12 +347,12 @@ pixelArray* Colorise()
 					if(j < NCOLS-1)
 					{
 						myRGBfile << "("<<returnValues[i][j].red <<","<< returnValues[i][j].green << ","<<returnValues[i][j].blue << "),";
-						printf("(%d,%d,%d),", returnValues[i][j].red,returnValues[i][j].green,returnValues[i][j].blue);
+                                                //printf("(%d,%d,%d),", returnValues[i][j].red,returnValues[i][j].green,returnValues[i][j].blue);
 					}
 					else
 					{
 						myRGBfile << "("<<returnValues[i][j].red <<","<< returnValues[i][j].green << ","<<returnValues[i][j].blue << ")";
-						printf("(%d,%d,%d)", returnValues[i][j].red,returnValues[i][j].green,returnValues[i][j].blue);
+                                                //printf("(%d,%d,%d)", returnValues[i][j].red,returnValues[i][j].green,returnValues[i][j].blue);
 					}
 
 				}
@@ -363,12 +363,12 @@ pixelArray* Colorise()
 					if(i < NROWS-1)
 					{
 						myRGBfile << "],\n\r";
-						printf("],\n\r");
+                                                //printf("],\n\r");
 					}
 					else
 					{
 						myRGBfile << "]";
-						printf("]");
+                                                //printf("]");
 					}
 				}
 
@@ -376,10 +376,10 @@ pixelArray* Colorise()
 	if (myRGBfile.is_open())
 	{
 		myRGBfile << "]";
-		printf("]");
+                //printf("]");
 		myRGBfile.close();
 	}
-	printf("\n\r");
+        //printf("\n\r");
 
 	//*************************************************************************************//
 
@@ -418,9 +418,9 @@ void display_Ima()
   ///std::string out;
   static array2d *NORMALIZED;
   pixelArray *COLORIZED;
-  printf("************NORMALIZED Data***********\n\r");
-  NORMALIZED = NormaliseValue();
-  printf("************NORMALIZED Data: %.3f ***********\n\r", *NORMALIZED+6);
+  //printf("************NORMALIZED Data***********\n\r");
+  //NORMALIZED = NormaliseValue();
+  //printf("************NORMALIZED Data: %.3f ***********\n\r", *NORMALIZED+6);
 
 	//************************************This saves file to local disk (temp.txt file to img folder) *****************************************************//
 
