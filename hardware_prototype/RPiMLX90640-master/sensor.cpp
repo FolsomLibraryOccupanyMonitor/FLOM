@@ -1295,25 +1295,25 @@ void Restore_Kta_param()
              case 0:
                tmp_Kta = Kta_odd_odd;
               #ifdef PRNT_Kta_param
-               printf("[%d,%d] = Kta_odd_odd\n\r",row,col);
+               //printf("[%d,%d] = Kta_odd_odd\n\r",row,col);
               #endif
                break;
              case 1:
                tmp_Kta = Kta_even_odd;
                #ifdef PRNT_Kta_param
-               printf("[%d,%d] = Kta_even_odd\n\r",row,col);
+               //printf("[%d,%d] = Kta_even_odd\n\r",row,col);
                #endif
                break;
              case 2:
                tmp_Kta = Kta_odd_even;
                #ifdef PRNT_Kta_param
-               printf("[%d,%d] = Kta_odd_even\n\r",row,col);
+               //printf("[%d,%d] = Kta_odd_even\n\r",row,col);
                #endif
                break;
              case 3:
                tmp_Kta = Kta_even_even;
                #ifdef PRNT_Kta_param
-               printf("[%d,%d] = Kta_even_even\n\r",row,col);
+               //printf("[%d,%d] = Kta_even_even\n\r",row,col);
                #endif
                break;
              default:tmp_Kta = Kta_odd_odd;printf("Kta-> this may not happen\n\r");break;
@@ -1321,7 +1321,7 @@ void Restore_Kta_param()
          Kta_range_1[row][col]= (tmp_Kta+(float)Kta*two_power_kta_scale2)/two_power_kta_scale1;
 
 #ifdef PRNT_Kta_param
-         printf("Kta[%d,%d] = %e\n\r",row,col,Kta_range_1[row][col]);
+         //printf("Kta[%d,%d] = %e\n\r",row,col,Kta_range_1[row][col]);
 #endif
       } // end for col
     } // end for row
