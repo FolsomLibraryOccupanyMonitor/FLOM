@@ -196,9 +196,9 @@ void get_ptat()
   DELTA_V = a1;
 
 #ifdef PRNT_PARAM_PTAT
-  printf("VPTAT=%d\n\r",VPTAT);
-  printf("VBE=%d\n\r",VBE);
-  printf("DELTA_V=%d\n\r",DELTA_V);
+  //printf("VPTAT=%d\n\r",VPTAT);
+  //printf("VBE=%d\n\r",VBE);
+  //printf("DELTA_V=%d\n\r",DELTA_V);
 #endif
 } // end get_ptat()
 
@@ -218,7 +218,7 @@ float Calc_Ta()
    Ta = (Ta-VPTAT_25)/Kt_PTAT+25;
 
 #ifdef PRNT_PARAM_CALC_TA
-   printf("-Ta %f\n\r",Ta);
+   /*printf("-Ta %f\n\r",Ta);
    printf("-VPTAT %d\n\r",VPTAT);
    printf("-ALPHA_PTAT: %f \r\n", ALPHA_PTAT);
    printf("-VBE: %d \r\n", VBE);
@@ -229,6 +229,7 @@ float Calc_Ta()
    printf("-Kv_Vdd: %f \r\n", Kv_Vdd);
    printf("-Kv_PTAT: %f \r\n", Kv_PTAT);
    printf("-Kt_PTAT: %f \r\n", Kt_PTAT);
+*/
 #endif
    return Ta;
 
@@ -246,33 +247,33 @@ void set_IR_refresh_rate(char c)
 
    switch (c) {
       case '0':
-          printf("IR refresh 0.5 Hz\n\r");
+          //printf("IR refresh 0.5 Hz\n\r");
           R_T = 1.0/0.5;
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[1] = reg_config[1] & 0x7f;
           break;
       case '1':
-          printf("IR refresh 1 Hz\n\r");
+          //printf("IR refresh 1 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[1] = reg_config[1] | 0x80;
           R_T = 1.0/1.0;
           break;
       case '2':
-          printf("IR refresh 2 Hz\n\r");
+          //printf("IR refresh 2 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x01;
           reg_config[1] = reg_config[1] & 0x7f;
           R_T = 1.0/2.0;
           break;
       case '4':
-          printf("IR refresh 4 Hz\n\r");
+          //printf("IR refresh 4 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x01;
           reg_config[1] = reg_config[1] | 0x80;
           R_T = 1.0/4.0;
           break;
       case '8':
-          printf("IR refresh 8 Hz\n\r");
+          //printf("IR refresh 8 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x02;
           reg_config[1] = reg_config[1] & 0x7f;
@@ -280,7 +281,7 @@ void set_IR_refresh_rate(char c)
           break;
       case 'A':
       case 'a':
-          printf("IR refresh 16 Hz\n\r");
+          //printf("IR refresh 16 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x02;
           reg_config[1] = reg_config[1] | 0x80;;
@@ -288,7 +289,7 @@ void set_IR_refresh_rate(char c)
           break;
       case 'B':
       case 'b':
-          printf("IR refresh 32 Hz\n\r");
+          //printf("IR refresh 32 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x03;
           reg_config[1] = reg_config[1] & 0x7f;
@@ -296,14 +297,14 @@ void set_IR_refresh_rate(char c)
           break;
       case 'C':
       case 'c':
-          printf("IR refresh 64 Hz\n\r");
+          //printf("IR refresh 64 Hz\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x03;
           reg_config[1] = reg_config[1] | 0x80;
           R_T = 1.0/64.0;
           break;
       default:
-          printf("WRONG SELECTION, DEFAULTING TO 4 HZ\n\r");
+          //printf("WRONG SELECTION, DEFAULTING TO 4 HZ\n\r");
           reg_config[0] = reg_config[0] & 0xfc;
           reg_config[0] = reg_config[0] | 0x01;
           reg_config[1] = reg_config[1] | 0x80;
