@@ -735,7 +735,7 @@ void read_mem(char A_MSB, char A_LSB,int cnt)     // cnt = number of bytes!
 #ifdef DEBUG_READ_MEM
     printf("MSB=%x,LSB=%x \r\n",A_MSB,A_LSB);
     for (int a=0;a<cnt;a++)
-        printf("Ram_store[%d]= %x\r\n",a,Ram_store[a]);
+        //printf("Ram_store[%d]= %x\r\n",a,Ram_store[a]);
 #endif
 } //end read_mem
 
@@ -1271,7 +1271,7 @@ void Restore_Kta_param()
          aa = ((row)*32+(col)+0x2440)-0x2400;
           a = ((int)eeprom[aa*2])*256+(int)eeprom[aa*2+1];
 #ifdef PRNT_Kta_param
-         printf("Kta_address[%d,%d]=%x, content=%x\n\r",row,col,aa+0x2400,a);
+         //printf("Kta_address[%d,%d]=%x, content=%x\n\r",row,col,aa+0x2400,a);
 #endif
 
          int Kta= a & 0x000e;
