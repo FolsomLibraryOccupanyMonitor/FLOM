@@ -218,18 +218,18 @@ float Calc_Ta()
    Ta = (Ta-VPTAT_25)/Kt_PTAT+25;
 
 #ifdef PRNT_PARAM_CALC_TA
-   /*printf("-Ta %f\n\r",Ta);
-   printf("-VPTAT %d\n\r",VPTAT);
-   printf("-ALPHA_PTAT: %f \r\n", ALPHA_PTAT);
-   printf("-VBE: %d \r\n", VBE);
-   printf("-DELTA_Volt: %f \r\n", DELTA_Volt);
-   printf("-Vdd_25: %f \r\n", Vdd_25);
-   printf("-Kv_Vdd: %f \r\n", Kv_Vdd);
-   printf("-VPTAT_art: %f \r\n", VPTAT_art);
-   printf("-Kv_Vdd: %f \r\n", Kv_Vdd);
-   printf("-Kv_PTAT: %f \r\n", Kv_PTAT);
-   printf("-Kt_PTAT: %f \r\n", Kt_PTAT);
-*/
+   //printf("-Ta %f\n\r",Ta);
+   //printf("-VPTAT %d\n\r",VPTAT);
+   //printf("-ALPHA_PTAT: %f \r\n", ALPHA_PTAT);
+   //printf("-VBE: %d \r\n", VBE);
+   //printf("-DELTA_Volt: %f \r\n", DELTA_Volt);
+   //printf("-Vdd_25: %f \r\n", Vdd_25);
+   //printf("-Kv_Vdd: %f \r\n", Kv_Vdd);
+   //printf("-VPTAT_art: %f \r\n", VPTAT_art);
+   //printf("-Kv_Vdd: %f \r\n", Kv_Vdd);
+   //printf("-Kv_PTAT: %f \r\n", Kv_PTAT);
+   //printf("-Kt_PTAT: %f \r\n", Kt_PTAT);
+
 #endif
    return Ta;
 
@@ -645,9 +645,9 @@ void wr_mlx_EEPROM_refresh(char c)
 
 void GET_A_KEY()
 {
-    printf("\n\rStrike a key to continue ");
+    //printf("\n\rStrike a key to continue ");
     (void)getchar();
-    printf("\n\r");
+    //printf("\n\r");
     return;
 } // GET_A_KEY()
 
@@ -657,8 +657,8 @@ void GET_A_KEY()
 
 void analyse_config()
 {
-   printf("Max prgm loop duration must be < %f seconds\r\n", R_T);
-   printf("config[reg0,reg1] %d, %d\r\n", reg_config[0],reg_config[1]);
+   //printf("Max prgm loop duration must be < %f seconds\r\n", R_T);
+   //printf("config[reg0,reg1] %d, %d\r\n", reg_config[0],reg_config[1]);
    char tmp =reg_config[0]>>2;
    tmp = tmp & 0x03;
    switch ((int)tmp){
@@ -838,8 +838,8 @@ void Restore_VDD_param()
    Vdd_25 = ((float)b)*32.0-8192.0;
 
 #ifdef PRNT_VDD_param
-   printf("Kv_vdd:%f\n\r", Kv_Vdd);
-   printf("Vdd_25:%f\n\r", Vdd_25);
+   //printf("Kv_vdd:%f\n\r", Kv_Vdd);
+   //printf("Vdd_25:%f\n\r", Vdd_25);
 #endif
 } // end Restore_VDD_param
 
@@ -879,10 +879,10 @@ void Restore_TA_param()
    ALPHA_PTAT = (float)a1/4.0 +8;
 
 #ifdef PRNT_TA_param
-   printf("Kv_PTAT:%f\n\r", Kv_PTAT);
-   printf("Kt_PTAT:%f\n\r", Kt_PTAT);
-   printf("VPTAT_25:%f\n\r", VPTAT_25);
-   printf("ALPHA_PTAT:%f\n\r", ALPHA_PTAT);
+   //printf("Kv_PTAT:%f\n\r", Kv_PTAT);
+   //printf("Kt_PTAT:%f\n\r", Kt_PTAT);
+   //printf("VPTAT_25:%f\n\r", VPTAT_25);
+   //printf("ALPHA_PTAT:%f\n\r", ALPHA_PTAT);
 #endif
 
 } // end Restore_TA_param
@@ -985,8 +985,8 @@ void Restore_OFFSET_param()
         Pix_os_ref_range_1[row][col]=OFFSET_avg+(float)OCC_row*(float)pow(2.0,(double)OCC_scale_row)+(float)OCC_col*(float)pow(2.0,(double)OCC_scale_col);
         Pix_os_ref_range_1[row][col] = Pix_os_ref_range_1[row][col] + (float)pow(2.0,(double)OCCscaleremnant)*(float)offset_row_col;
         #ifdef PRNT_OFFSET_param
-        printf("pix-offset address has value [%d,%d]=%d\n\r",row,col,offset_row_col);
-        printf("Pix_os_ref_range_1[%d,%d] = %f\n\r",row,col,Pix_os_ref_range_1[row][col]);
+        //printf("pix-offset address has value [%d,%d]=%d\n\r",row,col,offset_row_col);
+        //printf("Pix_os_ref_range_1[%d,%d] = %f\n\r",row,col,Pix_os_ref_range_1[row][col]);
         #endif
         } // for rows
      } // for cols
@@ -1009,7 +1009,7 @@ void Restore_SENSITIVITY_param()
     int Alpha_scale = (a & 0xf000)/4096 + 30;
 
     #ifdef PRNT_SENSITIVITY_param
-    printf("Alpha_scale=%d\n\r",Alpha_scale);
+    //printf("Alpha_scale=%d\n\r",Alpha_scale);
     #endif
 
     // Alpha_ref
@@ -1018,7 +1018,7 @@ void Restore_SENSITIVITY_param()
     float Alpha_ref = (float)a1;
 
     #ifdef PRNT_SENSITIVITY_param
-    printf("Alpha_ref=%f\n\r",Alpha_ref);
+    //printf("Alpha_ref=%f\n\r",Alpha_ref);
     #endif
 
     // ACC_scale_row
@@ -1026,7 +1026,7 @@ void Restore_SENSITIVITY_param()
     int ACC_scale_row=(a & 0x0f00)/256;
 
     #ifdef PRNT_SENSITIVITY_param
-    printf("ACC_scale_row=%d\n\r",ACC_scale_row);
+    //printf("ACC_scale_row=%d\n\r",ACC_scale_row);
     #endif
 
     // ACC_scale_col
@@ -1034,7 +1034,7 @@ void Restore_SENSITIVITY_param()
     int ACC_scale_col=(a & 0x00f0)/16;
 
     #ifdef PRNT_SENSITIVITY_param
-     printf("ACC_scale_col=%d\n\r",ACC_scale_col);
+     //printf("ACC_scale_col=%d\n\r",ACC_scale_col);
     #endif
 
     // ACC_scale_remnant
@@ -1042,7 +1042,7 @@ void Restore_SENSITIVITY_param()
      int ACC_scale_remnant= a & 0x000f;
 
     #ifdef PRNT_SENSITIVITY_param
-     printf("ACC_scale_remnant=%d\n\r",ACC_scale_remnant);
+     //printf("ACC_scale_remnant=%d\n\r",ACC_scale_remnant);
     #endif
 
     // loop over rows and cols
@@ -1069,7 +1069,7 @@ void Restore_SENSITIVITY_param()
            break;
        default :
            ACC_row = a & 0x000f;
-           printf("ACC OCC_row->this default can not!!\n\r");
+           //printf("ACC OCC_row->this default can not!!\n\r");
            break;
        }
 
@@ -1077,15 +1077,15 @@ void Restore_SENSITIVITY_param()
 
        for (int col=0; col<NCOLS; col++) {
 #ifdef PRNT_SENSITIVITY_param
-          printf("Restore_SENSITIVITY_param for pix[%d,%d]\n\r",row,col);
-          printf("row address[%d,%d]=%x, content :%x\n\r",row,col,adr+0x2400,a);
-          printf("ACC_row[%d] = %d\n\r",row,ACC_row);
+          //printf("Restore_SENSITIVITY_param for pix[%d,%d]\n\r",row,col);
+          //printf("row address[%d,%d]=%x, content :%x\n\r",row,col,adr+0x2400,a);
+          //printf("ACC_row[%d] = %d\n\r",row,ACC_row);
 #endif
           // ACC_col
           adr1 = (((int)col/4)+0x2428)-0x2400;
           a = ((int)eeprom[adr1*2])*256+(int)eeprom[adr1*2+1];
 #ifdef PRNT_SENSITIVITY_param
-          printf("ACC_col address[%d,%d]=%x\n\r",row,col,adr1+0x2400);
+          //printf("ACC_col address[%d,%d]=%x\n\r",row,col,adr1+0x2400);
 #endif
           switch(col%4)
             {
@@ -1113,14 +1113,14 @@ void Restore_SENSITIVITY_param()
           if ( ACC_col > 7) ACC_col -=16;
 
 #ifdef PRNT_SENSITIVITY_param
-          printf("ACC_col[%d,%d] = %d, content:%x\n\r",row,col,ACC_col,a);
+          //printf("ACC_col[%d,%d] = %d, content:%x\n\r",row,col,ACC_col,a);
 #endif
 
           // get alpha_pixel_row_col
 
           adr2 = ((row)*32+(col)+0x2440)-0x2400;
 #ifdef PRNT_SENSITIVITY_param
-          printf("pix-offset address[%d,%d]=%x\n\r",row,col,adr2+0x2400);
+          //printf("pix-offset address[%d,%d]=%x\n\r",row,col,adr2+0x2400);
 #endif
           a = ((int)eeprom[adr2*2])*256+(int)eeprom[adr2*2+1];
           int alpha_pixel_row_col= a & 0x03f0;
@@ -1129,14 +1129,14 @@ void Restore_SENSITIVITY_param()
           if ( alpha_pixel_row_col > 31) alpha_pixel_row_col -=64;
 
 #ifdef PRNT_SENSITIVITY_param
-          printf("alpha_pixel_row_col[%d,%d] = %d\n\r",row,col,alpha_pixel_row_col);
+          //printf("alpha_pixel_row_col[%d,%d] = %d\n\r",row,col,alpha_pixel_row_col);
 #endif
           Alpha[row][col]=(float)ACC_row*(float)pow(2.0,(double)ACC_scale_row)+(float)ACC_col*(float)pow(2.0,(double)ACC_scale_col);
           Alpha[row][col] = Alpha[row][col] + (float)pow(2.0,(double)ACC_scale_remnant)*(float)alpha_pixel_row_col;
           Alpha[row][col] = (Alpha[row][col]+(float)Alpha_ref)/(float)pow(2.0,(double)Alpha_scale);
 
 #ifdef PRNT_SENSITIVITY_param
-          printf("Alpha[%d,%d] = %e\n\r",row,col,Alpha[row][col]);
+          //printf("Alpha[%d,%d] = %e\n\r",row,col,Alpha[row][col]);
 #endif
 
         } // for rows
@@ -1165,7 +1165,7 @@ void Restore_Kv_param()
     if (aa > 7) aa=aa-16;
     Kv_odd_odd = (float)aa/two_power_kv_scale;
 #ifdef PRNT_Kv_param
-    printf("Kv_odd_odd=%f\n\r",Kv_odd_odd);
+    //printf("Kv_odd_odd=%f\n\r",Kv_odd_odd);
 #endif
 
     // Kv_even_odd
@@ -1173,21 +1173,21 @@ void Restore_Kv_param()
     if (aa > 7) aa=aa-16;
     Kv_even_odd = (float)aa/two_power_kv_scale;
 #ifdef PRNT_Kv_param
-    printf("Kv_even_odd=%f\n\r",Kv_even_odd);
+    //printf("Kv_even_odd=%f\n\r",Kv_even_odd);
 #endif
     // Kv_odd_even
     aa = (a & 0x00f0)/16;
     if (aa > 7) aa=aa-16;
     Kv_odd_even = (float)aa/two_power_kv_scale;
 #ifdef PRNT_Kv_param
-    printf("Kv_odd_even=%f\n\r",Kv_odd_even);
+    //printf("Kv_odd_even=%f\n\r",Kv_odd_even);
 #endif
     // Kv_even_even
     aa = (a & 0x000f);
     if (aa > 7) aa=aa-16;
     Kv_even_even = (float)aa/two_power_kv_scale;
 #ifdef PRNT_Kv_param
-    printf("Kv_even_even=%f\n\r",Kv_even_even);
+    //printf("Kv_even_even=%f\n\r",Kv_even_even);
 #endif
 
 } // end Restore_Kv_param
@@ -1239,7 +1239,7 @@ void Restore_Kta_param()
 
     Kta_odd_odd = (float)aa;
 #ifdef PRNT_Kta_param
-    printf("Kta_odd_odd=%f\n\r",Kta_odd_odd);
+    //printf("Kta_odd_odd=%f\n\r",Kta_odd_odd);
 
 #endif
     // Kta_even_odd
@@ -1247,7 +1247,7 @@ void Restore_Kta_param()
     if (aa > 127) aa=aa-256;
     Kta_even_odd = (float)aa;
 #ifdef PRNT_Kta_param
-    printf("Kta_even_odd=%f\n\r",Kta_even_odd);
+    //printf("Kta_even_odd=%f\n\r",Kta_even_odd);
 #endif
     // Kta_odd_even
     a = ((int)eeprom[(0x2437-0x2400)*2])*256+(int)eeprom[(0x2437-0x2400)*2+1];
@@ -1255,7 +1255,7 @@ void Restore_Kta_param()
     if (aa > 127) aa=aa-256;
     Kta_odd_even = (float)aa;
 #ifdef PRNT_Kta_param
-    printf("Kta_odd_even=%f\n\r",Kta_odd_even);
+    //printf("Kta_odd_even=%f\n\r",Kta_odd_even);
 
 #endif
     // Kta_even_even
@@ -1263,7 +1263,7 @@ void Restore_Kta_param()
     if (aa > 127) aa=aa-256;
     Kta_even_even = (float)aa;
 #ifdef PRNT_Kta_param
-    printf("Kta_even_even=%f\n\r",Kta_even_even);
+    //printf("Kta_even_even=%f\n\r",Kta_even_even);
 #endif
 
     for (int row=0; row<NROWS; row++) {
@@ -1340,7 +1340,7 @@ void Restore_GAIN_param()
     if (a > 32767) a=a-65536;
     GainMeas_25_3v2 = (float)a;
     #ifdef PRNT_GAIN_param
-    printf("GainMeas_25_3v2 = %f\n\r",GainMeas_25_3v2);
+    //printf("GainMeas_25_3v2 = %f\n\r",GainMeas_25_3v2);
     #endif
 } // end Restore_GAIN_param
 
@@ -1357,7 +1357,7 @@ void Restore_KsTa_param()
     if (a > 127) a=a-256;
     KsTa = (float)a/8192.0;
     #ifdef PRNT_KsTa_param
-    printf("KsTa = %f\n\r",KsTa);
+    //printf("KsTa = %f\n\r",KsTa);
     #endif
 } // end Restore_KsTa_param
 
@@ -1378,7 +1378,7 @@ void Restore_KsTo_param()
 
     KsTo = (float)a/(float)pow(2.0,(double)aa);
     #ifdef PRNT_KsTo_param
-    printf("KsTo = %f\n\r",KsTo);
+    //printf("KsTo = %f\n\r",KsTo);
     #endif
 } // end Restore_KsTo_param()
 
@@ -1410,9 +1410,9 @@ void Restore_SENS_ALPHA_CP_param()
     ALPHA_CP_subpage_1 = ALPHA_CP_subpage_0*(float)(1+(float)ratio/128);
 
     #ifdef PRNT_SENS_ALPHA_CP_param
-    printf("ratio = %d\n\r",ratio);
-    printf("ALPHA_CP_subpage_0 = %e\n\r",ALPHA_CP_subpage_0);
-    printf("ALPHA_CP_subpage_1 = %e\n\r",ALPHA_CP_subpage_1);
+    //printf("ratio = %d\n\r",ratio);
+    //printf("ALPHA_CP_subpage_0 = %e\n\r",ALPHA_CP_subpage_0);
+    //printf("ALPHA_CP_subpage_1 = %e\n\r",ALPHA_CP_subpage_1);
     #endif
 
 } // end Restore_SENS_ALPHA_CP_param()
@@ -1439,8 +1439,8 @@ void Restore_OFFSET_CP_param()
     if (aa > 31) aa=aa-64;
     OFFSET_CP_subpage_1 = OFFSET_CP_subpage_0 + (float)aa;
     #ifdef PRNT_OFFSET_CP_param
-    printf("OFFSET_CP_subpage_0 = %e\n\r",OFFSET_CP_subpage_0);
-    printf("OFFSET_CP_subpage_1 = %e\n\r",OFFSET_CP_subpage_1);
+    //printf("OFFSET_CP_subpage_0 = %e\n\r",OFFSET_CP_subpage_0);
+    //printf("OFFSET_CP_subpage_1 = %e\n\r",OFFSET_CP_subpage_1);
     #endif
 
 } // Restore_OFFSET_CP_param()
@@ -1462,7 +1462,7 @@ void Restore_Kv_CP_param()
     a = (a & 0x0f00)/256;
     KVcp = (float)aa/(float)pow(2.0,(double)a);
     #ifdef PRNT_Kv_CP_param
-    printf("KVcp = %e\n\r",KVcp);
+    //printf("KVcp = %e\n\r",KVcp);
     #endif
 } // end
 
@@ -1486,7 +1486,7 @@ void Restore_KTa_CP_param()
 
     Kta_cp = (float)aa/(float)pow(2.0,(double)a);
 #ifdef PRNT_KTa_CP_param
-    printf("Kta_cp = %e\n\r",Kta_cp);
+    //printf("Kta_cp = %e\n\r",Kta_cp);
 #endif
 } // end Restore_Kta_CP_param()
 
@@ -1504,7 +1504,7 @@ void Restore_TGC_param()
 
     TGC = (float)a/32.0;
     #ifdef PRNT_TGC_param
-    printf("TGC = %e\n\r",TGC);
+    //printf("TGC = %e\n\r",TGC);
     #endif
 } // end Restore_TGC_param()
 
@@ -1524,11 +1524,11 @@ float Calc_Vdd(){
 
 
 #ifdef PRNT_Calc_Vdd
-  printf("-VDD_ram %x\n\r",a1);
-  printf("-Vdd_25 %f\n\r",Vdd_25);
-  printf("-Kv_Vdd %f\n\r",Kv_Vdd);
-  printf("-Vdd_V0 %f\n\r",Vdd_V0);
-  printf("-VDD-calc %f\n\r",g_Vdd);
+  //printf("-VDD_ram %x\n\r",a1);
+  //printf("-Vdd_25 %f\n\r",Vdd_25);
+  //printf("-Kv_Vdd %f\n\r",Kv_Vdd);
+  //printf("-Vdd_V0 %f\n\r",Vdd_V0);
+  //printf("-VDD-calc %f\n\r",g_Vdd);
 #endif
   return g_Vdd;
 }
@@ -1566,9 +1566,9 @@ float Calc_To(int x, int y, int v) // row, col, value pixel
  float pixosref = Pix_os_ref_range_1[x][y];
 
 #ifdef PRNT_Calc_To
- printf("#Calc_To [%d,%d]->%d\n\r",x,y,v);
- printf("#pixgain ->%f\n\r",pixgain);
- printf("#pixosref ->%f\n\r",pixosref);
+ //printf("#Calc_To [%d,%d]->%d\n\r",x,y,v);
+ //printf("#pixgain ->%f\n\r",pixgain);
+ //printf("#pixosref ->%f\n\r",pixosref);
 #endif
 
  int aa = Get_Odd_Even(x+1,y+1);
@@ -1586,17 +1586,17 @@ float Calc_To(int x, int y, int v) // row, col, value pixel
   float pixos = pixgain-pixosref*(1+Kta_range_1[x][y]*(g_Ta-25.0))*(1+Kv*(g_Vdd-Vdd_V0));
 
 #ifdef PRNT_Calc_To
-  printf("#pixos ->%f\n\r",pixos);
-  printf("#pix_gain_cp_sp0 ->%f\n\r",pix_gain_cp_sp0);
-  printf("#pix_gain_cp_sp1 ->%f\n\r",pix_gain_cp_sp1);
+  //printf("#pixos ->%f\n\r",pixos);
+  //printf("#pix_gain_cp_sp0 ->%f\n\r",pix_gain_cp_sp0);
+  //printf("#pix_gain_cp_sp1 ->%f\n\r",pix_gain_cp_sp1);
 #endif
 
   float pix_os_cp_sp0=pix_gain_cp_sp0-OFFSET_CP_subpage_0*(1+Kta_cp*(g_Ta-25.0))*(1+KVcp*(g_Vdd-Vdd_V0));
   float pix_os_cp_sp1=pix_gain_cp_sp1-OFFSET_CP_subpage_1*(1+Kta_cp*(g_Ta-25.0))*(1+KVcp*(g_Vdd-Vdd_V0));
 
 #ifdef PRNT_Calc_To
-  printf("#pix_os_cp_sp0 ->%f\n\r",pix_os_cp_sp0);
-  printf("#pix_os_cp_sp1 ->%f\n\r",pix_os_cp_sp1);
+  //printf("#pix_os_cp_sp0 ->%f\n\r",pix_os_cp_sp0);
+  //printf("#pix_os_cp_sp1 ->%f\n\r",pix_os_cp_sp1);
 #endif
 
   int ODD_en,EVEN_en;
@@ -1611,14 +1611,14 @@ float Calc_To(int x, int y, int v) // row, col, value pixel
   float vir_compensated = (pixos/emmisivity)-TGC*((float)ODD_en*(float)pix_os_cp_sp0+(float)EVEN_en*(float)pix_os_cp_sp1);
 
 #ifdef PRNT_Calc_To
-   printf("#vir_compensated ->%f\n\r",vir_compensated);
-   printf("#pixos ->%f\n\r",pixos);
-   printf("#TGC ->%f\n\r",TGC);
-   printf("#ODD_en ->%d\n\r",ODD_en);
-   printf("#EVEN_en ->%d\n\r",EVEN_en);
-   printf("#pix_os_cp_sp0 ->%f\n\r",pix_os_cp_sp0);
-   printf("#pix_os_cp_sp1 ->%f\n\r",pix_os_cp_sp1);
-   printf("#TGC*.... ->%f\n\r",TGC*(ODD_en*pix_os_cp_sp0+EVEN_en*pix_os_cp_sp1));
+   //printf("#vir_compensated ->%f\n\r",vir_compensated);
+   //printf("#pixos ->%f\n\r",pixos);
+   //printf("#TGC ->%f\n\r",TGC);
+   //printf("#ODD_en ->%d\n\r",ODD_en);
+   //printf("#EVEN_en ->%d\n\r",EVEN_en);
+   //printf("#pix_os_cp_sp0 ->%f\n\r",pix_os_cp_sp0);
+   //printf("#pix_os_cp_sp1 ->%f\n\r",pix_os_cp_sp1);
+   //printf("#TGC*.... ->%f\n\r",TGC*(ODD_en*pix_os_cp_sp0+EVEN_en*pix_os_cp_sp1));
 #endif
 
   float Alpha_comp=(Alpha[x][y]-TGC*(ODD_en*ALPHA_CP_subpage_0+EVEN_en*ALPHA_CP_subpage_1));
@@ -1628,9 +1628,9 @@ float Calc_To(int x, int y, int v) // row, col, value pixel
   double Sx = (Alpha_comp*Alpha_comp*Alpha_comp*vir_compensated)+Tak4*(Alpha_comp*Alpha_comp*Alpha_comp*Alpha_comp);
 
 #ifdef PRNT_Calc_To
-  printf("#Alpha_comp ->%e\n\r",Alpha_comp);
-  printf("#Tak4 ->%e\n\r",Tak4);
-  printf("#Sx ->%e\n\r",Sx);
+  //printf("#Alpha_comp ->%e\n\r",Alpha_comp);
+  //printf("#Tak4 ->%e\n\r",Tak4);
+  //printf("#Sx ->%e\n\r",Sx);
 #endif
 
   Sx=sqrt(Sx);
@@ -1640,8 +1640,8 @@ float Calc_To(int x, int y, int v) // row, col, value pixel
   TO =sqrt(TO)-273.15;;
 
 #ifdef PRNT_Calc_To
-  printf("-Sx page 0 = %e\n\r",Sx);
-  printf("pix->%d,%d:To = %e\n\r",x,y,TO);
+  //printf("-Sx page 0 = %e\n\r",Sx);
+  //printf("pix->%d,%d:To = %e\n\r",x,y,TO);
 #endif
 
   return (float)TO;
