@@ -200,7 +200,8 @@ def check(request, floor_id):
         return HttpResponse(template.render(floor, request))
     except TemplateDoesNotExist:
         raise Http404()
-    except:
+    except Exception as e:
+        print(e)
         raise Http404("Unexpected ERROR")
 
 
@@ -213,3 +214,5 @@ def about(request):
         raise Http404()
     except:
         raise Http404("Unexpected ERROR")
+
+
