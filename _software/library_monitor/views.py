@@ -63,7 +63,9 @@ def enter(request, room_id, secret_key):
         raise Http404()
     stats = cache.get(room_id)
     time = timezone.make_aware(datetime.datetime.now(),
-                                          timezone.get_current_timezone())
+                               timezone.get_current_timezone())
+    if stats['occupied']:
+        return HttpResponse('occupied')
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
         ocppy = None
@@ -84,7 +86,7 @@ def enter(request, room_id, secret_key):
     stats['occupied'] = True
     stats['e_time'] = time
     cache.set(room_id, stats, None)
-    return check(request, '3')
+    return HttpResponse('entered room')
 
 
 def leave(request, room_id, secret_key):
@@ -150,7 +152,7 @@ def leave(request, room_id, secret_key):
 
     cache.set(room_id, stats, None)
 
-    return check(request, '3')
+    return HttpResponse('left room')
 
 
 def stats_page(request):
