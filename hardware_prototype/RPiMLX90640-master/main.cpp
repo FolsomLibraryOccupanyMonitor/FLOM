@@ -542,7 +542,13 @@ void find_objects()
         }
     }
     printf("%3d\n\r",pxover);
-    if(pxover>38){printf("********THIS ROOM IS OCCUPIED***********\n\n\r");}
+    if(pxover>38){
+        printf("********THIS ROOM IS OCCUPIED***********\n\n\r");
+        //Get request with room num, secret key, and 'enter'
+    }
+    else{
+        //get request with room num, secret key, and 'leave'
+    }
     //printf("REady to start\n\r");//GET_A_KEY();
 
     Reset_New_Data_In_Ram2();
@@ -570,6 +576,10 @@ void find_objects()
                 printf("%3d\n\r",pxover);
                 if(pxover>38){
                     printf("********THIS ROOM IS OCCUPIED***********\n\n\r");
+                    //Get request with room num, secret key, and 'enter'
+                }
+                else{
+                    //get request with room num, secret key, and 'leave'
                 }
                 //GET_A_KEY();
     } // end while
