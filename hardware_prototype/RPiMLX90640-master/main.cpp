@@ -49,7 +49,7 @@ char            refesh_rate = '0';
 
 char            mlxFifo[] = "/var/run/mlx90640.sock";
 
-int             num, fd, sleepinsec, flag = 0, threshold = 250, pxover;
+int             num, fd, sleepinsec, flag = 0, threshold = 270, pxover;
 
 pid_t           pid;
 
@@ -545,9 +545,11 @@ void find_objects()
     if(pxover>38){
         printf("********THIS ROOM IS OCCUPIED***********\n\n\r");
         //Get request with room num, secret key, and 'enter'
+        system("python /home/pi/send.py enter");
     }
     else{
         //get request with room num, secret key, and 'leave'
+        system("python /home/pi/send.py leave");
     }
     //printf("REady to start\n\r");//GET_A_KEY();
 
@@ -576,10 +578,11 @@ void find_objects()
                 printf("%3d\n\r",pxover);
                 if(pxover>38){
                     printf("********THIS ROOM IS OCCUPIED***********\n\n\r");
-                    //Get request with room num, secret key, and 'enter'
+                    system("python /home/pi/send.py enter");
                 }
                 else{
                     //get request with room num, secret key, and 'leave'
+                    system("python /home/pi/send.py leave");
                 }
                 //GET_A_KEY();
     } // end while
