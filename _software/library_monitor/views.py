@@ -122,8 +122,7 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    t = timezone.make_aware(stats['e_time'],
-                            timezone.get_current_timezone())
+    t = time
     stats['last_enter'] = t.strftime('%Y-%m-%d %I:%M %p')
     stats['last_leave'] = time.strftime('%Y-%m-%d %I:%M %p')
     stats['e_time'] = None
