@@ -4,7 +4,8 @@ from django.views.generic import RedirectView
 
 
 urlpatterns = [
-    # plain url boi
+    # plain url 
+    # path('enterall/', views.enter_leave_allrooms, name='enter_all'),
     # ex: /stats/
     path('stats/', views.stats_page, name='stats'),
     # ex: /about/

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+
 import os
 import json
 from django.core.cache import cache
@@ -37,7 +38,7 @@ with open(CONFIG_FILE) as f:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['flom.ml','www.flom.ml','localhost','127.0.0.1']
 
@@ -106,6 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# comment out for local running
+# cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -129,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # print(cache.get('initialized'))
+
 cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
 cache.set('dev', config['DEVELOPMENT'])
 cache.set('floors', list(config['FLOOR'].keys()), None)
