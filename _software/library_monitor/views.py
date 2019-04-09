@@ -53,7 +53,7 @@ def enter_leave_allrooms(request):
 def enter(request, room_id, secret_key):
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
-            if cache.get('dev') == "True":
+            if cache.get('dev_login') == "True":
                 if secret_key != 'aaaaaa':
                     raise Http404("Dev: Invalid Address")
             else:
@@ -84,10 +84,11 @@ def enter(request, room_id, secret_key):
     stats['occupied'] = True
     stats['e_time'] = time
     cache.set(room_id, stats, None)
-    return check(request, '3')
+    return HttpResponse("Entered")
 
 
 def leave(request, room_id, secret_key):
+    print(request)
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
             if cache.get('dev') == "True":
@@ -200,10 +201,6 @@ def check(request, floor_id):
 
 
 def about(request):
-<<<<<<< HEAD
-    template = loader.get_template('library_monitor/about.html')
-    return HttpResponse(template.render({}, request))
-=======
     try:
 
         template = loader.get_template('library_monitor/about.html')
@@ -213,5 +210,3 @@ def about(request):
     except:
         raise Http404("Unexpected ERROR")
 
-
->>>>>>> dev
