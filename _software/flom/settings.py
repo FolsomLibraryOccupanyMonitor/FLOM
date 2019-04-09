@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+
 import os
 import json
 from django.core.cache import cache
@@ -106,6 +107,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# cache settings
+CACHES = {
+    'default': {
+        # 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        # 'LOCATION': '/home/ubuntu/django_cache',
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -129,6 +138,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # print(cache.get('initialized'))
+
 cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
 cache.set('dev', config['DEVELOPMENT'])
 cache.set('floors', list(config['FLOOR'].keys()), None)
