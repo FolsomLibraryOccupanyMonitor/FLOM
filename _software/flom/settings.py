@@ -110,8 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # cache settings
 CACHES = {
     'default': {
-        # 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        # 'LOCATION': '/home/ubuntu/django_cache',
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
