@@ -32,7 +32,7 @@ def load_rooms(request):
 
     return check(request, '3')
 
-
+# onetime load of enter and leave to db
 def enter_leave_allrooms(request):
     if cache.get('dev') == "True":
         floors = cache.get('floors')
@@ -43,7 +43,7 @@ def enter_leave_allrooms(request):
                 print(room)
                 print(cache.get("SECRET_KEYs")[room])
                 enter(request, room, cache.get("SECRET_KEYs")[room])
-                time.sleep(1)
+                time.sleep(10)
                 leave(request, room, cache.get("SECRET_KEYs")[room])
 
     return check(request, '3')
@@ -62,6 +62,8 @@ def enter(request, room_id, secret_key):
         raise Http404()
     stats = cache.get(room_id)
     time = datetime.datetime.now()
+    if stats['occupied']:
+        raise Http404('Room already occupied')
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
         ocppy = None
@@ -99,7 +101,7 @@ def leave(request, room_id, secret_key):
 
     stats = cache.get(room_id)
     if stats['e_time'] is None:
-        raise Http404()
+        raise Http404('Room wasn\'t occupied')
     time = timezone.make_aware(datetime.datetime.now(),
                                timezone.get_current_timezone())
     try:

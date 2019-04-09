@@ -18,5 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('library_monitor.urls')),
-    # path('admin/', admin.site.urls),
+    path('flom/', include('django.contrib.auth.urls')),
 ]
