@@ -5,7 +5,8 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    # plain url boi
+    # plain url 
+    # path('enterall/', views.enter_leave_allrooms, name='enter_all'),
     # ex: /stats/
     path('stats/', views.stats_page, name='stats'),
     # ex: /about/
@@ -24,6 +25,5 @@ urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),
     # ex: /accounts/profile
     path('accounts/profile/', RedirectView.as_view(url='/3/'),name = 'check')
-
 
 ]

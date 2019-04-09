@@ -10,9 +10,6 @@ import datetime
 import time
 
 
-# import pytz
-
-
 # from django.db import models
 
 # onetime load of rooms into db
@@ -35,6 +32,7 @@ def load_rooms(request):
 
     return check(request, '3')
 
+# onetime load of enter and leave to db
 def enter_leave_allrooms(request):
     if cache.get('dev') == "True":
         floors = cache.get('floors')
@@ -44,11 +42,12 @@ def enter_leave_allrooms(request):
             for room, stats in floor.items():
                 print(room)
                 print(cache.get("SECRET_KEYs")[room])
-                enter(request,room,cache.get("SECRET_KEYs")[room])
-                time.sleep(1)
-                leave(request,room,cache.get("SECRET_KEYs")[room])
+                enter(request, room, cache.get("SECRET_KEYs")[room])
+                time.sleep(10)
+                leave(request, room, cache.get("SECRET_KEYs")[room])
 
     return check(request, '3')
+
 
 def enter(request, room_id, secret_key):
     try:
@@ -62,8 +61,9 @@ def enter(request, room_id, secret_key):
         print(e)
         raise Http404()
     stats = cache.get(room_id)
-    time = timezone.make_aware(datetime.datetime.now(),
-                                          timezone.get_current_timezone())
+    time = datetime.datetime.now()
+    if stats['occupied']:
+        raise Http404('Room already occupied')
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
         ocppy = None
@@ -84,7 +84,8 @@ def enter(request, room_id, secret_key):
     stats['occupied'] = True
     stats['e_time'] = time
     cache.set(room_id, stats, None)
-    return HttpResponse("Entered")
+
+    return HttpResponse('entered room')
 
 
 def leave(request, room_id, secret_key):
@@ -102,7 +103,7 @@ def leave(request, room_id, secret_key):
 
     stats = cache.get(room_id)
     if stats['e_time'] is None:
-        raise Http404()
+        raise Http404('Room wasn\'t occupied')
     time = timezone.make_aware(datetime.datetime.now(),
                                timezone.get_current_timezone())
     try:
@@ -123,7 +124,9 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     stats['occupied'] = False
-    stats['last_enter'] = stats['e_time'].strftime('%Y-%m-%d %I:%M %p')
+    t = timezone.make_aware(stats['e_time'],
+                            timezone.get_current_timezone())
+    stats['last_enter'] = t.strftime('%Y-%m-%d %I:%M %p')
     stats['last_leave'] = time.strftime('%Y-%m-%d %I:%M %p')
     stats['e_time'] = None
     try:
@@ -151,15 +154,16 @@ def leave(request, room_id, secret_key):
 
     cache.set(room_id, stats, None)
 
-    return check(request, '3')
+    return HttpResponse('left room')
 
 
 def stats_page(request):
     try:
         template = loader.get_template('library_monitor/stats.html')
         available_stats = dict()
-        available_stats['titles'] = ['Floor', 'Room #', 'Occupied', 'Last Entered',
-                                     'Last Exited', 'Daily Average occupation',
+        available_stats['titles'] = ['Floor', 'Room #', 'Occupied',
+                                     'Last Entered', 'Last Exited',
+                                     'Daily Average occupation',
                                      'Daily Average usage']
         available_stats['rooms'] = {}
         floors = cache.get('floors')
@@ -171,8 +175,10 @@ def stats_page(request):
                 occupancy = 'No'
                 if stats["occupied"]:
                     occupancy = 'Yes'
-                    available_stats['rooms'][room]['last_enter'] = stats[
-                        'e_time'].strftime('%Y-%m-%d %I:%M %p')
+                    t = stats['e_time'].astimezone(
+                        timezone.get_current_timezone())
+                    available_stats['rooms'][room]['last_enter'] = \
+                        t.strftime('%Y-%m-%d %I:%M %p')
                     available_stats['rooms'][room]['last_leave'] = '---'
                 # recent_log.enter_time.strftime('%c')
                 available_stats['rooms'][room]['occupancy'] = occupancy
@@ -182,13 +188,16 @@ def stats_page(request):
 
     except TemplateDoesNotExist:
         raise Http404()
-    except:
+    except Exception as e:
+        print(e)
         raise Http404("Unexpected ERROR")
 
 
 def check(request, floor_id):
     try:
-        template = loader.get_template('library_monitor/floor' + floor_id + '.html')
+
+        template = loader.get_template(
+            'library_monitor/floor' + floor_id + '.html')
         rooms = cache.get('floor_' + str(floor_id))
         floor = cache.get_many(rooms)
         floor = {'floor': floor}
