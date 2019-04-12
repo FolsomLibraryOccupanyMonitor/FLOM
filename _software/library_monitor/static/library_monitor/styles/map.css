@@ -10,4 +10,9 @@ Styles for the floor plans
     width: 60%;
     top: 15%;
     left: 20%;
+    z-index: -1;
+}
+
+#floor-plan {
+    z-index: -2;
 }
