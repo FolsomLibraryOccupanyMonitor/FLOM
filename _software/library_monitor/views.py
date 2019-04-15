@@ -9,21 +9,32 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 import datetime
 import time
 
+"""
+Database setup functions:
 
-# from django.db import models
+    load_rooms()
+    enter_leave_allrooms()
 
-# onetime load of rooms into db
+    These functions are used, for only once in the begining, to set up 
+    room data and occupancy data.
+"""
+
+#load_rooms() gets each room number and floor number from cache
+#   and puts the room information into Room database table.
 def load_rooms(request):
     if cache.get('dev') == "True":
         floors = cache.get('floors')
-        for floor_n in floors:
-            rooms = cache.get('floor_' + floor_n)
+        for floor_number in floors:
+            rooms = cache.get('floor_' + floor_number)
             floor = cache.get_many(rooms)
             for room, stats in floor.items():
-                room_d = Room(room_name=room, room_floor=floor_n)
+                room_d = Room(room_name=room, room_floor=floor_number)
+
+                #Try to find a specific room in DB
+                #If object is not found, save the new room instace into DB
                 try:
                     room_db = Room.objects.get(room_name=room,
-                                               room_floor=floor_n)
+                                               room_floor=floor_number)
                 except ObjectDoesNotExist:
                     room_d.save()
                 except Exception as e:
@@ -32,12 +43,13 @@ def load_rooms(request):
 
     return check(request, '3')
 
-# onetime load of enter and leave to db
+#enter_leave_allrooms() creates arbitrary enter and leave log
+#   and puts them into Occupancy database table.
 def enter_leave_allrooms(request):
     if cache.get('dev') == "True":
         floors = cache.get('floors')
-        for floor_n in floors:
-            rooms = cache.get('floor_' + floor_n)
+        for floor_number in floors:
+            rooms = cache.get('floor_' + floor_number)
             floor = cache.get_many(rooms)
             for room, stats in floor.items():
                 print(room)
@@ -48,6 +60,10 @@ def enter_leave_allrooms(request):
 
     return check(request, '3')
 
+
+"""
+URL patterns
+"""
 
 def enter(request, room_id, secret_key):
     try:
