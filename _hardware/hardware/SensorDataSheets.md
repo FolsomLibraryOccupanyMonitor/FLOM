@@ -1,0 +1,1 @@
+﻿#Sensor Data Sheets## MLX90640```https://www.mouser.com/datasheet/2/734/MLX90640-Datasheet-Melexis-1324357.pdf```## HC-SR501 Pyroelectric Infrared PIR Motion Sensor ```https://www.mpja.com/download/31227sc.pdf```
