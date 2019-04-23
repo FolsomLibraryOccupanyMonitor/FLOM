@@ -5,7 +5,8 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    # plain url boi
+    # plain url 
+    # path('enterall/', views.enter_leave_allrooms, name='enter_all'),
     # ex: /stats/
     path('stats/', views.stats_page, name='stats'),
     # ex: /about/
@@ -17,13 +18,12 @@ urlpatterns = [
     # ex: /5/leave/
     path('<str:room_id>/leave/<secret_key>', views.leave, name='leave'),
     # ex: /default path/
-    path('',RedirectView.as_view(url='/accounts/login/'),name='login'),
+    path('',views.initializeLogin,name='login'),
     # ex: /admin
     path('admin/', admin.site.urls),
     # ex: /accounts
     path('accounts/',include('django.contrib.auth.urls')),
     # ex: /accounts/profile
-    path('accounts/profile/', RedirectView.as_view(url='/3/'),name = 'check')
-
+    path('accounts/profile/', views.login ,name = 'check')
 
 ]

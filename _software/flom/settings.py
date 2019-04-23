@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+
 import os
 import json
 from django.core.cache import cache
@@ -37,7 +38,9 @@ with open(CONFIG_FILE) as f:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+SESSION_COOKIE_HTTPONLY = 'django.contrib.sessions.backends.signed_cookies'
 
 ALLOWED_HOSTS = ['flom.ml','www.flom.ml','localhost','127.0.0.1']
 
@@ -106,6 +109,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#comment out for local running
+#cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -128,6 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# print(cache.get('initialized'))
 
 cache.set('SECRET_KEYs', config['SECRET_KEYs'], None)
 cache.set('dev', config['DEVELOPMENT'])
@@ -139,7 +152,6 @@ for floor in config['FLOOR']:
     for room_id in rooms:
         stats = {"occupied": False, "e_time": None, "last_enter": None,
                  "last_leave": None, "dao": None, "dau": None, "floor": floor}
-
         cache.set(room_id, stats, None)
 
 STATICFILES_DIRS = [
