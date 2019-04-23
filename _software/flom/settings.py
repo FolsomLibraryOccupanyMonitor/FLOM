@@ -40,6 +40,8 @@ SECRET_KEY = config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+SESSION_COOKIE_HTTPONLY = 'django.contrib.sessions.backends.signed_cookies'
+
 ALLOWED_HOSTS = ['flom.ml','www.flom.ml','localhost','127.0.0.1']
 
 # Application definition
@@ -107,8 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# comment out for local running
-# cache settings
+#comment out for local running
+#cache settings
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
