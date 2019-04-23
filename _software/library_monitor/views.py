@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.core.cache import cache
+from django.http import HttpResponseRedirect
 from django.template import loader, TemplateDoesNotExist
 # from django.http import Http404
 from django.utils import timezone
@@ -87,9 +88,7 @@ def enter(request, room_id, secret_key):
 
     return HttpResponse('entered room')
 
-
 def leave(request, room_id, secret_key):
-    print(request)
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
             if cache.get('dev') == "True":
@@ -156,8 +155,18 @@ def leave(request, room_id, secret_key):
 
     return HttpResponse('left room')
 
+def initializeLogin(request):
+    request.session['Logged'] = 'False'
+    return HttpResponseRedirect('/accounts/login')
+
+def login(request):
+    request.session['Logged'] = 'True'
+    return HttpResponseRedirect("/3")
+
 
 def stats_page(request):
+    if(request.session['Logged'] != 'True'):
+        return HttpResponseRedirect('/accounts/login')
     try:
         template = loader.get_template('library_monitor/stats.html')
         available_stats = dict()
@@ -194,6 +203,8 @@ def stats_page(request):
 
 
 def check(request, floor_id):
+    if request.session['Logged'] == None or request.session['Logged'] != 'True' :
+        return HttpResponseRedirect("/accounts/login")
     try:
 
         template = loader.get_template(
@@ -210,6 +221,8 @@ def check(request, floor_id):
 
 
 def about(request):
+    if(request.session['Logged'] != 'True'):
+        return HttpResponseRedirect('/accounts/login')
     try:
 
         template = loader.get_template('library_monitor/about.html')
