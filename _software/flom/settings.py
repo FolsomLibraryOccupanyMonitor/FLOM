@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #comment out for local running
 #cache settings
-CACHES = {
+ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
