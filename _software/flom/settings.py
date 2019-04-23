@@ -38,7 +38,7 @@ with open(CONFIG_FILE) as f:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 SESSION_COOKIE_HTTPONLY = 'django.contrib.sessions.backends.signed_cookies'
 
