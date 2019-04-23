@@ -24,6 +24,6 @@ urlpatterns = [
     # ex: /accounts
     path('accounts/',include('django.contrib.auth.urls')),
     # ex: /accounts/profile
-    path('accounts/profile/', views.login ,name = 'check')
+    path('accounts/profile/', views.login ,name = 'check'),
 
 ]

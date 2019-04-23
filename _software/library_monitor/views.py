@@ -161,8 +161,7 @@ def initializeLogin(request):
 def login(request):
     request.session['Logged'] = 'True'
     return HttpResponseRedirect("/3")
-
-
+    
 def stats_page(request):
     if(request.session['Logged'] != 'True'):
         return HttpResponseRedirect('/accounts/login')
