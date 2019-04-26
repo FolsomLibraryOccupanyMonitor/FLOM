@@ -52,8 +52,6 @@ def enter_leave_allrooms(request):
             rooms = cache.get('floor_' + floor_number)
             floor = cache.get_many(rooms)
             for room, stats in floor.items():
-                print(room)
-                print(cache.get("SECRET_KEYs")[room])
                 enter(request, room, cache.get("SECRET_KEYs")[room])
                 time.sleep(10)
                 leave(request, room, cache.get("SECRET_KEYs")[room])
@@ -63,6 +61,14 @@ def enter_leave_allrooms(request):
 
 """
 URL patterns
+
+    enter()
+    leave()
+    stats_page()
+    check()
+    about()
+
+    These functions handle the HTTP calls.
 """
 
 def enter(request, room_id, secret_key):
