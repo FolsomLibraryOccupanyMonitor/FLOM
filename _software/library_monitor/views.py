@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.core.cache import cache
+from django.http import HttpResponseRedirect
 from django.template import loader, TemplateDoesNotExist
 # from django.http import Http404
 from django.utils import timezone
@@ -42,6 +43,7 @@ def load_rooms(request):
                     print(e)
 
     return check(request, '3')
+
 
 #enter_leave_allrooms() creates arbitrary enter and leave log
 #   and puts them into Occupancy database table.
@@ -115,6 +117,7 @@ def enter(request, room_id, secret_key):
     room_stat['occupied'] = True
     room_stat['e_time'] = current_time
     cache.set(room_id, room_stat, None)
+    
     return HttpResponse('entered room')
 
 #leave() handles all of the processes that should be 
@@ -154,6 +157,7 @@ def leave(request, room_id, secret_key):
     log_exists = True
     dao = 'None'
     dau = 'None'
+
     room_stat['occupied'] = False
     last_enter_time = timezone.make_aware(room_stat['e_time'],
                             timezone.get_current_timezone())
@@ -162,6 +166,7 @@ def leave(request, room_id, secret_key):
     room_stat['last_enter'] = last_enter_time.strftime('%Y-%m-%d %I:%M %p')
     room_stat['last_leave'] = current_time.strftime('%Y-%m-%d %I:%M %p')
     room_stat['e_time'] = None
+    
     try:
         total_logs = Log.objects.filter(room_id=room)
     except ObjectDoesNotExist:
@@ -189,9 +194,19 @@ def leave(request, room_id, secret_key):
 
     return HttpResponse('left room')
 
+def initializeLogin(request):
+    request.session['Logged'] = 'False'
+    return HttpResponseRedirect('/accounts/login')
+
+def login(request):
+    request.session['Logged'] = 'True'
+    return HttpResponseRedirect("/3")
+
 #stats_page() creates the template for stats page.
 #	It displays latest status and statistics for each room.
 def stats_page(request):
+    if request.session['Logged'] != 'True':
+        return HttpResponseRedirect('/accounts/login')
     try:
         template = loader.get_template('library_monitor/stats.html')
         available_stats = dict()
@@ -228,6 +243,8 @@ def stats_page(request):
 #check() creates the template for live occupancy display of given floor.
 #	It displays image of given floor and occupancy of each room in it.
 def check(request, floor_id):
+    if request.session['Logged'] is None or request.session['Logged'] != 'True':
+        return HttpResponseRedirect("/accounts/login")
     try:
 
         template = loader.get_template(
@@ -245,13 +262,15 @@ def check(request, floor_id):
 #about() creates the template for about page.
 #	It displays information about the project.
 def about(request):
+    if request.session['Logged'] != 'True':
+        return HttpResponseRedirect('/accounts/login')
     try:
 
         template = loader.get_template('library_monitor/about.html')
         return HttpResponse(template.render({}, request))
     except TemplateDoesNotExist:
         raise Http404()
-    except:
+    except Exception as e:
+        print(e)
         raise Http404("Unexpected ERROR")
-
 
