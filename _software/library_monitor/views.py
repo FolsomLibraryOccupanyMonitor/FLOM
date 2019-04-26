@@ -33,6 +33,7 @@ def load_rooms(request):
 
     return check(request, '3')
 
+
 # onetime load of enter and leave to db
 def enter_leave_allrooms(request):
     if cache.get('dev') == "True":
@@ -87,6 +88,7 @@ def enter(request, room_id, secret_key):
     cache.set(room_id, stats, None)
 
     return HttpResponse('entered room')
+
 
 def leave(request, room_id, secret_key):
     try:
@@ -154,16 +156,19 @@ def leave(request, room_id, secret_key):
 
     return HttpResponse('left room')
 
+
 def initializeLogin(request):
     request.session['Logged'] = 'False'
     return HttpResponseRedirect('/accounts/login')
 
+
 def login(request):
     request.session['Logged'] = 'True'
     return HttpResponseRedirect("/3")
-    
+
+
 def stats_page(request):
-    if(request.session['Logged'] != 'True'):
+    if request.session['Logged'] != 'True':
         return HttpResponseRedirect('/accounts/login')
     try:
         template = loader.get_template('library_monitor/stats.html')
@@ -201,7 +206,7 @@ def stats_page(request):
 
 
 def check(request, floor_id):
-    if request.session['Logged'] == None or request.session['Logged'] != 'True' :
+    if request.session['Logged'] is None or request.session['Logged'] != 'True':
         return HttpResponseRedirect("/accounts/login")
     try:
 
@@ -219,7 +224,7 @@ def check(request, floor_id):
 
 
 def about(request):
-    if(request.session['Logged'] != 'True'):
+    if request.session['Logged'] != 'True':
         return HttpResponseRedirect('/accounts/login')
     try:
 
@@ -227,6 +232,7 @@ def about(request):
         return HttpResponse(template.render({}, request))
     except TemplateDoesNotExist:
         raise Http404()
-    except:
+    except Exception as e:
+        print(e)
         raise Http404("Unexpected ERROR")
 
