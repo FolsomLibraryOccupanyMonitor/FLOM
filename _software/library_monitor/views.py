@@ -71,7 +71,11 @@ URL patterns
     These functions handle the HTTP calls.
 """
 
+
+#enter() handles all of the processes that should be 
+#	handled once a person enters a room.
 def enter(request, room_id, secret_key):
+	#if secret_key is not valid, we don't process the fucntion
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
             if cache.get('dev') == "True":
@@ -82,13 +86,18 @@ def enter(request, room_id, secret_key):
     except Exception as e:
         print(e)
         raise Http404()
-    stats = cache.get(room_id)
+
+    room_stat = cache.get(room_id)
     time = datetime.datetime.now()
+
     if stats['occupied']:
         raise Http404('Room already occupied')
+
     try:
         room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
         ocppy = None
+
+        #Uppdate occupy information for specific room in DB
         try:
             ocppy = Occupy.objects.get(room_id=room)
             ocppy.time = time
@@ -100,16 +109,18 @@ def enter(request, room_id, secret_key):
         raise Http404()
     except Exception as e:
         print('ERROR Unexpected')
-        # print(e)
         raise Http404()
 
-    stats['occupied'] = True
-    stats['e_time'] = time
-    cache.set(room_id, stats, None)
+    #Update room stat in cache
+    room_stat['occupied'] = True
+    room_stat['e_time'] = time
+    cache.set(room_id, room_stat, None)
     return HttpResponse('entered room')
 
-
+#leave() handles all of the processes that should be 
+#	handled once a person leaves a room.
 def leave(request, room_id, secret_key):
+	#if secret_key is not valid, we don't process the fucntion
     try:
         if secret_key != cache.get("SECRET_KEYs")[room_id]:
             if cache.get('dev') == "True":
@@ -121,15 +132,16 @@ def leave(request, room_id, secret_key):
         print(e)
         raise Http404()
 
-    stats = cache.get(room_id)
-    if stats['e_time'] is None:
+    room_stat = cache.get(room_id)
+    if room_stat['e_time'] is None:
         raise Http404('Room wasn\'t occupied')
     time = timezone.make_aware(datetime.datetime.now(),
                                timezone.get_current_timezone())
     try:
-        room = Room.objects.get(room_name=room_id, room_floor=stats["floor"])
+        room = Room.objects.get(room_name=room_id, room_floor=room_stat["floor"])
 
-        log = Log(room_id=room, enter_time=stats["e_time"],
+        #Once someoen leaves a room log is updated
+        log = Log(room_id=room, enter_time=room_stat["e_time"],
                   leave_time=time)
         log.save()
     except ObjectDoesNotExist:
@@ -137,18 +149,17 @@ def leave(request, room_id, secret_key):
         raise Http404()
     except Exception as e:
         print('ERROR Unexpected')
-        # print(e)
         raise Http404()
 
     log_exists = True
     dao = 'None'
     dau = 'None'
-    stats['occupied'] = False
-    t = timezone.make_aware(stats['e_time'],
+    room_stat['occupied'] = False
+    t = timezone.make_aware(room_stat['e_time'],
                             timezone.get_current_timezone())
-    stats['last_enter'] = t.strftime('%Y-%m-%d %I:%M %p')
-    stats['last_leave'] = time.strftime('%Y-%m-%d %I:%M %p')
-    stats['e_time'] = None
+    room_stat['last_enter'] = t.strftime('%Y-%m-%d %I:%M %p')
+    room_stat['last_leave'] = time.strftime('%Y-%m-%d %I:%M %p')
+    room_stat['e_time'] = None
     try:
         total_logs = Log.objects.filter(room_id=room)
     except ObjectDoesNotExist:
