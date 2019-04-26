@@ -88,7 +88,7 @@ def enter(request, room_id, secret_key):
         raise Http404()
 
     room_stat = cache.get(room_id)
-    time = datetime.datetime.now()
+    current_time = datetime.datetime.now()
 
     if stats['occupied']:
         raise Http404('Room already occupied')
@@ -100,9 +100,9 @@ def enter(request, room_id, secret_key):
         #Uppdate occupy information for specific room in DB
         try:
             ocppy = Occupy.objects.get(room_id=room)
-            ocppy.time = time
+            ocppy.time = current_time
         except ObjectDoesNotExist:
-            ocppy = Occupy(room_id=room, time=time)
+            ocppy = Occupy(room_id=room, time=current_time)
         ocppy.save()
     except ObjectDoesNotExist:
         print('ERROR - RaspPi hit room that does not exist')
@@ -113,7 +113,7 @@ def enter(request, room_id, secret_key):
 
     #Update room stat in cache
     room_stat['occupied'] = True
-    room_stat['e_time'] = time
+    room_stat['e_time'] = current_time
     cache.set(room_id, room_stat, None)
     return HttpResponse('entered room')
 
@@ -135,14 +135,14 @@ def leave(request, room_id, secret_key):
     room_stat = cache.get(room_id)
     if room_stat['e_time'] is None:
         raise Http404('Room wasn\'t occupied')
-    time = timezone.make_aware(datetime.datetime.now(),
+    current_time = timezone.make_aware(datetime.datetime.now(),
                                timezone.get_current_timezone())
     try:
         room = Room.objects.get(room_name=room_id, room_floor=room_stat["floor"])
 
         #Once someoen leaves a room log is updated
         log = Log(room_id=room, enter_time=room_stat["e_time"],
-                  leave_time=time)
+                  leave_time=current_time)
         log.save()
     except ObjectDoesNotExist:
         print('ERROR - RaspPi hit room that does not exist')
@@ -155,10 +155,12 @@ def leave(request, room_id, secret_key):
     dao = 'None'
     dau = 'None'
     room_stat['occupied'] = False
-    t = timezone.make_aware(room_stat['e_time'],
+    last_enter_time = timezone.make_aware(room_stat['e_time'],
                             timezone.get_current_timezone())
-    room_stat['last_enter'] = t.strftime('%Y-%m-%d %I:%M %p')
-    room_stat['last_leave'] = time.strftime('%Y-%m-%d %I:%M %p')
+
+    #Update last_enter, last_leave, and enter time accordingly
+    room_stat['last_enter'] = last_enter_time.strftime('%Y-%m-%d %I:%M %p')
+    room_stat['last_leave'] = current_time.strftime('%Y-%m-%d %I:%M %p')
     room_stat['e_time'] = None
     try:
         total_logs = Log.objects.filter(room_id=room)
@@ -166,9 +168,9 @@ def leave(request, room_id, secret_key):
         log_exists = False
     except Exception as e:
         print('ERROR Unexpected')
-        # print(e)
         log_exists = False
 
+    #If log of the room exists, calculate the average occupancy time
     if log_exists:
         dau_calc = 0
         day = []
@@ -187,7 +189,8 @@ def leave(request, room_id, secret_key):
 
     return HttpResponse('left room')
 
-
+#stats_page() creates the template for stats page.
+#	It displays latest status and statistics for each room.
 def stats_page(request):
     try:
         template = loader.get_template('library_monitor/stats.html')
@@ -211,7 +214,6 @@ def stats_page(request):
                     available_stats['rooms'][room]['last_enter'] = \
                         t.strftime('%Y-%m-%d %I:%M %p')
                     available_stats['rooms'][room]['last_leave'] = '---'
-                # recent_log.enter_time.strftime('%c')
                 available_stats['rooms'][room]['occupancy'] = occupancy
                 available_stats['rooms'][room]['number'] = room
         available_stats = {'available_stats': available_stats}
@@ -223,7 +225,8 @@ def stats_page(request):
         print(e)
         raise Http404("Unexpected ERROR")
 
-
+#check() creates the template for live occupancy display of given floor.
+#	It displays image of given floor and occupancy of each room in it.
 def check(request, floor_id):
     try:
 
@@ -239,7 +242,8 @@ def check(request, floor_id):
         print(e)
         raise Http404("Unexpected ERROR")
 
-
+#about() creates the template for about page.
+#	It displays information about the project.
 def about(request):
     try:
 
