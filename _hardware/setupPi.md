@@ -15,3 +15,13 @@ Eject SD card and plug it into Rapsberry PI
 
 ## Step 5
 Power up the Raspberry PI
+
+## Step 6
+Connect to wifi through NOOBS
+
+## Step 7
+Open up a terminal and type the following commands:
+[cd Downloads]
+[git clone https://github.com/FolsomLibraryOccupanyMonitor/FLOM.git]
+
+This will clone the FLOM github to the raspberry pi along with all the files needed to run our software.
