@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class Floor3Config(AppConfig):
+class AboutConfig(AppConfig):
     name = 'about'
