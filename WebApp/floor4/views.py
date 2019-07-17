@@ -3,5 +3,4 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-	return HttpResponse("Hello, world. this is floor 3.")
-
+	return HttpResponse("Hello, world. this is floor 4.")
