@@ -22,12 +22,12 @@
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
               crossorigin="anonymous">
         {# main.css #}
-        <link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" />
+        <link rel="stylesheet" href="{% static 'main.css' %}" type="text/css" />
         {# Navbar styles #}
-        <link rel="stylesheet" href="{% static 'library_monitor/styles/navbar.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'WebApp/templates/css/navbar.css' %}" type="text/css"/>
         {# More stylesheets as needed #}
         {% block styles %}{% endblock %}
-        {% include "navbar.html" %}
+        {% include "html/navbar.html" %}
     </head>
     <body>
         {% block body %}

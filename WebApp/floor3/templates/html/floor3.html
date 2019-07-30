@@ -1,0 +1,24 @@
+{# floor3.html #}
+{# template for displaying the 3rd floor of the library #}
+{% extends "html/main.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/map.css' %}" type="text/css" />
+{% endblock %}
+
+{% block body %}
+    <img src="{% static floor3template.png %}"  alt="Floor3Try" class="map" id="floor-plan"/>
+    {% for room, stats in floor.items %}
+        {% if stats.occupied %}
+            {% with "floor3/images/"|add:room|add:"_red.png" as occupied %}
+                <img src="{% static occupied %}" alt="Floor3" class="map"/>
+            {% endwith %}
+        {% else %}
+            {% with "floor3/images/"|add:room|add:".png" as unoccupied %}
+                <img src="{% static unoccupied %}" alt="Floor3" class="map"/>
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
