@@ -46,27 +46,17 @@ margin: 0px 10px 0px 10px;
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+  background-color: #7e8e41;
 }
 
 .gray a {
-  background-image: linear-gradient(to right, rgba(255,255,255,0) 50%, rgba(210, 215, 211, 1) 50%);
+  background-image: linear-gradient(to right, rgba(255,255,255,0) 50%, rgba(210, 215, 811, 1) 50%);
   background-position: -0% 0;
   background-size: 200% auto;
   color: #222;
   line-height: 1em;
   text-decoration: none;
-  transition: background-position 0.1s ease-out;
-}
-
-.red a {
-  background-image: linear-gradient(to right, rgba(255,255,255,0) 50%, rgba(217, 30, 24, 1) 50%);
-  background-position: -99.99% 0;
-  background-size: 200% auto;
-  color: white;
-  line-height: 1em;
-  text-decoration: none;
-  transition: background-position 0.1s ease-out;
+  transition: background-position .6s ease-out;
 }
 
 a:hover {
