@@ -3,19 +3,87 @@
 {% extends "html/main.html" %}
 {% load static %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="style/css" />
+{% endblock %}
+
+
 {% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+  <a class="navbar-brand" href="#"><font size="5">FLOM</font></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item red scroll">
+        <a class="nav-link" href="/about/"> <font color="white">About</font><span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item gray scroll"> 
+        <a class="nav-link" href="/3/">Floor 3</a>
+      </li>
+
+      <li class="nav-item gray scroll"> 
+        <a class="nav-link" href="/4/">Floor 4</a>
+      </li>
+
+      <li class="nav-item gray scroll dropdown">
+
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Room Usage
+        </a>
+          <div class="dropdown-content">
+          <a href="/stats/">Floor 3</a>
+          <a href="/stats/">Floor 4</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user" style="font-size: 1.25em"></i>
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Account</a>
+          <a href="#">Sign in</a>
+          <a href="#">Sign out</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-effect waves-light" href="https://github.com/FolsomLibraryOccupanyMonitor" >
+            <i class="fab fa-github" style="font-size: 1.37em"></i> 
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
 <div class="container">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
         <div class="about" style = "align-items: right; margin-left: 15%; margin-right: 15%;">
-            <h2>FLOM</h2>
-            <p>FLOM (Folsom Library Occupancy Monitor) is an open source project made by students in the Rensselaer Community of Open Source class at RPI. Our mission was to provide students with a helpful application that allows them to see which study rooms are available before going to the library. If you have any issues or find any bugs, please raise an issue at this <a href = "https://github.com/FolsomLibraryOccupanyMonitor/FLOM/issues">link</a>.</p>
+          <div class="text-center"><img src="{% static 'library.png' %}" height = 450 alt="Library" class="map" id="floor-plan" /></div>
+            <br>
+            <br>
+          
+            <h4 align="middle"> <b>Folsom Library Occupancy Monitor </b></h4>
+
+            <br>
+            <p align="middle">FLOM (Folsom Library Occupancy Monitor) is an open source project made by students in the Rensselaer Community of Open Source class at RPI. Our mission was to provide students with a helpful application that allows them to see which study rooms are available before going to the library. If you have any issues or find any bugs, please raise an issue at this <a href = "https://github.com/FolsomLibraryOccupanyMonitor/FLOM/issues">link</a>.</p>
             <p style="margin-left: 45%;"> 
-            	<a href="https://github.com/flomv2"  style = "font-size: 3rem;"> <i class="fab fa-github"></i> </a> 
-            	<div class = "links" style = "align-items: right;">
-				Developers (GitHub): <a href = "https://github.com/prashb99">prashb99</a>, <a href = "https://github.com/Wixby">Wixby</a>, <a href = "https://github.com/jgaltman">jgaltman</a>, <a href = "https://github.com/youngcc3157">youngcc3157</a>, <a href = "https://github.com/kaijianZ">kaijianZ</a>, <a href = "https://github.com/jingsting">jingsting</a>
-				</div>
-			</p>
-        </div> 
+                <a href="https://github.com/flomv2/FLOM"  style = "font-size: 3rem;"> <i class="fab fa-github"></i> </a> 
+        
+        <div class = "links" style = "align-items: right;">
+                Developers (Spring 2019): <a href = "https://github.com/prashb99">prashb99</a>, <a href = "https://github.com/Wixby">Wixby</a>, <a href = "https://github.com/jgaltman">jgaltman</a>, <a href = "https://github.com/youngcc3157">youngcc3157</a>, <a href = "https://github.com/kaijianZ">kaijianZ</a>, <a href = "https://github.com/jingsting">jingsting</a> <br>
+        Developers (Summer 2019): <a href = "https://github.com/prashb99">prashb99</a>, <a href = "https://github.com/Jason-Durr">Jason-Durr</a>, <a href = "https://github.com/SquidThePrinter">SquidThePrinter</a>, <a href = "https://github.com/pangtsu">Jiawen-Lin</a>, <a href = "https://github.com/Jcherella">Jcherella</a>, <a href = "https://github.com/barnesv17">barnesv17</a>
+                </div>
+            </p>
+        </div>
 
     </div>
 </div>
