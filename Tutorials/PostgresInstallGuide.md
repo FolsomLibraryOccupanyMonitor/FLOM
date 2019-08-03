@@ -26,6 +26,25 @@ $ sudo su - postgres
 ```bash
 $ psql
 ```
+ * You may encounter an error that says:
+   ```bash
+   psql: could not connect to server: No such file or directory
+
+   Is the server running locally and accepting connections on 
+   Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
+   ```
+ * This error has to do with the server being misconfigured before it starts. Follow these steps        to fix this error.
+   1. Certify that postgresql service is running, using ```sudo service postgresql start```
+   2. Run ```pg_lsclusters``` from your terminal.
+   
+      The output should be something like:
+      
+       ```bash
+       Ver Cluster Port Status Owner    Data directory              Log file
+       11  main    5432 down   postgres /var/lib/postgresql/11/main /var/log/postgresql/postgresql-11-main.log
+        ```
+    4.  Copy the version and the cluster, and run: ```pg_ctlcluster <version> <cluster> start ```
+    5. Now the server should be running and you can verify this by using ```sudo service postgresql start``` again.
 3. Once you've started a PostgreSQL session, you'll need to create a database, a user to interact with that database, and set the default expected values for the user that Django expects.
 ```bash
 postgres=# CREATE DATABASE flom;
@@ -45,7 +64,7 @@ $ exit
 At last, link the PostgreSQL database that you created above to your Django application.
 1. Change into your project's working directory and enter the virtual enviornment to install `psycopg2`, a library necessary for PostgreSQL to work with Python.
 ```bash
-$ ./env/bin/activate
+$ . env/bin/activate
 $ pip3 install psycopg2
 ```
 2. Open the `settings.py` module located in the child project directory. Scroll down until you see a section that looks similar to this:
