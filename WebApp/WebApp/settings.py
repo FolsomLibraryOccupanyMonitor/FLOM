@@ -120,6 +120,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'floor3/images/static'),
-    os.path.join(BASE_DIR, 'floor4/images/static'),
+    os.path.join(BASE_DIR, 'floor3/static'),
+    os.path.join(BASE_DIR, 'floor4/static'),
+    os.path.join(BASE_DIR, 'about/static'),
+    os.path.join(BASE_DIR, 'stats/static')
 ]
