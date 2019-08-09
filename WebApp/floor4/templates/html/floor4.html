@@ -6,13 +6,13 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{% static '/css/map.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'css/style.css' %}" type="style/css" />
+<link rel="stylesheet" href="{% static '/css/style.css' %}" type="style/css" />
 
 {% endblock %}
 
 {% block body %}
 
-<img src="{% static 'floor4template.png' %}" alt="Floor4" class="map" id="floor-plan" />
+<img src="{% static 'images/floor4template.png' %}" alt="Floor4" class="map" id="floor-plan" />
 {% for room, stats in floor.items %}
 {% if stats.occupied %}
 {% with "floor4/images/"|add:room|add:"_red.png" as occupied %}
