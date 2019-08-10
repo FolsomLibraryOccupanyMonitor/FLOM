@@ -2,7 +2,7 @@
 1. Install Python and Pip
 	* We have to first update the local APT repository. 
 ````shell
-$ sudo apt-get update && sudo apt-get -y upgade
+$ sudo apt-get update && sudo apt-get -y upgrade
 ````
 2. Install Python 3 
 ````shell
