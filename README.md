@@ -6,7 +6,7 @@ FLOM is a web application created by a group of RPI students that allows the stu
 
 ## Getting Started
 To get started all you need to do is clone the repository onto your local machine
-by typing ```git clone https://github.com/flomv2/FLOM.git```\ in your terminal.
+by typing ```git clone https://github.com/flomv2/FLOM.git``` in your terminal.
 
 Before you can run the web application, you will need to complete the Django install tutorial that is located on our GitHub in the Tutorials folder.
 
