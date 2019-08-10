@@ -1,28 +1,28 @@
 {# floor4.html #}
-{# template for displaying the 4th floor of the library #}
-
+{# template for displaying the 3rd floor of the library #}
 {% extends "html/main.html" %}
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static '/css/map.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static '/css/style.css' %}" type="style/css" />
+<link rel="stylesheet" href="{% static 'css/map.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="style/css" />
 
 {% endblock %}
 
 {% block body %}
-
-<img src="{% static 'images/floor4template.png' %}" alt="Floor4" class="map" id="floor-plan" />
-{% for room, stats in floor.items %}
-{% if stats.occupied %}
-{% with "floor4/images/"|add:room|add:"_red.png" as occupied %}
-<img src="{% static occupied %}" alt="Floor4" class="map" />
-{% endwith %}
-{% else %}
-{% with "floor4/images/"|add:room|add:".png" as unoccupied %}
-<img src="{% static unoccupied %}" alt="Floor4" class="map" />
-{% endwith %}
-{% endif %}
+<img src="{% static 'images/floor4template.png' %}" alt="Floor4Try" class="map" id="floor-plan" />
+{% for room in Rooms %}
+	{% if room.occupied %}
+		{% with 'images/'|add:room.ID|add:".png" as occupied %}
+		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
+		{% endwith %}
+	{% else %}
+		{% with 'images/'|add:room.ID|add:"_red.png" as occupied %}
+		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
+		{% endwith %}
+	{% endif %}
+	
+	
 {% endfor %}
 
 {% endblock %}

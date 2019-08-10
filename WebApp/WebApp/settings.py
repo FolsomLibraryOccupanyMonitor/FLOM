@@ -11,17 +11,23 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import json
+from django.core.cache import cache
+import ast
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CONFIG_FILE = 'WebApp/config.ini'
+config = {}
+with open(CONFIG_FILE) as cfile:
+    config = json.load(cfile)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x4v$^$_7ga)8s4=^%t!%e%8)0*v6*0!5sztw53ho0^)g&@g%-p'
-
+SECRET_KEY = config["SECRET KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -31,6 +37,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'floor3',
+    'floor4',
+    'stats',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -98,6 +107,22 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+
+#cache settings
+#comment out for local running
+# CACHES = {
+#     'default':{
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
+
+for floor in config["FLOORS"]:
+    rooms = config["FLOORS"][floor]
+    rooms = ast.literal_eval(rooms)
+    cache.set('floor'+floor, rooms, None)
 
 
 # Internationalization
