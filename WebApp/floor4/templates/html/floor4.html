@@ -13,16 +13,16 @@
 <img src="{% static 'images/floor4template.png' %}" alt="Floor4Try" class="map" id="floor-plan" />
 {% for room in Rooms %}
 	{% if room.occupied %}
-		{% with 'images/'|add:room.ID|add:".png" as occupied %}
-		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
-		{% endwith %}
-	{% else %}
 		{% with 'images/'|add:room.ID|add:"_red.png" as occupied %}
 		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
 		{% endwith %}
+	{% else %}
+		{% with 'images/'|add:room.ID|add:".png" as occupied %}
+		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
+		{% endwith %}
 	{% endif %}
-	
-	
+
+
 {% endfor %}
 
 {% endblock %}
