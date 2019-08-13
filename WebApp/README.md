@@ -6,6 +6,11 @@ Django forces creators to break his/her code into these "apps".
 #### *manage.py*
 This is a container for all of our project's applications. 
 Think of the arguments passed to manage.py as subcommands. It is a tool for executing many Django-specific tasks. It is also an extension point where developers can create custom commands that are specific to his/her app.
+### Our "Apps"...
+- *about*: For the *About page* on our website
+- *floor3*: For the *Floor 3 page* on our website
+- *floor4*: For the *Floor 4 page* on our website
+- *stats*: For the *Stats page* on our website
 ### Now we will explore the general layout of each of our "Apps"...
 #### *admin.py*
 This file is where we gput all of our configuration regarding the Django builtin admin.
