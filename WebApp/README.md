@@ -13,7 +13,7 @@ Think of the arguments passed to manage.py as subcommands. It is a tool for exec
 - *stats*: For the *Stats page* on our website
 ### Now we will explore the general layout of each of our "Apps"...
 #### *admin.py*
-This file is where we gput all of our configuration regarding the Django builtin admin.
+This file is where we put all of our configuration regarding the Django builtin admin.
 In other words, it is used to display our models in and customize the Django admin pannel
 #### *apps.py*
 This file is used in Django's internal app registry and is mainly used to store metadata. For the most part, we do not modify this.
