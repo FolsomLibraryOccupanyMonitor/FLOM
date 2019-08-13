@@ -29,6 +29,6 @@ This file is for adding unit and integration tests. A test is code one writes to
 A view is simply a Python function that takes a web request and returns a web response. The views.py file is where we define all of our views related to this app, both Class-Based and Function-Based. 
 #### *urls.py*
 This file is used to store app specific mappings of URLs to views.    
-For every URL that starts with ```admin/```, Django will find a corresponding view. 
+For every URL that starts with ```''/``` in our project, Django will find the corresponding view. 
 #### *static & templates folders*
 These folders are simply used to store static files or template files in each of our applications. They are stored into a single location that can easily be served.
