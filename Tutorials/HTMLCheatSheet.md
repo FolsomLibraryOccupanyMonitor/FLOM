@@ -64,6 +64,24 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<em>...</em>```                 | Emphasis - Shown as Italics in most browsers        |
 |```<font>...</font>```             | Font tag obsolete, use CSS (see below)              |
 
+## Section Divisions
+| HTML Code                 | Description                               |
+| ------------------------  | :---------------------------------------- |
+| ```<div>...</div>```      | Division or Section of Page Content       |
+|```<span>...</span>```     | Section of text within other content      |
+|```<p>...</p>```           | Paragraph of text                         |
+|```<br>```                 | Line Break                                |
+|```<nobr>...</nobr>```     | Line Break                                |
+|```<hr>```                 | Basic horizontal Line                     |
+|```<hr>``` Tag Attributes: |                                           |
+| ```size="?"```            | Line Thickness in pixels                  |
+| ```width="?"```           | Line Width in pixels                      |
+| ```width="??%"```         | Line Width as a percentage                |
+| ```color="#??????"```     | Line Color (see below)                    |
+| ```align="?"```           | Horizontal Alignment: left, center, right |
+| ```noshade```             | No 3D cut-out                             |
+
+
 
 
 ###### Resources: 
