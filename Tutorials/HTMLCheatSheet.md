@@ -73,7 +73,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<br>```                    | Line Break                                |
 |```<nobr>...</nobr>```        | Line Break                                |
 |```<hr>```                    | Basic horizontal Line                     |
-|```<hr>``` Tag Attributes:    |                                           |
+| <hr>   Tag Attributes:       |                                           |
 | ```   size="?"```            | Line Thickness in pixels                  |
 | ```   width="?"```           | Line Width in pixels                      |
 | ```   width="??%"```         | Line Width as a percentage                |
@@ -85,7 +85,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 | HTML Code                      | Description                               |
 | ------------------------------ | :---------------------------------------- |
 | ```<img sr"url" alt="text">``` | Basic Image                               |
-| ```<img>``` Tag Attributes:    |                                           |
+| <img> Tag Attributes:          |                                           |
 | ```   src="url"```             | URL or filename of image (required!)      |
 | ```   alt="text"```            | Alternate Text (required!)                |
 | ```   align="?"```             | Image alignment within surrounding text   |
@@ -96,7 +96,15 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 | ```   hspace="??"```           | Space on either side of image (in pixels) |
 
 ## Linking Tags
-
+| HTML Code                          | Description                                                       |
+| ---------------------------------- | :---------------------------------------------------------------- |
+|```<a href="url"> link text </a>``` | Basic Link                                                        |
+| <a> Tag Attributes:                |                                                                   |
+| ```href="url"```                   | Location (url) of page to link to                                 |
+| ```name="??"```                    | Name of link (name of anchor, or name of bookmark)                |
+| ```target="?"```                   | Link target location: _self, _blank, _top, _parent.               |
+| ```href="url#bookmark"```          | Link to a bookmark (defined with name attribute).                 |
+| ``` href="mailto:email"            | Link which initiates an email (dependent on user's email client). |
 
 
 
