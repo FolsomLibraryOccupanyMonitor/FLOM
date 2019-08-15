@@ -29,8 +29,8 @@ def enterRoom(request,ID,password):
 		else: # If the current room is NOT occupied...
 			currRoom.occupied = True # Set the current room to be occupied
 			roomList = createDic() 
-			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 image on the website
-			cache.set("display4",display,None) # Display the image of floor4 with filled rooms
+			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update floor4 template with updated rooms
+			cache.set("display4",display,None) # Set new template as display4 variable
 			return HttpResponse("Room successfully entered!") # Respond that the room has been successfully occupied
 
 	else: # If the Room is NOT found in the "rooms" dictionary...
@@ -45,8 +45,8 @@ def exitRoom(request,ID,password):
 		else: # If the current room is occupied...
 			currRoom.occupied = False # Set the current room to be NOT occupied
 			roomList = createDic()
-			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 image on the website
-			cache.set("display4",display,None) # Display the image of floor4 with filled rooms
+			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 template with updated rooms
+			cache.set("display4",display,None) # Set new template as display4 variable
 			return HttpResponse("Room successfully exited!") # Respond that the room has been successfully exited
 
 def createRooms(): # Fills the rooms dictionary
@@ -54,5 +54,5 @@ def createRooms(): # Fills the rooms dictionary
 	for room in roomIDs: # For every room on floor4...
 		rooms[room] = Room(roomID = room, occupied = False) # Add an entry in the rooms dictionary, where each new room is intially NOT occupied
 	roomList = createDic()
-	display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 image on the website
-	cache.set("display4",display,None) # Display the image of floor 4
+	display = render_to_response('floor4/templates/html/floor4.html',roomList) # Create new template with updated rooms
+	cache.set("display4",display,None) # Set new template as display4 variable
