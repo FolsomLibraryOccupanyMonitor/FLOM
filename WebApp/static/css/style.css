@@ -48,6 +48,7 @@ body{
   background-color: #7e8e41;
 }
 
+/* when hovering, changes background to gray */
 .gray a {
   background-image: linear-gradient(to right, rgba(255,255,255,0) 50%, rgba(210, 215, 811, 1) 50%);
   background-position: -0% 0;
