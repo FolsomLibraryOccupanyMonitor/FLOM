@@ -47,7 +47,22 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<br>```                                 | Line Break (force a new line)                              |
 |```<span style="color:red"> red </span>``` | Use CSS style to change text color                         |
 
-
+## Text Formatting
+| HTML Code                         | Description                                         |
+| --------------------------------- | :-------------------------------------------------- |
+| ```<h?>...</h?>```                | Heading (?=1 for largest to 6 for smallest, e.g. h1 |
+|```<b>...</b>```                   | Bold Text                                           |
+|```<i>...</i>```                   | Italic Text                                         |
+|```<u>...</u>```                   | Underline text                                      |
+|```<strike>...</strike>```         | Strikeout Text                                      |
+|```<sup>...</sup>```               | Superscript - Smaller text placed above normal text |
+|```<small>...</small>```           | Subscript - Smaller text placed below normal text   |
+|```<tt>...</tt>```                 | Typewriter text                                     |
+|```<pre>...</pre>```               | Pre-formatted Text                                  |
+|```<blockquote>...</blockquote>``` | Text Block Quote                                    |
+|```<strong>...</strong>```         | Strong- Shown as Bold in most browsers              |
+|```<em>...</em>```                 | Emphasis - Shown as Italics in most browsers        |
+|```<font>...</font>```             | Font tag obsolete, use CSS (see below)              |
 
 
 
