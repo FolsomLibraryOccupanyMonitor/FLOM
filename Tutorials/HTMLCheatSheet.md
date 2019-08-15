@@ -65,21 +65,37 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<font>...</font>```             | Font tag obsolete, use CSS (see below)              |
 
 ## Section Divisions
-| HTML Code                 | Description                               |
-| ------------------------  | :---------------------------------------- |
-| ```<div>...</div>```      | Division or Section of Page Content       |
-|```<span>...</span>```     | Section of text within other content      |
-|```<p>...</p>```           | Paragraph of text                         |
-|```<br>```                 | Line Break                                |
-|```<nobr>...</nobr>```     | Line Break                                |
-|```<hr>```                 | Basic horizontal Line                     |
-|```<hr>``` Tag Attributes: |                                           |
-| ```size="?"```            | Line Thickness in pixels                  |
-| ```width="?"```           | Line Width in pixels                      |
-| ```width="??%"```         | Line Width as a percentage                |
-| ```color="#??????"```     | Line Color (see below)                    |
-| ```align="?"```           | Horizontal Alignment: left, center, right |
-| ```noshade```             | No 3D cut-out                             |
+| HTML Code                    | Description                               |
+| ---------------------------  | :---------------------------------------- |
+| ```<div>...</div>```         | Division or Section of Page Content       |
+|```<span>...</span>```        | Section of text within other content      |
+|```<p>...</p>```              | Paragraph of text                         |
+|```<br>```                    | Line Break                                |
+|```<nobr>...</nobr>```        | Line Break                                |
+|```<hr>```                    | Basic horizontal Line                     |
+|```<hr>``` Tag Attributes:    |                                           |
+| ```   size="?"```            | Line Thickness in pixels                  |
+| ```   width="?"```           | Line Width in pixels                      |
+| ```   width="??%"```         | Line Width as a percentage                |
+| ```   color="#??????"```     | Line Color (see below)                    |
+| ```   align="?"```           | Horizontal Alignment: left, center, right |
+| ```   noshade```             | No 3D cut-out                             |
+
+## Images
+| HTML Code                      | Description                               |
+| ------------------------------ | :---------------------------------------- |
+| ```<img sr"url" alt="text">``` | Basic Image                               |
+| ```<img>``` Tag Attributes:    |                                           |
+| ```   src="url"```             | URL or filename of image (required!)      |
+| ```   alt="text"```            | Alternate Text (required!)                |
+| ```   align="?"```             | Image alignment within surrounding text   |
+| ```   width="??"```            | Image width (in pixels or %)              |
+| ```   height="??"```           | Image height (in pixels or %)             |
+| ```   border="??"```           | Border thickness (in pixels)              |
+| ```   vpace="??"```            | Space above and below image (in pixels)   |
+| ```   hspace="??"```           | Space on either side of image (in pixels) |
+
+## Linking Tags
 
 
 
