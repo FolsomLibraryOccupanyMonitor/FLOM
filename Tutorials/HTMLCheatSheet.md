@@ -19,7 +19,7 @@ The header file contains information about the document that will not appear on 
 The title tag defines the title that will appear in the title bar of your web browser. The title must appear between the head tags.
 #### Body - ```<body> </body>```
 The body tags contain all the information and other visible content on the page. All your images, links, and plain text must go between the ```<body>``` and ```</body>``` tags.
-#### Example:
+#### Example: Basic HTML Structure
 ``` 
 <html>
   <head>
@@ -33,19 +33,18 @@ The body tags contain all the information and other visible content on the page.
 ## Tag Attributes
 Attributes allow you to customize a tag, and are defined within the opening tag, for example:      
 ```<img src="image1.jpg>``` or ```<p align="center">```...```</p>```
-## Basic Tags
-#### Headings
-```<h1> A Heading </h1>```
-Use heading for titles and subtitles, and make some text stand out from others
-#### Paragraphs
-```<p> Some text </p>```
-Most content on a simple web page will appear in paragraphs or sections
-#### Links
-```<a href="home.html"> My homepage </a>```
-Links are necessary for users to jump from one page to another.
-### Images
-```<img src="photo.jpg">```
-Add images to your web page!
+## Common Tags
+| HTML Code                 | Description                                  |
+| ------------------------- |:--------------------------------------------:|
+| ```<h?> heading </h?>```  | heading (h1 for largest to h6 for smallest)  |
+| ```<p> paragraph </p?>``` | Paragraph of Text                            |
+| ```<b> bold </b>```       | Make text between tags bold                  |            
 
 
-###### Resource: http://www.simplehtmlguide.com/whatishtml.php
+
+
+###### Resources: 
+###### http://www.simplehtmlguide.com/whatishtml.php
+###### http://www.simplehtmlguide.com/basics.php
+###### http://www.simplehtmlguide.com/essential.php
+###### http://www.simplehtmlguide.com/cheatsheet.php
