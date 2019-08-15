@@ -34,7 +34,7 @@ The body tags contain all the information and other visible content on the page.
 Attributes allow you to customize a tag, and are defined within the opening tag, for example:      
 ```<img src="image1.jpg>``` or ```<p align="center">```...```</p>```
 ## Common Tags
-| HTML Code                                 | Description                                                |
+| HTML                                      | Description                                                |
 | ----------------------------------------- |:----------------------------------------------------------:|
 | ```<h?> heading </h?>```                  | heading (h1 for largest to h6 for smallest)                |
 | ```<p> paragraph </p?>```                 | Paragraph of Text                                          |
@@ -48,7 +48,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<span style="color:red"> red </span>``` | Use CSS style to change text color                         |
 
 ## Text Formatting
-| HTML Code                         | Description                                         |
+| HTML                              | Description                                         |
 | --------------------------------- | :-------------------------------------------------- |
 | ```<h?>...</h?>```                | Heading (?=1 for largest to 6 for smallest, e.g. h1 |
 |```<b>...</b>```                   | Bold Text                                           |
@@ -65,7 +65,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<font>...</font>```             | Font tag obsolete, use CSS (see below)              |
 
 ## Section Divisions
-| HTML Code                    | Description                               |
+| HTML                         | Description                               |
 | ---------------------------  | :---------------------------------------- |
 | ```<div>...</div>```         | Division or Section of Page Content       |
 |```<span>...</span>```        | Section of text within other content      |
@@ -73,7 +73,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 |```<br>```                    | Line Break                                |
 |```<nobr>...</nobr>```        | Line Break                                |
 |```<hr>```                    | Basic horizontal Line                     |
-| <hr>   Tag Attributes:       |                                           |
+| hr Tag Attributes:           |                                           |
 | ```   size="?"```            | Line Thickness in pixels                  |
 | ```   width="?"```           | Line Width in pixels                      |
 | ```   width="??%"```         | Line Width as a percentage                |
@@ -82,10 +82,10 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 | ```   noshade```             | No 3D cut-out                             |
 
 ## Images
-| HTML Code                      | Description                               |
+| HTML                           | Description                               |
 | ------------------------------ | :---------------------------------------- |
 | ```<img sr"url" alt="text">``` | Basic Image                               |
-| <img> Tag Attributes:          |                                           |
+| img Tag Attributes:            |                                           |
 | ```   src="url"```             | URL or filename of image (required!)      |
 | ```   alt="text"```            | Alternate Text (required!)                |
 | ```   align="?"```             | Image alignment within surrounding text   |
@@ -96,15 +96,53 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 | ```   hspace="??"```           | Space on either side of image (in pixels) |
 
 ## Linking Tags
-| HTML Code                          | Description                                                       |
+| HTML                               | Description                                                       |
 | ---------------------------------- | :---------------------------------------------------------------- |
 |```<a href="url"> link text </a>``` | Basic Link                                                        |
-| <a> Tag Attributes:                |                                                                   |
+| a Tag Attributes:                  |                                                                   |
 | ```href="url"```                   | Location (url) of page to link to                                 |
 | ```name="??"```                    | Name of link (name of anchor, or name of bookmark)                |
 | ```target="?"```                   | Link target location: _self, _blank, _top, _parent.               |
 | ```href="url#bookmark"```          | Link to a bookmark (defined with name attribute).                 |
-| ``` href="mailto:email"            | Link which initiates an email (dependent on user's email client). |
+| ``` href="mailto:email"```         | Link which initiates an email (dependent on user's email client). |
+
+## Lists
+| HTML                  | Description                                            |
+| ```<ol>...</ol>```    | Ordered List                                           |
+| ```<ul>...</ul>```    | Un-ordered List                                        |
+| ```<li>...</li>```    | List Item (within ordered or unordered)                |
+| ```<ol type="?"> ```  | Ordered list type A, a, I, i, l                        |
+| ```<ol start="??">``` | Ordered list starting value                            |
+| ```<ul type="?"> ```  | Unordered list bullet type: disc, circle, square       |
+| ```<li value="??">``` | List Item Value (changes current and subsequent items) |
+| ```<li type="??">```  | List Item Type (changes only current item)             |
+| ```<dl>...</dl>```    | Definition List                                        |
+| ```<dt>...</dt>```    | Term or phrase being defined                           |
+| ```<dd>...</dd>```    | Detailed Definition of Term                            |
+
+## Special Characters
+| HTML          | Descripion                   |   
+| ------------- | :--------------------------- |
+| ```&lt;```    | < Less than symbol           |
+| ```&gt;```    | > Greater than symbol        |
+| ```&amp;```   | & Ampersand, or 'and' sign   |
+| ```&quot;```  | " Quotation mark             |
+| ```&copy;```  | Copyright Symbol             |
+| ```&trade;``` | Trademark Symbol             |
+| ```&nbsp;```  | A Space (non-breaking space) |
+
+## Miscellaneous Tags
+| HTML | Description |
+| ```<!-- ... -->```
+| ```<!DOCTYPE html ... >``` |
+| ```<meta> ... </meta>``` |
+| <meta> Tag Attributes: |
+| ```name="***"```
+| ```http-equiv="***"```
+| ```
+
+
+
 
 
 
