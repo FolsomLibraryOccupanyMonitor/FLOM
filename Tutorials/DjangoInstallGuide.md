@@ -6,7 +6,7 @@ $ sudo apt-get update && sudo apt-get -y upgrade
 ````
 2. Install Python 3 
 ````shell
-$ sudo apt-get install python 3
+$ sudo apt-get install python3
 ````
 3. Verify that Python was installed correctly.
 ````shell
