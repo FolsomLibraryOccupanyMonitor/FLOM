@@ -40,28 +40,31 @@ def enterRoom(request,ID,password):
 
 # ID = specific room's ID
 def exitRoom(request,ID,password):
-	if ID in rooms.keys():
-		currRoom = rooms[ID]
-		if not currRoom.occupied:
-			return HttpResponse("Room already empty")
-		else:
-			currRoom.occupied = False
-			currRoom.lastExited = datetime.now()
-			currRoom.save()
-			roomList = createDic()
-			display = render_to_response('floor4/templates/html/floor4.html',roomList)
-			cache.set("display4",display,None)
-			return HttpResponse("Room successfully exited!")
+	if ID in rooms.keys(): # If the Room is found in the "rooms" directory...
+		currRoom = rooms[ID] # Store the value for the current room
+		if not currRoom.occupied: # If the current room is NOT occupied
+			return HttpResponse("Room already empty") # Respond that the room is already empty
+		else: # If the current room is occupied...
+			currRoom.occupied = False # Set the current room to be NOT occupied
+			currRoom.lastExited = datetime.now() # Keep track of when the room was exited
+			currRoom.save() # Save the status of the room to the database
+			roomList = createDic() # See function createDic() above
+			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 template with updated rooms
+			cache.set("display4",display,None) # Set new template as display4 variable
+			return HttpResponse("Room successfully exited!") # Respond that the room has been successfully exited
+		
+	else: # If the room is NOT found in the "rooms" dictionary
+		return HttpResponse("Room Not Found") # Respond that the room was not found
 
-def createRooms():
-	roomIDs = cache.get("floor4")
-	for room in roomIDs:
-		roomFound = Room.objects.filter(roomID = room).count()
-		if roomFound > 0:
-			rooms[room] = Room.objects.get(roomID = room)
-		else:
-			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now())
-			rooms[room].save()
-	roomList = createDic()
-	display = render_to_response('floor4/templates/html/floor4.html',roomList)
-	cache.set("display4",display,None)
+def createRooms(): # Fills the rooms dictionary
+	roomIDs = cache.get("floor4") # Get all of the room IDs for rooms on floor 4
+	for room in roomIDs: # For every room on floor4...
+		roomFound = Room.objects.filter(roomID = room).count() # Find if the room is found in the database (should equal 1)
+		if roomFound > 0: # If the room was found...
+			rooms[room] = Room.objects.get(roomID = room) # Put the room into the rooms dictionary
+		else: # If the room was not found.
+			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now()) # Create the room with intial states
+			rooms[room].save() # Save the status of the room to the database
+	roomList = createDic() # See function createDic() above
+	display = render_to_response('floor4/templates/html/floor4.html',roomList) # Create new template with updated rooms
+	cache.set("display4",display,None) # See new template as display4 variable
