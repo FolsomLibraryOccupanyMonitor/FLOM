@@ -47,9 +47,9 @@ $ pip3 -V
 	 ````shell
 	 (env) sylvee@DESKTOP-RFPF6M7:
 	 ````
-	 4. Now intall the Django package with pip
+	 4. Now intall the Django package with pip3
 	 ````shell
-	 $ pip install django
+	 $ pip3 install django
 	 ````
 	 5. Verify that Django installed
 	 ````shell
@@ -93,7 +93,8 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
  ````
  3. Visit http://127.0.0.1:8000/ and you should see a rocket.
- 4.  Now you are ready to begin development of your project.
+ 4. For more in depth tutorial checkout [Django's Tutorial](https://docs.djangoproject.com/en/2.2/intro/tutorial01/)
+ 5.  Now you are ready to begin development of your project.
  
  
  
