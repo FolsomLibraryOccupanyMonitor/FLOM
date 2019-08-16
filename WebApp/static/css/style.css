@@ -57,13 +57,13 @@ body{
   background-size: 200% auto;
   color: #222;
   line-height: 1em;
-  text-decoration-color: #D7D9D7;
+  /* text-decoration-color: #D7D9D7; */
   transition: background-position .6s ease-out;
 }
 
 a:hover {
   background-position: -99.99% 0;
-  background-color: #092638;
+  background-color: #28577B;
 }
 
 
