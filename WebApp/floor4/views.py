@@ -1,8 +1,9 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from floor3.models import Room
+from floor4.models import Room
 from django.core.cache import cache
 from django.template import RequestContext
+from datetime import datetime
 # Create your views here.
 
 rooms = {}
@@ -24,6 +25,8 @@ def enterRoom(request,ID,password):
 			return HttpResponse("Room already occupied")
 		else:
 			currRoom.occupied = True
+			currRoom.lastEntered = datetime.now()
+			currRoom.save()
 			roomList = createDic()
 			display = render_to_response('floor4/templates/html/floor4.html',roomList)
 			cache.set("display4",display,None)
@@ -39,6 +42,8 @@ def exitRoom(request,ID,password):
 			return HttpResponse("Room already empty")
 		else:
 			currRoom.occupied = False
+			currRoom.lastExited = datetime.now()
+			currRoom.save()
 			roomList = createDic()
 			display = render_to_response('floor4/templates/html/floor4.html',roomList)
 			cache.set("display4",display,None)
@@ -47,7 +52,12 @@ def exitRoom(request,ID,password):
 def createRooms():
 	roomIDs = cache.get("floor4")
 	for room in roomIDs:
-		rooms[room] = Room(roomID = room, occupied = False)
+		roomFound = Room.objects.filter(roomID = room).count()
+		if roomFound > 0:
+			rooms[room] = Room.objects.get(roomID = room)
+		else:
+			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now())
+			rooms[room].save()
 	roomList = createDic()
 	display = render_to_response('floor4/templates/html/floor4.html',roomList)
 	cache.set("display4",display,None)
