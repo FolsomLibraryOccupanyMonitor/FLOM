@@ -26,8 +26,10 @@ Our developers pride ourselves on writing beautiful and efficient code. Contribu
     `License.md`  		- MIT License 
     `README.md`         - This file
 
+## Website/Communication
+https://rcos.io/projects/flomv2/flom/profile      
+Contact any of the contributors on this page and we can add you to our Mattermost chat! This is also where you can find our blog.
    
-
 ## Git Branching Model
 
 When making a new feature or a bug fix, please make a new branch from **Master** (or branch you are trying to modify). On your command line, run 
