@@ -108,6 +108,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 
 ## Lists
 | HTML                  | Description                                            |
+| --------------------- | :----------------------------------------------------- |
 | ```<ol>...</ol>```    | Ordered List                                           |
 | ```<ul>...</ul>```    | Un-ordered List                                        |
 | ```<li>...</li>```    | List Item (within ordered or unordered)                |
@@ -132,14 +133,23 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 | ```&nbsp;```  | A Space (non-breaking space) |
 
 ## Miscellaneous Tags
-| HTML | Description |
-| ```<!-- ... -->```
-| ```<!DOCTYPE html ... >``` |
-| ```<meta> ... </meta>``` |
-| <meta> Tag Attributes: |
-| ```name="***"```
-| ```http-equiv="***"```
-| ```
+| HTML               | Description                     |
+| ------------------ | :------------------------------ |
+| ```<!-- ... -->``` | Comment within HTML source code |
+
+## Body Background & Colors
+| HTML                       | Desciption                                              |
+| -------------------------- | :------------------------------------------------------ |
+| <body> Tag Attributes:     |                                                         |
+| ```background = "url"```   | Background Image                                        |
+| ```bgcolor = "#??????"```  | Background Color                                        |
+| ``` text="#??????"```      | Document Text Color                                     |
+| ```link="#??????"```       | Link Color                                              |
+| ```vlink="#??????"```      | Visited Link Color                                      |
+| ```alink="#??????"```      | Active Link Color                                       |
+| ```bgproperties="fixed"``` | Background Properties -"Fixed"= non-scrolling watermark |
+| ```leftmargin="?"```       | Side Margin Size in Pixels (Internet Explorer)          | 
+| ```topmargin="?"```        | Top Margin Size in Pixels (Internet Explorer)           |
 
 
 
