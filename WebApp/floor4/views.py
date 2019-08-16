@@ -1,9 +1,10 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from floor3.models import Room
+from floor4.models import Room
 from django.core.cache import cache
 from django.template import RequestContext
-# Create your views here. A view is a Python function that takes a web request and returns a web response.
+from datetime import datetime
+# Create your views here.
 
 rooms = {} # Initially, rooms is an empty dictionary
 
@@ -22,40 +23,45 @@ def index(request):
 
 # ID = the specific room's ID
 def enterRoom(request,ID,password):
-	if ID in rooms.keys(): # If the Room is found in the "rooms" dictionary...
-		currRoom = rooms[ID] # Store the value for the current room
-		if currRoom.occupied: # If the current room is occupied...
-			return HttpResponse("Room already occupied") # Respond that the room is already occupied
-		else: # If the current room is NOT occupied...
-			currRoom.occupied = True # Set the current room to be occupied
-			roomList = createDic() # See createDic() function above
-			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update floor4 template with updated rooms
-			cache.set("display4",display,None) # Set new template as display4 variable
-			return HttpResponse("Room successfully entered!") # Respond that the room has been successfully occupied
-
+	if ID in rooms.keys():	# If the Room is found in the "rooms" dictionary...
+		currRoom = rooms[ID]	# If the current room is occupied...
+		if currRoom.occupied:	
+			return HttpResponse("Room already occupied")	# Respond that the room is already occupied
+		else:	# If the current room is NOT occupied...
+			currRoom.occupied = True	# Set the current room to be occupied
+			currRoom.lastEntered = datetime.now() # Saving last entered
+			currRoom.save()	# saving to database
+			roomList = createDic()	# See createDic() function above
+			display = render_to_response('floor4/templates/html/floor4.html',roomList)# Update floor4 template with updated rooms
+			cache.set("display4",display,None)	# Set new template as display4 variable
+			return HttpResponse("Room successfully entered!")
 	else: # If the Room is NOT found in the "rooms" dictionary...
 		return HttpResponse("Room Not Found") # Respond that the room was not found
 
 # ID = specific room's ID
 def exitRoom(request,ID,password):
-	if ID in rooms.keys(): # If the Room is found in the "rooms" dictionary...
-		currRoom = rooms[ID] # Store the value for the current room
-		if not currRoom.occupied: # If the current room is NOT occupied...
-			return HttpResponse("Room already empty") # Respond that the room is already empty
-		else: # If the current room is occupied...
-			currRoom.occupied = False # Set the current room to be NOT occupied
-			roomList = createDic() # See createDic() function above
-			display = render_to_response('floor4/templates/html/floor4.html',roomList) # Update the floor4 template with updated rooms
-			cache.set("display4",display,None) # Set new template as display4 variable
-			return HttpResponse("Room successfully exited!") # Respond that the room has been successfully exited
-		
-	else: # If the room is NOT found in the "rooms" dictionary...
-		return HttpResponse("Room Not Found") # Respond that the room was not found
+	if ID in rooms.keys():
+		currRoom = rooms[ID]
+		if not currRoom.occupied:
+			return HttpResponse("Room already empty")
+		else:
+			currRoom.occupied = False
+			currRoom.lastExited = datetime.now()
+			currRoom.save()
+			roomList = createDic()
+			display = render_to_response('floor4/templates/html/floor4.html',roomList)
+			cache.set("display4",display,None)
+			return HttpResponse("Room successfully exited!")
 
-def createRooms(): # Fills the rooms dictionary
-	roomIDs = cache.get("floor4") # Get all of the roomIDs for rooms on floor 4
-	for room in roomIDs: # For every room on floor4...
-		rooms[room] = Room(roomID = room, occupied = False) # Add an entry in the rooms dictionary, where each new room is intially NOT occupied
-	roomList = createDic() # See creatDic() function above
-	display = render_to_response('floor4/templates/html/floor4.html',roomList) # Create new template with updated rooms
-	cache.set("display4",display,None) # Set new template as display4 variable
+def createRooms():
+	roomIDs = cache.get("floor4")
+	for room in roomIDs:
+		roomFound = Room.objects.filter(roomID = room).count()
+		if roomFound > 0:
+			rooms[room] = Room.objects.get(roomID = room)
+		else:
+			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now())
+			rooms[room].save()
+	roomList = createDic()
+	display = render_to_response('floor4/templates/html/floor4.html',roomList)
+	cache.set("display4",display,None)
