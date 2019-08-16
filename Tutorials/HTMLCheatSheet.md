@@ -140,7 +140,7 @@ Attributes allow you to customize a tag, and are defined within the opening tag,
 ## Body Background & Colors
 | HTML                       | Desciption                                              |
 | -------------------------- | :------------------------------------------------------ |
-| <body> Tag Attributes:     |                                                         |
+| body Tag Attributes:       |                                                         |
 | ```background = "url"```   | Background Image                                        |
 | ```bgcolor = "#??????"```  | Background Color                                        |
 | ``` text="#??????"```      | Document Text Color                                     |
