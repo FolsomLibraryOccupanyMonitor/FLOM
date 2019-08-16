@@ -28,7 +28,7 @@ Our developers pride ourselves on writing beautiful and efficient code. Contribu
 
 ## Website/Communication
 https://rcos.io/projects/flomv2/flom/profile      
-Contact any of the contributors on this page and we can add you to our Mattermost chat!
+Contact any of the contributors on this page and we can add you to our Mattermost chat! This is also where you can find our blog.
    
 ## Git Branching Model
 
