@@ -90,6 +90,7 @@ DATABASES = {
 }
 ```
 After making these changes, save and close the `settings.py`.
+
 4. Change into the Django project directory to create and apply any existing migrations to the database.
 ```
 $ python3 manage.py makemigrations
