@@ -4,5 +4,5 @@ from django.db import models
 class Room(models.Model):
 	roomID = models.CharField(max_length = 5) # ID of room (Ex. 301, 324)
 	occupied = models.IntegerField() # 0 for empty, 1 for occupied
-	lastExited = models.DateField()
-	lastEntered = models.DateField()
+	lastExited = models.DateTimeField()
+	lastEntered = models.DateTimeField()
