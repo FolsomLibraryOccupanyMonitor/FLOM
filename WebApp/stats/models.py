@@ -14,7 +14,9 @@ class OccupancyStats(models.Model):
 	averageDayOccupancy = models.IntegerField()
 	averageWeekOccupancy = models.IntegerField()
 	averageMonthOccupancy = models.IntegerField()
-	currentOccupancyTime = models.DateTimeField()
+
+	def __str__(self):
+		return 'Total Occupancy: ' + str(totalOccupancy)
 	
 class RoomUsage(models.Model):
 	'''
@@ -26,27 +28,40 @@ class RoomUsage(models.Model):
 		currentDate - holds the current date and time for the room
 	'''
 	room = models.OneToOneField(Room, on_delete=models.CASCADE)
-	occupancy_stats = models.OneToOneField(OccupancyStats, on_delete=models.CASCADE)
+	occupancyStats = models.OneToOneField(OccupancyStats, on_delete=models.CASCADE)
 	largestHoursInRoom = models.IntegerField()
-	currentDate = models.DateTimeField()
+	currentDate = models.DateTimeField(auto_now_add=True, editable=True)
 
+	def getTimeSinceEntry(self):
+		'''
+		@return amount of time room has been occupied
+		'''
+		return datetime.now() - room.lastEntered
 
+	def getTimeSinceExit(self):
+		'''
+		@return amount of time room has been empty
+		'''
+		return datetime.now() - room.lastExited
 
-
-
-
+	def __str__(self):
+		return 'Usage for ' + room.roomID
 
 class Room(models.Model):
 	'''
 	Model for a Room
 	@member (s)
-		int roomID - the number of the room (ex. 301, 324)
+		string roomID - the number of the room (ex. 301-A, 324)
 		int occupied - occupation status of the room (0 = false, 1 = true)
-		Date lastExited - date of last exit
-		Date lastEntered - date of last entry
+		DateTime lastExited - date of last exit
+		DateTime lastEntered - date of last entry
+		string roomType - single/group designation
 	'''
 	roomID = models.CharField(max_length = 5) # ID of room (Ex. 301, 324)
 	occupied = models.IntegerField() # 0 for empty, 1 for occupied
-	lastExited = models.DateTimeField()
-	lastEntered = models.DateTimeField()
+	lastExited = models.DateTimeField(auto_now_add=True, editable=True)
+	lastEntered = models.DateTimeField(auto_now_add=True, editable=True)
 	roomType = models.CharField() #single/group for now, could get more descriptive potentially
+
+	def __str__(self):
+		return 'Room: ' + roomID
