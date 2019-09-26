@@ -8,7 +8,7 @@ from datetime import datetime
 
 rooms = {} # Initially, rooms is an empty dictionary
 
-def createDic():
+def getUpdatedRoomsList():
 	'''
 	Creates an updated version of the rooms list used for updating the webpage
 	@return a dictionary with (key = "Rooms", value = list of rooms and their occupancy)
@@ -30,7 +30,6 @@ def index(request):
 	'''
 	return cache.get("display3")
 
-# ID = the specific room's ID
 def enterRoom(request,ID,password):
 	'''
 	This function is called when someone enters a room
@@ -50,7 +49,7 @@ def enterRoom(request,ID,password):
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create the dictionary of rooms needed to update webpage
-			roomList = createDic()
+			roomList = getUpdatedRoomsList()
 			# set the cache with the new room display based on changes made
 			display = render_to_response('floor3/templates/html/floor3.html',roomList)
 			cache.set("display3",display,None)
@@ -59,7 +58,6 @@ def enterRoom(request,ID,password):
 	else:
 		return HttpResponse("Room Not Found")
 
-# ID = specific room's ID
 def exitRoom(request,ID,password):
 	'''
 	This function is called when someone exits a room
@@ -79,15 +77,14 @@ def exitRoom(request,ID,password):
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create dictionary of rooms needed to update webpage
-			roomList = createDic()
+			roomList = getUpdatedRoomsList()
 			# set the cache with the new room display based on changes made
-			display = render_to_response('floor3/templates/html/floor3.html',roomList)
+			display = render_to_response('floor3/templates/html/floor3.html', roomList)
 			cache.set("display3",display,None)
 			return HttpResponse("Room successfully exited!")
 	# Room not found
 	else:
 		return HttpResponse("Room Not Found")
-
 
 
 def createRooms():
@@ -112,6 +109,6 @@ def createRooms():
 			rooms[ID].save()
 
 	# create an updated list of rooms to render to the webpage 
-	roomList = createDic()
+	roomList = getUpdatedRoomsList()
 	display = render_to_response('floor3/templates/html/floor3.html',roomList)
 	cache.set("display3",display,None)
