@@ -1,4 +1,7 @@
 from django.shortcuts import render_to_response
-# Create your views here.
+
 def index(request):
+	'''
+	@return display of stats page
+	'''
 	return render_to_response('stats/templates/html/stats.html')

@@ -1,3 +1,3 @@
 from django.test import TestCase
 
-# Create your tests here.
+# TODO: implement unit tests for floor3
