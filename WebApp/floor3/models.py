@@ -14,4 +14,4 @@ class Room(models.Model):
 	occupied = models.IntegerField() # 0 for empty, 1 for occupied
 	lastExited = models.DateTimeField()
 	lastEntered = models.DateTimeField()
-	roomType = models.CharField() #single/group for now, could get more descriptive potentially
+	roomType = models.CharField(max_length=6) #single/group for now, could get more descriptive potentially

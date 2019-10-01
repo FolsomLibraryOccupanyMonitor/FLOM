@@ -1,6 +1,25 @@
 from django.db import models
 from datetime import datetime
 
+class Room(models.Model):
+	'''
+	Model for a Room
+	@member (s)
+		string roomID - the number of the room (ex. 301-A, 324)
+		int occupied - occupation status of the room (0 = false, 1 = true)
+		DateTime lastExited - date of last exit
+		DateTime lastEntered - date of last entry
+		string roomType - single/group designation
+	'''
+	roomID = models.CharField(max_length = 5) # ID of room (Ex. 301, 324)
+	occupied = models.IntegerField() # 0 for empty, 1 for occupied
+	lastExited = models.DateTimeField(auto_now_add=True, editable=True)
+	lastEntered = models.DateTimeField(auto_now_add=True, editable=True)
+	roomType = models.CharField(max_length=6) #single/group for now, could get more descriptive potentially
+
+	def __str__(self):
+		return 'Room: ' + roomID
+
 class OccupancyStats(models.Model):
 	'''
 	Contains useful occupancy statistics
@@ -46,22 +65,3 @@ class RoomUsage(models.Model):
 
 	def __str__(self):
 		return 'Usage for ' + room.roomID
-
-class Room(models.Model):
-	'''
-	Model for a Room
-	@member (s)
-		string roomID - the number of the room (ex. 301-A, 324)
-		int occupied - occupation status of the room (0 = false, 1 = true)
-		DateTime lastExited - date of last exit
-		DateTime lastEntered - date of last entry
-		string roomType - single/group designation
-	'''
-	roomID = models.CharField(max_length = 5) # ID of room (Ex. 301, 324)
-	occupied = models.IntegerField() # 0 for empty, 1 for occupied
-	lastExited = models.DateTimeField(auto_now_add=True, editable=True)
-	lastEntered = models.DateTimeField(auto_now_add=True, editable=True)
-	roomType = models.CharField() #single/group for now, could get more descriptive potentially
-
-	def __str__(self):
-		return 'Room: ' + roomID

@@ -6,6 +6,6 @@ class RoomAdmin(admin.ModelAdmin):
 	'''
 	Model for a RoomAdmin
 	'''
-	list_display = ('roomID', 'occupied', 'lastEntered', 'lastExited')
+	list_display = ('roomID', 'occupied', 'lastEntered', 'lastExited', 'roomType')
 
 admin.site.register(Room, RoomAdmin)
