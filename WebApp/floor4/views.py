@@ -63,7 +63,7 @@ def createRooms(): # Fills the rooms dictionary
 		if roomFound > 0: # If the room was found...
 			rooms[room] = Room.objects.get(roomID = room) # Put the room into the rooms dictionary
 		else: # If the room was not found.
-			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now()) # Create the room with intial states
+			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now(), roomType = 's') # Create the room with intial states
 			rooms[room].save() # Save the status of the room to the database
 	roomList = createDic() # See function createDic() above
 	display = render_to_response('floor4/templates/html/floor4.html',roomList) # Create new template with updated rooms

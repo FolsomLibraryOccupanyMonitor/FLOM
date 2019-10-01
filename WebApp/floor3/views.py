@@ -65,7 +65,7 @@ def createRooms(): # Fills the rooms dictionary
 		if roomFound > 0: # If the room was found...
 			rooms[room] = Room.objects.get(roomID = room) # Put the room in the rooms dictionary
 		else: # If the room was not found
-			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now()) # Create the room with initial states
+			rooms[room] = Room(roomID = room, occupied = False, lastEntered = datetime.now(), lastExited = datetime.now(), roomType = 's') # Create the room with initial states
 			rooms[room].save() # Save the status of the room to the database
 
 	roomList = createDic() # See function createDic() above
