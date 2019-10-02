@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RoomUsage',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, null = True, blank = True,primary_key=True, serialize=False, verbose_name='ID')),
                 ('largestHoursInRoom', models.IntegerField()),
                 ('currentDate', models.DateTimeField(auto_now_add=True)),
                 ('occupancyStats', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='stats.OccupancyStats')),

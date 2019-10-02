@@ -11,14 +11,12 @@ class Room(models.Model):
 		DateTime lastEntered - date of last entry
 		string roomType - single/group designation
 	'''
-	roomID = models.CharField(max_length = 5) # ID of room (Ex. 301, 324)
-	occupied = models.IntegerField() # 0 for empty, 1 for occupied
+	roomID = models.CharField(max_length = 5, default = 'default') # ID of room (Ex. 301, 324)
+	occupied = models.IntegerField(default = 0) # 0 for empty, 1 for occupied
 	lastExited = models.DateTimeField(auto_now_add=True, editable=True)
 	lastEntered = models.DateTimeField(auto_now_add=True, editable=True)
-	roomType = models.CharField(max_length=2) #single/group for now, could get more descriptive potentially
+	roomType = models.CharField(max_length=2, default = 'S') #single/group for now, could get more descriptive potentially
 
-	def __str__(self):
-		return 'Room: ' + roomID
 
 class OccupancyStats(models.Model):
 	'''
@@ -29,13 +27,10 @@ class OccupancyStats(models.Model):
 		averageWeekOccupancy - average number of occupants for each week
 		averageMonthOccupancy - average number of occupants for each month
 	'''
-	totalOccupancy = models.IntegerField()
-	averageDayOccupancy = models.IntegerField()
-	averageWeekOccupancy = models.IntegerField()
-	averageMonthOccupancy = models.IntegerField()
-
-	def __str__(self):
-		return 'Total Occupancy: ' + str(totalOccupancy)
+	totalOccupancy = models.IntegerField(default = 0)
+	averageDayOccupancy = models.IntegerField(default = 0)
+	averageWeekOccupancy = models.IntegerField(default = 0)
+	averageMonthOccupancy = models.IntegerField(default = 0)
 	
 class RoomUsage(models.Model):
 	'''
@@ -50,19 +45,3 @@ class RoomUsage(models.Model):
 	occupancyStats = models.OneToOneField(OccupancyStats, on_delete=models.CASCADE)
 	largestHoursInRoom = models.IntegerField()
 	currentDate = models.DateTimeField(auto_now_add=True, editable=True)
-
-	def getTimeSinceEntry(self):
-		'''
-		@return amount of time room has been occupied
-		'''
-		return datetime.now() - room.lastEntered
-
-	def getTimeSinceExit(self):
-		'''
-		@return amount of time room has been empty
-		'''
-		return datetime.now() - room.lastExited
-
-	def __str__(self):
-		return 'Usage for ' + room.roomID
-
