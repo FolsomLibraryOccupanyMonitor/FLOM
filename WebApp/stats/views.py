@@ -1,7 +1,5 @@
 from django.shortcuts import render_to_response
-from stats.models import Room
-from stats.models import OccupancyStats
-from stats.models import RoomUsage
+from stats.models import Room, OccupancyStats, RoomUsage
 from datetime import datetime
 
 
