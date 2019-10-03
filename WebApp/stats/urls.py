@@ -5,5 +5,5 @@ urlpatterns = [
 	path('',views.index, name="index"),
 ]
 
-print("Initializing Stats")
-views.createObjects()
+print("Initializing stats...")
+views.populateFloors()

@@ -43,5 +43,5 @@ class RoomUsage(models.Model):
 	'''
 	room = models.OneToOneField(Room, on_delete=models.CASCADE)
 	occupancyStats = models.OneToOneField(OccupancyStats, on_delete=models.CASCADE)
-	largestHoursInRoom = models.IntegerField()
+	largestHoursInRoom = models.IntegerField(default=0)
 	currentDate = models.DateTimeField(auto_now_add=True, editable=True)
