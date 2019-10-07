@@ -37,8 +37,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'floor3',
-    'floor4',
+    'floor',
     'stats',
     'django.contrib.admin',
     'django.contrib.auth',

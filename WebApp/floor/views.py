@@ -11,9 +11,8 @@ from .models import Floor, Room
 
 #TODO: learn what actually gets put in on a page request
 
-
-
-rooms = {} # Initially, rooms is an empty dictionary
+floors = {} # floor['3'] = Floor('floor3') and same for 4
+rooms = {} # holds the rooms for all the floors
 
 def getUpdatedRoomsList(floor):
 	'''
@@ -31,13 +30,13 @@ def getUpdatedRoomsList(floor):
 		roomList["Rooms"].append(add)
 	return roomList
 
-def index(request):
+def index(request, floor):
 	'''
 	@return the display for floor3
 	'''
-	return cache.get("display3")
+	return cache.get("display" + floor)
 
-def enterRoom(request,ID,password):
+def enterRoom(request, floor, ID, password):
 	'''
 	This function is called when someone enters a room
 	@modifies Room object with matching ID
@@ -56,16 +55,16 @@ def enterRoom(request,ID,password):
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create the dictionary of rooms needed to update webpage
-			roomList = getUpdatedRoomsList()
+			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
-			display = render_to_response('floor3/templates/html/floor3.html',roomList)
-			cache.set("display3",display,None)
+			display = render_to_response('floor' + floor + '/templates/html/floor' + floor + '.html', roomList)
+			cache.set("display" + floor, display, None)
 			return HttpResponse("Room successfully entered!")
 	# Room not found
 	else:
 		return HttpResponse("Room Not Found")
 
-def exitRoom(request,ID,password):
+def exitRoom(request, floor, ID, password):
 	'''
 	This function is called when someone exits a room
 	@modifies Room object with matching ID
@@ -84,10 +83,10 @@ def exitRoom(request,ID,password):
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create dictionary of rooms needed to update webpage
-			roomList = getUpdatedRoomsList()
+			roomList = getUpdatedRoomsList(floors[floor]s)
 			# set the cache with the new room display based on changes made
-			display = render_to_response('floor3/templates/html/floor3.html', roomList)
-			cache.set("display3",display,None)
+			display = render_to_response('floor' + floor + '/templates/html/floor' + floor + '.html', roomList)
+			cache.set("display" + floor, display, None)
 			return HttpResponse("Room successfully exited!")
 	# Room not found
 	else:
@@ -127,5 +126,9 @@ def populateFloors():
 	floor4 = Floor(name='floor4')
 	floor3.save()
 	floor4.save()
+	floors['3'] = floor3
+	floors['4'] = floor4
+	print('Creating rooms for floor 3...')
 	createRooms(floor3, floor3IDs)
+	print('Creating rooms for floor 4...')
 	createRooms(floor4, floor4IDs)
