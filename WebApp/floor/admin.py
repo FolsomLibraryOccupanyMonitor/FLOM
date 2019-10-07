@@ -6,7 +6,7 @@ class FloorAdmin(admin.ModelAdmin):
 	'''
 	Model for displaying info on admin page for Floor model
 	'''
-	list_display = ('floor')
+	list_display = ('name', 'roomCount')
 
 class RoomAdmin(admin.ModelAdmin):
 	'''

@@ -14,7 +14,7 @@ exitRoom - This will find the correspoding view named "exitRoom"
 	- Password (password for RasberryPi device)
 '''
 urlpatterns = [
-	path('<floor>', views.index, name="index"),
+	path("map/<floor>", views.index, name="index"),
 	path("enter/<floor>/<ID>/<password>", views.enterRoom, name = "enterRoom"),
 	path("exit/<floor>/<ID>/<password>", views.exitRoom, name= "exitRoom")
 ]

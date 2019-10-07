@@ -32,7 +32,7 @@ def getUpdatedRoomsList(floor):
 
 def index(request, floor):
 	'''
-	@return the display for floor3
+	@return the display for floor
 	'''
 	return cache.get("display" + floor)
 
@@ -57,7 +57,7 @@ def enterRoom(request, floor, ID, password):
 			# create the dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
-			display = render_to_response('floor' + floor + '/templates/html/floor' + floor + '.html', roomList)
+			display = render_to_response('floor/templates/html/floor' + floor + '.html', roomList)
 			cache.set("display" + floor, display, None)
 			return HttpResponse("Room successfully entered!")
 	# Room not found
@@ -83,9 +83,9 @@ def exitRoom(request, floor, ID, password):
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create dictionary of rooms needed to update webpage
-			roomList = getUpdatedRoomsList(floors[floor]s)
+			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
-			display = render_to_response('floor' + floor + '/templates/html/floor' + floor + '.html', roomList)
+			display = render_to_response('floor/templates/html/floor' + floor + '.html', roomList)
 			cache.set("display" + floor, display, None)
 			return HttpResponse("Room successfully exited!")
 	# Room not found
@@ -108,9 +108,9 @@ def createRooms(floor, IDs):
 			rooms[ID].save()
 			floor.roomCount += 1
 			floor.save()
-	roomsList = getUpdatedRoomsList(floor)
-	display = render_to_response('floor/templates/html/' + floor.name[-1] + '.html', roomList)
-	cache.set(floor.name[-1], display, None)
+	roomList = getUpdatedRoomsList(floor)
+	display = render_to_response('floor/templates/html/' + floor.name + '.html', roomList)
+	cache.set('display'+floor.name[-1], display, None)
 
 
 def populateFloors():
@@ -122,10 +122,18 @@ def populateFloors():
 	# get the room IDs from the cache for the floor
 	floor3IDs = cache.get('floor3')
 	floor4IDs = cache.get('floor4')
-	floor3 = Floor(name='floor3')
-	floor4 = Floor(name='floor4')
-	floor3.save()
-	floor4.save()
+	floor3Found = Floor.objects.filter(name='floor3').count()
+	if floor3Found > 0:
+		floor3 = Floor.objects.get(name='floor3')
+	else:
+		floor3 = Floor(name='floor3')
+		floor3.save()
+	floor4Found = Floor.objects.filter(name='floor4').count()
+	if floor4Found > 0:
+		floor4 = Floor.objects.get(name='floor4')
+	else:
+		floor4 = Floor(name='floor4')
+		floor4.save()
 	floors['3'] = floor3
 	floors['4'] = floor4
 	print('Creating rooms for floor 3...')
