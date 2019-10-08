@@ -37,8 +37,8 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'floor3',
-    'floor4',
+    'about',
+    'floor',
     'stats',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,8 +145,7 @@ STATIC_URL = '/static/'
 # Add directories for new pages here
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'floor3/static'),
-    os.path.join(BASE_DIR, 'floor4/static'),
+    os.path.join(BASE_DIR, 'floor/static'),
     os.path.join(BASE_DIR, 'about/static'),
     os.path.join(BASE_DIR, 'stats/static')
 ]

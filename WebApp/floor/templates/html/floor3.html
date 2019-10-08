@@ -11,17 +11,17 @@
 
 {% block body %}
 {# Image of Library Floor 3#}
-<img src="{% static 'images/floor3template.png' %}" alt="Floor3Try" class="map" id="floor-plan" />
+<img src="{% static 'images/floor3/floor3template.png' %}" alt="Floor3Try" class="map" id="floor-plan" />
 {# Loop to show which rooms are Occupied and Unoccupied #}
 {% for room in Rooms %}
 	{% if room.occupied %}
 		{# Occupied Rooms #}
-		{% with 'images/'|add:room.ID|add:"_red.png" as occupied %}
+		{% with 'images/floor3/'|add:room.ID|add:"_red.png" as occupied %}
 		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
 		{% endwith %}
 	{% else %}
 		{# Unoccupied Rooms #}
-		{% with 'images/'|add:room.ID|add:".png" as occupied %}
+		{% with 'images/floor3/'|add:room.ID|add:".png" as occupied %}
 		<img src="{% static occupied %}" alt="roomIMG" class="map" id="room-image" />
 		{% endwith %}
 	{% endif %}
