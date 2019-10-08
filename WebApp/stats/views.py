@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
-from stats.models import Room, OccupancyStats, RoomUsage
+from stats.models import OccupancyStats, RoomUsage
+from floor.models import Room
 from datetime import datetime
 from django.core.cache import cache
 
@@ -58,8 +59,8 @@ def createRooms(IDs):
 			room.save()
 			occupancy.save()
 			roomUsages[ID] = RoomUsage(room=room, occupancyStats=occupancy, currentDate=datetime.now())
-			# save the status of the room to the database
-			roomUsages[ID].save()
+		# save the status of the room to the database
+		roomUsages[ID].save()
 
 def populateFloors():
 	'''
