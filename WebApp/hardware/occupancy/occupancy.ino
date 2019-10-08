@@ -1,10 +1,8 @@
-#include <stdlib.h>
-#include <unistd.h>
+#include "hive_map.h"
+#include "hive_map.c"
 
-#include <hive_map.h>
-
-#define PIR = 2; //connect PIR sensor to pin 2 of arduino
-#define LED = 13; //connect LED for testing
+#define PIR 2 //connect PIR sensor to pin 2 of arduino
+#define LED 13 //connect LED for testing
 
 int PIR_STATE = LOW;
 int val = 0;
@@ -32,17 +30,23 @@ void loop(){
         if (PIR_STATE == LOW) {
             Serial.println("Motion detected!");
             PIR_STATE = HIGH;
-            node.isOccupied = true;
+            node.state.isOccupied = true;
+            update_node(&node, sizeof(node)); //update node
         }
     } 
     else {
-        digitalWrite(ledPin, LOW); // turn LED OFF
+        digitalWrite(LED, LOW); // turn LED OFF
         if (PIR_STATE == HIGH){
             Serial.println("Motion ended!");
             PIR_STATE = LOW;
-            node.isOccupied = false;
+            node.state.isOccupied = false;
+            update_node(&node, sizeof(node));
         }
     }
+    // while(1) {
+    //     delay(1000);
+    //     cycle_node(&node, sizeof(node));
+    // }
 }
 
 
