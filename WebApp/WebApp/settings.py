@@ -118,6 +118,12 @@ AUTH_PASSWORD_VALIDATORS = [
 #     }
 # }
 
+LOGIN_REDIRECT_URL = '../about'
+
+LOGIN_URL = 'login'
+
+# LOGOUT_REDIRECT_ULR = 'about'
+
 for floor in config["FLOORS"]:
     rooms = config["FLOORS"][floor]
     rooms = ast.literal_eval(rooms)

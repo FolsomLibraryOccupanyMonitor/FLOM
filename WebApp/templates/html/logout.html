@@ -1,11 +1,4 @@
-<!-- templates/registration/login.html -->
-<div name = "background" style="background-size: all; color: #3e3e3f">
-
-</div>
-
 <!DOCTYPE html>
-{# main.html #}
-{# This is the main file / big kahuna / dad for the map homepage #}
 {% extends "html/main.html" %}
 {% load static %}
 <html>
@@ -35,14 +28,11 @@
     </head>
     <body>
         {% block body %}
-        <div name = "main" style="color: #white; display: block; position: absolute; margin-left:auto; margin-right:auto; width: 60%; top: 30%; left: 40%">
-		<h2 style="margin-left: 9%; color: white">FLOM</h2>
-		<form method="post">
-			  {% csrf_token %}
-			  {{ form.as_p }}
-			  <button type="submit" style="margin-left: 10%">Login</button>
-		</form>
-	</div>
+        <div class="logout" style="color: white;  padding: 50px; margin: auto; width: 50%; text-align: center;">
+          <h1>You have been logged out</h1>
+
+          <a class="button" href="/login/" >Log in again</a>
+        </div>
         {% endblock %}
     </body>
 </html>
