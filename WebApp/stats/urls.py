@@ -6,4 +6,3 @@ urlpatterns = [
 ]
 
 print("Initializing stats...")
-views.populateFloors()

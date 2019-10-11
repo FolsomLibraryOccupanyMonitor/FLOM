@@ -1,13 +1,9 @@
 from django.contrib import admin
 
-from .models import OccupancyStats, RoomUsage
+from .models import statsLog
 # Register your models here.
 
-class OccupancyAdmin(admin.ModelAdmin):
-	list_display = ('totalOccupancy', 'averageDayOccupancy', 'averageWeekOccupancy', 'averageMonthOccupancy')
+class statsLogAdmin(admin.ModelAdmin):
+	list_display = ('roomPointer', 'event','roomID','timeStamp')
 
-class UsageAdmin(admin.ModelAdmin):
-	list_display = ('room', 'occupancyStats', 'largestHoursInRoom', 'currentDate')
-
-admin.site.register(OccupancyStats, OccupancyAdmin)
-admin.site.register(RoomUsage, UsageAdmin)
+admin.site.register(statsLog,statsLogAdmin)

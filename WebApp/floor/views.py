@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.cache import cache
 from django.template import RequestContext
 from datetime import datetime
+from stats.views import log
 
 from .models import Floor, Room
 # Create your views here. A view is a Python function that takes a web request and returns a web response.
@@ -54,6 +55,8 @@ def enterRoom(request, floor, ID, password):
 			currRoom.lastEntered = datetime.now()
 			# save changes made to current room (to database)
 			currRoom.save()
+
+			log(currRoom, ID,1)
 			# create the dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
@@ -82,6 +85,8 @@ def exitRoom(request, floor, ID, password):
 			currRoom.lastExited = datetime.now()
 			# save changes made to current room (to database)
 			currRoom.save()
+
+			log(currRoom, ID,0)
 			# create dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
