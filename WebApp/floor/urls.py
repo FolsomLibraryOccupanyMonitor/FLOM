@@ -21,4 +21,4 @@ urlpatterns = [
 
 # initalize database with data from config.ini file
 # ONLY CALLED ONCE AT SERVER STARTUP
-views.populateFloors()
+# views.populateFloors()
