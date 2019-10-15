@@ -14,11 +14,11 @@ exitRoom - This will find the correspoding view named "exitRoom"
 	- Password (password for RasberryPi device)
 '''
 urlpatterns = [
-	path("map/<floor>", views.index, name="index"),
+	path("<floor>", views.index, name="index"),
 	path("enter/<floor>/<ID>/<password>", views.enterRoom, name = "enterRoom"),
 	path("exit/<floor>/<ID>/<password>", views.exitRoom, name= "exitRoom")
 ]
 
 # initalize database with data from config.ini file
 # ONLY CALLED ONCE AT SERVER STARTUP
-# views.populateFloors()
+views.populateFloors()

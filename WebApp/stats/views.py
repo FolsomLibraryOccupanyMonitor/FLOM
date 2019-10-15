@@ -13,5 +13,5 @@ def index(request):
 	return render_to_response('stats/templates/html/stats.html')
 
 def log(rp, rID, e):
-	currLog = statsLog(roomPointer = rp, event = e,roomID = rID)
+	currLog = statsLog(roomPointer = rp, event = e, roomID = rID)
 	currLog.save()
