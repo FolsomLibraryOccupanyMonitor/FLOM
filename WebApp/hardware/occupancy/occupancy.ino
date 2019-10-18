@@ -6,6 +6,8 @@
 
 int PIR_STATE = LOW;
 int val = 0;
+byte timer = 0;
+bool cycle_flag = true;
 
 typedef struct Occupancy_Space { //creating an occupancy space
     HiveMapSpaceId space;
@@ -14,9 +16,30 @@ typedef struct Occupancy_Space { //creating an occupancy space
 
 HiveMapNode(Occupancy_Space) node; //room defined by occupancy space
 
+void setup_interrupts() {
+  noInterrupts(); // disable interrupts
+  // set up timer interput phase
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0;
+  OCR1A = 31250; // compare match register (16MHz/256/2Hz)
+  TCCR1B |= (1 << WGM12); // CTC mode
+  TCCR1B |= (1 << CS12); // 256 prescaler
+  TIMSK1 |= (1 << OCIE1A); // enable timer compare interrupt
+  interrupts(); // re-endable interrupts
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+  TCNT1 = 34286; // timer duration
+  cycle_flag = true;
+  ++timer;
+}
+
 void setup(){
     pinMode(LED, OUTPUT);
     pinMode(PIR, INPUT);
+    setup_interrupts();
     node.loc = 10; //room number
     node.goal_loc = 1; //floor number
     node.state_received = NULL;
@@ -43,10 +66,10 @@ void loop(){
             update_node(&node, sizeof(node));
         }
     }
-    // while(1) {
-    //     delay(1000);
-    //     cycle_node(&node, sizeof(node));
-    // }
+    if(cycle_flag) {
+        cycle_node(&node, sizeof(node));
+        cycle_flag = false;
+    }
 }
 
 
