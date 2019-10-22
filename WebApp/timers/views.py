@@ -29,35 +29,41 @@ def threadf(name):
 			lastHour = now.hour
 			for ID in floor3IDS:
 				TimeFrame hr = new TimeFrame()
-				hr.date = 
+				hr.date = now 
 				hr.roomPointer = Room.objects.get(roomID=ID)
-				hr.span = 
-				hr.roomID = 
-				hr.totalOccupants = 
-				hr.avgOccLength =
+				hr.span = "hour"
+				hr.roomID = ID
+				#placeholder syntax
+				log = importLog(ID, now)
+				hr.totalOccupants = log.occupants
+				hr.avgOccLength = log.occupantLength
 				hr.save()
 			for ID in floor4IDs:
 				TimeFrame hr = new TimeFrame()
-				hr.date = 
-				hr.roomPointer = 
-				hr.span = 
-				hr.roomID = 
-				hr.totalOccupants = 
-				hr.avgOccLength =
-
+				hr.date = now
+				hr.roomPointer = Room.objects.get(roomID=ID)
+				hr.span = "hour"
+				#placeholder syntax
+				log = importLog(ID, now)
+				hr.totalOccupants = log.occupants
+				hr.avgOccLength = log.occupantLength
+				hr.save()
 			print("An hour has passed")
 		if (now.day != lastDay):
 			lastDay = now.day
-			print("An day has passed")
+			print("A day has passed")
 		if (now.month != lastMonth):
 			lastMonth = now.month
-			print("An hour has passed")
+			print("A month has passed")
 		if (now.year != lastYear):
 			lastYear = now.year
-			print("An hour has passed")
+			print("A year has passed")
 		
 
 def startThread():
 	t = threading.Thread(target=threadf, args=(1,))
 	t.setDaemon(True)
 	t.start()
+
+def importLog(ID, now):
+
