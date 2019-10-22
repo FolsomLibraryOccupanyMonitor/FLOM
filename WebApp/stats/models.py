@@ -16,4 +16,3 @@ class statsLog(models.Model):
 	event = models.IntegerField(default = 0)
 	roomID = models.CharField(max_length = 5)
 	timeStamp = models.DateTimeField(auto_now_add=True, editable=False)
-

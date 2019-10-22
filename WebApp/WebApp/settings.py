@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'about',
     'floor',
     'stats',
+    'timers',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
