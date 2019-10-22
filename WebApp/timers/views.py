@@ -13,20 +13,41 @@ def index(request):
 	'''
 	@return display of stats page
 	'''
+	time.sleep(5)
 	print("STATS")
 
 def threadf(name):
 	start = datetime.datetime.now()
 	lastHour = start.hour
 	lastDay = start.day
-	# lastWeek = start.week
 	lastMonth = start.month
 	lastYear = start.year
+
+	floor3IDs = cache.get('floor3')
+	floor4IDs = cache.get('floor4')
 	while(True):
 		time.sleep(5)
 		now = datetime.datetime.now()
 		if (now.hour != lastHour):
 			lastHour = now.hour
+			for ID in floor3IDS:
+				TimeFrame hr = new TimeFrame()
+				hr.date = 
+				hr.roomPointer = Room.objects.get(roomID=ID)
+				hr.span = 
+				hr.roomID = 
+				hr.totalOccupants = 
+				hr.avgOccLength =
+				hr.save()
+			for ID in floor4IDs:
+				TimeFrame hr = new TimeFrame()
+				hr.date = 
+				hr.roomPointer = 
+				hr.span = 
+				hr.roomID = 
+				hr.totalOccupants = 
+				hr.avgOccLength =
+
 			print("An hour has passed")
 		if (now.day != lastDay):
 			lastDay = now.day
