@@ -29,7 +29,7 @@ class TimeFrame(models.Model):
 		totalOccupants - total number of occupants over the span
 		avgOccLength - average occupation length for a room (in minutes)
 	'''
-	date = models.DateField()
+	date = models.DateField(auto_now_add=True, editable=False)
 	roomPointer = models.ForeignKey(Room, on_delete=models.CASCADE)
 	span = models.CharField(max_length=6)
 	roomID = models.CharField(max_length=5)
