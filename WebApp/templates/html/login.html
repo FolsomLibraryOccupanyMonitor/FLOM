@@ -33,16 +33,41 @@
         {# More stylesheets as needed #}
         {% block styles %}{% endblock %}
     </head>
+
     <body>
         {% block body %}
-        <div name = "main" style="color: #white; display: block; position: absolute; margin-left:auto; margin-right:auto; width: 60%; top: 30%; left: 40%">
-		<h2 style="margin-left: 9%; color: white">FLOM</h2>
-		<form method="post">
-			  {% csrf_token %}
-			  {{ form.as_p }}
-			  <button type="submit" style="margin-left: 10%">Login</button>
-		</form>
-	</div>
+        <div name = "main"
+          style="background-color:
+            white; display: block;
+            margin:auto;
+            margin-top: 30px;
+            text-align: center;
+            width: 50%;
+            padding: 10px;">
+          <img src="{% static 'images/logo1.jpg' %}" alt="FLOM Logo"
+            style="margin: auto;
+              wdith: 50%;
+              height: 40%;
+              padding: 10px;">
+		      <form method="post">
+			      {% csrf_token %}
+			      {{ form.as_p }}
+			    <button type="submit"
+            style="background-color: black;
+              border: none;
+              color: white;
+              font-weight: bold;
+              padding: 10px 27px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 16px;
+              margin: 4px 3px;
+              cursor: pointer;"
+              >Login
+          </button>
+		      </form>
+	       </div>
         {% endblock %}
     </body>
 </html>
