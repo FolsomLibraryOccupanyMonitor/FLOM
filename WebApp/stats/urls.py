@@ -5,5 +5,5 @@ urlpatterns = [
 	path('',views.index, name="index"),
 ]
 
-# print("Initializing stats...")
-# views.populateFloors()
+# views.initializeData()
+# views.startThread()
