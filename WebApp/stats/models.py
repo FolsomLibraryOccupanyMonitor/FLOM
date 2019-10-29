@@ -3,7 +3,7 @@ from datetime import datetime
 
 from floor.models import Room
 
-class statsLog(models.Model):
+class StatsLog(models.Model):
 	'''
 	Contains useful occupancy statistics
 	@member (s)
