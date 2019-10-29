@@ -17,58 +17,59 @@ def index(request):
 	print("STATS")
 
 def threadf(name):
-	start = datetime.datetime.now()
-	lastHour = start.hour
-	lastDay = start.day
-	lastMonth = start.month
-	lastYear = start.year
+	pass
+	# start = datetime.datetime.now()
+	# lastHour = start.hour
+	# lastDay = start.day
+	# lastMonth = start.month
+	# lastYear = start.year
 
-	floor3IDs = cache.get('floor3')
-	floor4IDs = cache.get('floor4')
-	while(True):
-		time.sleep(5)
-		now = datetime.datetime.now()
-		if (now.hour != lastHour):
-			lastHour = now.hour
-			for ID in floor3IDS:
-				TimeFrame hr = new TimeFrame()
-				hr.date = now 
-				hr.roomPointer = Room.objects.get(roomID=ID)
-				hr.span = "hour"
-				hr.roomID = ID
-				#placeholder syntax
-				log = importLog(ID, now)
-				hr.totalOccupants = log.occupants
-				hr.avgOccLength = log.occupantLength
-				hr.save()
-			for ID in floor4IDs:
-				TimeFrame hr = new TimeFrame()
-				hr.date = now
-				hr.roomPointer = Room.objects.get(roomID=ID)
-				hr.span = "hour"
-				#placeholder syntax
-				log = importLog(ID, now)
-				hr.totalOccupants = log.occupants
-				hr.avgOccLength = log.occupantLength
-				hr.save()
-			print("An hour has passed")
-		if (now.day != lastDay):
-			lastDay = now.day
-			print("A day has passed")
-		if (now.month != lastMonth):
-			lastMonth = now.month
-			print("A month has passed")
-		if (now.year != lastYear):
-			lastYear = now.year
-			print("A year has passed")
+	# floor3IDs = cache.get('floor3')
+	# floor4IDs = cache.get('floor4')
+	# while(True):
+	# 	time.sleep(5)
+	# 	now = datetime.datetime.now()
+	# 	if (now.hour != lastHour):
+	# 		lastHour = now.hour
+	# 		for ID in floor3IDS:
+	# 			TimeFrame hr = new TimeFrame()
+	# 			hr.date = now 
+	# 			hr.roomPointer = Room.objects.get(roomID=ID)
+	# 			hr.span = "hour"
+	# 			hr.roomID = ID
+	# 			#placeholder syntax
+	# 			log = importLog(ID, now)
+	# 			hr.totalOccupants = log.occupants
+	# 			hr.avgOccLength = log.occupantLength
+	# 			hr.save()
+	# 		for ID in floor4IDs:
+	# 			TimeFrame hr = new TimeFrame()
+	# 			hr.date = now
+	# 			hr.roomPointer = Room.objects.get(roomID=ID)
+	# 			hr.span = "hour"
+	# 			#placeholder syntax
+	# 			log = importLog(ID, now)
+	# 			hr.totalOccupants = log.occupants
+	# 			hr.avgOccLength = log.occupantLength
+	# 			hr.save()
+	# 		print("An hour has passed")
+	# 	if (now.day != lastDay):
+	# 		lastDay = now.day
+	# 		print("A day has passed")
+	# 	if (now.month != lastMonth):
+	# 		lastMonth = now.month
+	# 		print("A month has passed")
+	# 	if (now.year != lastYear):
+	# 		lastYear = now.year
+	# 		print("A year has passed")
 		
-
 def startThread():
 	t = threading.Thread(target=threadf, args=(1,))
 	t.setDaemon(True)
 	t.start()
 
 def importLog(ID, now):
+	pass
 
 def createTimeFrames(floorIDs):
 	for ID in floorIDs:

@@ -10,6 +10,6 @@ def index(request):
 	'''
 	return render_to_response('stats/templates/html/stats.html')
 
-def log(rp, rID, e):
-	currLog = StatsLog(roomPointer = rp, event = e, roomID = rID)
+def log(rID, e):
+	currLog = StatsLog(event = e, roomID = rID)
 	currLog.save()

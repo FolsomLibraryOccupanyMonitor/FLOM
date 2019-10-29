@@ -12,7 +12,6 @@ class StatsLog(models.Model):
 		roomID = room ID of room
 		timeStamp - exact date time of the log
 	'''
-	roomPointer = models.ForeignKey(Room, on_delete=models.CASCADE)
 	event = models.IntegerField(default = 0)
 	roomID = models.CharField(max_length = 5)
 	timeStamp = models.DateTimeField(auto_now_add=True, editable=False)

@@ -4,6 +4,6 @@ from .models import StatsLog
 # Register your models here.
 
 class StatsLogAdmin(admin.ModelAdmin):
-	list_display = ('roomPointer', 'event','roomID','timeStamp')
+	list_display = ('roomID', 'event', 'timeStamp')
 
 admin.site.register(StatsLog, StatsLogAdmin)
