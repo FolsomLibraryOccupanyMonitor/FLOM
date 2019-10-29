@@ -70,29 +70,3 @@ def startThread():
 
 def importLog(ID, now):
 	pass
-
-def createTimeFrames(floorIDs):
-	for ID in floorIDs:
-		naive_datetime = datetime.datetime.now()
-		curr_datetime = make_aware(naive_datetime)
-		hour = Hour(date=curr_datetime, roomID=ID)
-		hour.save()
-		day = Day(date=curr_datetime, roomID=ID)
-		day.save()
-		week = Week(date=curr_datetime, roomID=ID)
-		week.save()
-		month = Month(date=curr_datetime, roomID=ID)
-		month.save()
-		year = Year(date=curr_datetime, roomID=ID)
-		year.save()
-
-def initializeData():
-	'''
-	Initialize database with start
-	day, week, month, and year
-	Should only be called once at startup
-	'''
-	floor3IDs = cache.get('floor3')
-	floor4IDs = cache.get('floor4')
-	createTimeFrames(floor3IDs)
-	createTimeFrames(floor4IDs)
