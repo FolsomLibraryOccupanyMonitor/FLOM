@@ -6,7 +6,6 @@ import time
 import datetime
 import threading
 from floor.models import Room
-from django.utils.timezone import make_aware
 
 def index(request):
 	'''
@@ -17,6 +16,28 @@ def index(request):
 def log(rID, e):
 	currLog = StatsLog(event = e, roomID = rID)
 	currLog.save()
+
+
+def createTimeObject(ID, duration, now):
+	timeObject = None
+	if(duration == "hour"):
+		timeObject = Hour()
+	elif(duration == "day"):
+		timeObject = Day()
+	elif(duration == "month"):
+		timeObject = Month()
+	elif(duration == "year"):
+		timeObject = Year()
+	else:
+		print("ERROR: INVALID TIME OBJECT REQUEST")
+	timeObject.date = now 
+	timeObject.roomPointer = Room.objects.get(roomID=ID)
+	timeObject.roomID = ID
+	logList = importLog(ID, now, duration)
+	timeObject.totalOccupants = getOccupants(logList, ID)
+	timeObject.avgOccLength = calcAvgOccLength(logList, ID)
+	timeObject.save()
+
 
 def threadf(name):
 	''''''
@@ -33,96 +54,41 @@ def threadf(name):
 
 	floor3IDs = cache.get('floor3')
 	floor4IDs = cache.get('floor4')
+	now = datetime.datetime.now()
 	while(True):
 		time.sleep(5)
 		now = datetime.datetime.now()
 		if (now.hour != lastHour):
 			lastHour = now.hour
 			for ID in floor3IDs:
-				hr = Hour()
-				hr.date = now 
-				hr.roomPointer = Room.objects.get(roomID=ID)
-				hr.roomID = ID
-				logList = importLog(ID, now)
-				hr.totalOccupants = getOccupants(logList, ID)
-				hr.avgOccLength = calcAvgOccLength(logList, ID)
-				hr.save()
+				createTimeObject(ID,"hour",now)
 			for ID in floor4IDs:
-				hr = Hour()
-				hr.date = now 
-				hr.roomPointer = Room.objects.get(roomID=ID)
-				hr.roomID = ID
-				logList = importLog(ID, now)
-				hr.totalOccupants = getOccupants(logList, ID)
-				hr.avgOccLength = calcAvgOccLength(logList, ID)
-				hr.save()
+				createTimeObject(ID,"hour",now)
 		if (now.day != lastDay):
 			lastDay = now.day
 			for ID in floor3IDs:
-				d = Day()
-				d.date = now 
-				d.roomPointer = Room.objects.get(roomID=ID)
-				d.roomID = ID
-				logList = importLog(ID, now)
-				d.totalOccupants = getOccupants(logList, ID)
-				d.avgOccLength = calcAvgOccLength(logList, ID)
-				d.save()
+				createTimeObject(ID,"day",now)
 			for ID in floor4IDs:
-				d = Day()
-				d.date = now 
-				d.roomPointer = Room.objects.get(roomID=ID)
-				d.roomID = ID
-				logList = importLog(ID, now)
-				d.totalOccupants = getOccupants(logList, ID)
-				d.avgOccLength = calcAvgOccLength(logList, ID)
-				d.save()
+				createTimeObject(ID,"day",now)
 		if (now.month != lastMonth):
 			lastMonth = now.month
 			for ID in floor3IDs:
-				mth = Month()
-				mth.date = now 
-				mth.roomPointer = Room.objects.get(roomID=ID)
-				mth.roomID = ID
-				logList = importLog(ID, now)
-				mth.totalOccupants = getOccupants(logList, ID)
-				mth.avgOccLength = calcAvgOccLength(logList, ID)
-				mth.save()
+				createTimeObject(ID,"month",now)				
 			for ID in floor4IDs:
-				mth = Month()
-				mth.date = now 
-				mth.roomPointer = Room.objects.get(roomID=ID)
-				mth.roomID = ID
-				logList = importLog(ID, now)
-				mth.totalOccupants = getOccupants(logList, ID)
-				mth.avgOccLength = calcAvgOccLength(logList, ID)
-				mth.save()
+				createTimeObject(ID,"month",now)
 		if (now.year != lastYear):
 			lastYear = now.year
 			for ID in floor3IDs:
-				yr = Year()
-				yr.date = now 
-				yr.roomPointer = Room.objects.get(roomID=ID)
-				yr.roomID = ID
-				logList = importLog(ID, now)
-				yr.totalOccupants = getOccupants(logList, ID)
-				yr.avgOccLength = calcAvgOccLength(logList, ID)
-				yr.save()
+				createTimeObject(ID,"year",now)
 			for ID in floor4IDs:
-				yr = Year()
-				yr.date = now 
-				yr.roomPointer = Room.objects.get(logList, ID)
-				yr.roomID = ID
-				logList = importLog(ID, now)
-				yr.totalOccupants = getOccupants(logList, ID)
-				yr.avgOccLength = calcAvgOccLength(logList, ID)
-				yr.save()		
+				createTimeObject(ID,"year",n)	
 def startThread():
 	print("Starting Thread")
 	t = threading.Thread(target=threadf, args=(1,))
 	t.setDaemon(True)
 	t.start()
 
-def importLog(ID, now):
+def importLog(ID, now, duration):
 	return 1
 
 
