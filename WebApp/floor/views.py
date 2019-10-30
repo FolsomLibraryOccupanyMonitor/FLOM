@@ -54,7 +54,7 @@ def enterRoom(request, floor, ID, password):
 			# save changes made to current room (to database)
 			currRoom.save()
 
-			log(currRoom, ID,1)
+			log(ID,1)
 			# create the dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
@@ -84,7 +84,7 @@ def exitRoom(request, floor, ID, password):
 			# save changes made to current room (to database)
 			currRoom.save()
 
-			log(currRoom, ID,0)
+			log(ID,0)
 			# create dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made

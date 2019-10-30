@@ -4,6 +4,8 @@ from datetime import datetime
 from django.core.cache import cache
 import time
 import datetime
+import threading
+from floor.models import Room
 from django.utils.timezone import make_aware
 
 def index(request):
@@ -23,7 +25,6 @@ def threadf(name):
 	#those pass create an object with information
 	#from logs for each room 
 	''''''
-	pass
 	start = datetime.datetime.now()
 	lastHour = start.hour
 	lastDay = start.day
@@ -34,131 +35,108 @@ def threadf(name):
 	floor4IDs = cache.get('floor4')
 	while(True):
 		time.sleep(5)
+		print("Here")
 		now = datetime.datetime.now()
 		if (now.hour != lastHour):
 			lastHour = now.hour
-			for ID in floor3IDS:
-				Hour hr = new Hour()
+			for ID in floor3IDs:
+				hr = Hour()
 				hr.date = now 
 				hr.roomPointer = Room.objects.get(roomID=ID)
 				hr.roomID = ID
-				log = importLog(ID, now)
-				hr.totalOccupants = log.getOccupants(roomID=ID)
-				hr.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				hr.totalOccupants = getOccupants(logList, ID)
+				hr.avgOccLength = calcAvgOccLength(logList, ID)
 				hr.save()
 			for ID in floor4IDs:
-				Hour hr = new Hour()
+				hr = Hour()
 				hr.date = now 
 				hr.roomPointer = Room.objects.get(roomID=ID)
 				hr.roomID = ID
-				log = importLog(ID, now)
-				hr.totalOccupants = log.getOccupants(roomID=ID)
-				hr.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				hr.totalOccupants = getOccupants(logList, ID)
+				hr.avgOccLength = calcAvgOccLength(logList, ID)
 				hr.save()
 		if (now.day != lastDay):
 			lastDay = now.day
-			for ID in floor3IDS:
-				Day d = new Day()
+			for ID in floor3IDs:
+				d = Day()
 				d.date = now 
 				d.roomPointer = Room.objects.get(roomID=ID)
 				d.roomID = ID
-				log = importLog(ID, now)
-				d.totalOccupants = log.getOccupants(roomID=ID)
-				d.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				d.totalOccupants = getOccupants(logList, ID)
+				d.avgOccLength = calcAvgOccLength(logList, ID)
 				d.save()
 			for ID in floor4IDs:
-				Day d = new Day()
+				d = Day()
 				d.date = now 
 				d.roomPointer = Room.objects.get(roomID=ID)
 				d.roomID = ID
-				log = importLog(ID, now)
-				d.totalOccupants = log.getOccupants(roomID=ID)
-				d.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				d.totalOccupants = getOccupants(logList, ID)
+				d.avgOccLength = calcAvgOccLength(logList, ID)
 				d.save()
 		if (now.month != lastMonth):
 			lastMonth = now.month
-			for ID in floor3IDS:
-				Month mth = new Month()
+			for ID in floor3IDs:
+				mth = Month()
 				mth.date = now 
 				mth.roomPointer = Room.objects.get(roomID=ID)
 				mth.roomID = ID
-				log = importLog(ID, now)
-				mth.totalOccupants = log.getOccupants(roomID=ID)
-				mth.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				mth.totalOccupants = getOccupants(logList, ID)
+				mth.avgOccLength = calcAvgOccLength(logList, ID)
 				mth.save()
 			for ID in floor4IDs:
-				Month mth = new Month()
+				mth = Month()
 				mth.date = now 
 				mth.roomPointer = Room.objects.get(roomID=ID)
 				mth.roomID = ID
-				log = importLog(ID, now)
-				mth.totalOccupants = log.getOccupants(roomID=ID)
-				mth.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				mth.totalOccupants = getOccupants(logList, ID)
+				mth.avgOccLength = calcAvgOccLength(logList, ID)
 				mth.save()
 		if (now.year != lastYear):
 			lastYear = now.year
-			for ID in floor3IDS:
-				Year yr = new Year()
+			for ID in floor3IDs:
+				yr = Year()
 				yr.date = now 
 				yr.roomPointer = Room.objects.get(roomID=ID)
 				yr.roomID = ID
-				log = importLog(ID, now)
-				yr.totalOccupants = log.getOccupants(roomID=ID)
-				yr.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				yr.totalOccupants = getOccupants(logList, ID)
+				yr.avgOccLength = calcAvgOccLength(logList, ID)
 				yr.save()
 			for ID in floor4IDs:
-				Year yr = new Year()
+				yr = Year()
 				yr.date = now 
-				yr.roomPointer = Room.objects.get(roomID=ID)
+				yr.roomPointer = Room.objects.get(logList, ID)
 				yr.roomID = ID
-				log = importLog(ID, now)
-				yr.totalOccupants = log.getOccupants(roomID=ID)
-				yr.avgOccLength = log.calcAvgOccLength(roomID=ID)
+				logList = importLog(ID, now)
+				yr.totalOccupants = getOccupants(logList, ID)
+				yr.avgOccLength = calcAvgOccLength(logList, ID)
 				yr.save()		
 def startThread():
+	print("Starting Thread")
 	t = threading.Thread(target=threadf, args=(1,))
 	t.setDaemon(True)
 	t.start()
 
 def importLog(ID, now):
-	pass
+	return 1
 
-def createTimeFrames(floorIDs):
-	for ID in floorIDs:
-		naive_datetime = datetime.datetime.now()
-		curr_datetime = make_aware(naive_datetime)
-		hour = Hour(date=curr_datetime, roomID=ID)
-		hour.save()
-		day = Day(date=curr_datetime, roomID=ID)
-		day.save()
-		week = Week(date=curr_datetime, roomID=ID)
-		week.save()
-		month = Month(date=curr_datetime, roomID=ID)
-		month.save()
-		year = Year(date=curr_datetime, roomID=ID)
-		year.save()
 
-def initializeData():
-	'''
-	Initialize database with start
-	day, week, month, and year
-	Should only be called once at startup
-	'''
-	floor3IDs = cache.get('floor3')
-	floor4IDs = cache.get('floor4')
-	createTimeFrames(floor3IDs)
-	createTimeFrames(floor4IDs)
-
-def getOccupants(ID):
+def getOccupants(logList, ID):
 	'''
 	Return the number of people in the room.
 	Gets information from logs.
 	'''
-	pass
-def calcAvgOccLength(ID):
+	return 1
+def calcAvgOccLength(logList, ID):
 	'''
 	Return the average amount of time
 	the room has spent occupied. 
 	Gets information from logs.
 	'''
-	pass
+	return 1
