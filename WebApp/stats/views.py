@@ -35,7 +35,6 @@ def threadf(name):
 	floor4IDs = cache.get('floor4')
 	while(True):
 		time.sleep(5)
-		print("Here")
 		now = datetime.datetime.now()
 		if (now.hour != lastHour):
 			lastHour = now.hour
