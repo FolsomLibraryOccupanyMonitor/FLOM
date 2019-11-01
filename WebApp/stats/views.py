@@ -34,8 +34,8 @@ def createTimeObject(ID, duration, now):
 	timeObject.roomPointer = Room.objects.get(roomID=ID)
 	timeObject.roomID = ID
 	logList = importLog(ID, now, duration)
-	timeObject.totalOccupants = getOccupants(logList, ID)
-	timeObject.avgOccLength = calcAvgOccLength(logList, ID)
+	timeObject.totalOccupants = getOccupants(logList, ID, duration)
+	timeObject.avgOccLength = calcAvgOccLength(logList, ID, duration)
 	timeObject.save()
 
 
@@ -90,7 +90,7 @@ def startThread():
 
 def importLog(ID, now, duration):
 	return 1
-
+	
 
 def getOccupants(logList, ID):
 	'''
