@@ -1,3 +1,34 @@
+#include <hive_map.hpp>
+#include "radio_endpoint.h"
+#include "messages.h"
+#include "locations.h"
+
+hmap::Location database(DATABASE);
+RadioEndPoint radio_endpoint;
+const byte address[6] = "00001";
+
+void on_occupancy_msg(void* raw_msg){
+    occupancy::Msg& o_msg = *static_cast<occupancy::Msg*>(raw_msg);
+    Serial.println(o_msg.body.occupied);
+}
+
+void setup() {
+    radio_endpoint.setup(address);
+    Serial.begin(9600);
+
+    database.subscribe<occupancy::Msg>(&on_occupancy_msg);
+    database.bind(radio_endpoint);
+}
+
+const unsigned int cycle_delay = 250;
+
+void loop() {
+    delay(cycle_delay);
+    database.cycle();
+    
+}
+
+/*
 #include "hive_map.h"
 #include "hive_map.c"
 
@@ -71,7 +102,7 @@ void loop(){
         cycle_flag = false;
     }
 }
-
+*/
 
 
 
