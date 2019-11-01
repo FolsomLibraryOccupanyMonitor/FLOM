@@ -6,6 +6,7 @@
 {# This is the main file / big kahuna / dad for the map homepage #}
 {% extends "html/main.html" %}
 {% load static %}
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,15 +17,7 @@
     <body>
         {% block body %}
         {# <!-- styling for body of page that holds login block--> #}
-        <div name = "main"
-          style="background-color:
-            white; display: block;
-            border-radius: 10px;
-            margin:auto;
-            margin-top: 30px;
-            text-align: center;
-            width: 50%;
-            padding: 10px;">
+        <div class= "login-main">
              {# <!--logo --> #}
             <img src="{% static 'images/logo1.jpg' %}" alt="FLOM Logo"
             style="margin: auto;
@@ -35,19 +28,7 @@
 			      {% csrf_token %}
 			      {{ form.as_p }}
              {# <!-- login button --> #}
-			    <button type="submit"
-            style="background-color: black;
-              border: none;
-              color: white;
-              font-weight: bold;
-              padding: 10px 27px;
-              text-align: center;
-              text-decoration: none;
-              display: inline-block;
-              font-size: 16px;
-              margin: 4px 3px;
-              cursor: pointer;"
-              >Login
+			    <button type="submit" class="login-sub">Login
           </button>
 		      </form>
 	       </div>
