@@ -26,12 +26,10 @@ class StatsLog(models.Model):
 		totalOccupants - total number of occupants over the span
 		avgOccLength - average occupation length for a room (in minutes)
 '''
-
-class Hour(models.Model):
-	date = models.DateTimeField()
-	roomID = models.CharField(max_length=5)
-	totalOccupants = models.IntegerField(default=0)
-	avgOccLength = models.IntegerField(default=0)
+# class Hour(models.Model):
+# 	date = models.DateTimeField()
+# 	roomID = models.CharField(max_length=5)
+# 	totalOccupants = models.IntegerField(default=0)
 
 class Day(models.Model):
 	date = models.DateTimeField()
