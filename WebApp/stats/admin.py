@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import StatsLog, Hour, Day, Week, Month, Year
+from .models import StatsLog, Day, Week, Month, Year
 # Register your models here.
 
 class StatsLogAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class YearAdmin(admin.ModelAdmin):
 	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
 
 admin.site.register(StatsLog, StatsLogAdmin)
-admin.site.register(Hour, HourAdmin)
+# admin.site.register(Hour, HourAdmin)
 admin.site.register(Day, DayAdmin)
 admin.site.register(Week, WeekAdmin)
 admin.site.register(Month, MonthAdmin)
