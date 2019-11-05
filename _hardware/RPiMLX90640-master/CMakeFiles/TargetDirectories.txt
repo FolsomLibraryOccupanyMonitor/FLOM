@@ -1,3 +1,0 @@
-/home/pi/Documents/FLOM/hardware_prototype/RPiMLX90640-master/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/FLOM/hardware_prototype/RPiMLX90640-master/CMakeFiles/edit_cache.dir
-/home/pi/Documents/FLOM/hardware_prototype/RPiMLX90640-master/CMakeFiles/MLX90640.dir

@@ -1,0 +1,69 @@
+{# navbar.html #}
+{# The menu bar seen on all pages #}
+{% load static %}
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+  <a class="navbar-brand">Folsom Library Occupancy Monitor</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+    <div class="navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
+
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+      <a class="navbar-brand" href="/about"><font size ="5">FLOM</font></a>
+      {# Minimized screen Drop Down Menu #}
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          {# Main Pages Links #}
+          <li class="nav-item gray scroll">
+            <a class="nav-link" href="/about/"> About<span class="sr-only">(current)</span></a>
+          </li>
+
+          <li class="nav-item gray scroll">
+            <a class="nav-link" href="/floor/map/3">Floor 3</a>
+          </li>
+
+          <li class="nav-item gray scroll">
+            <a class="nav-link" href="/floor/map/4">Floor 4</a>
+          </li>
+
+          <li class="nav-item gray scroll">
+            <a class="nav-link" href="/stats/">Statistics</a>
+          </li>
+
+        </ul>
+
+
+          {# User icon next to Login Link #}
+           <ul class="navbar-nav ml-auto nav-flex-icons" style="margin-right: 60px;">
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user" style="font-size: 1em"></i>
+           </a>
+            <div class="dropdown-content">
+
+                <a href="/logout/">Log out</a>
+                <a href="/login/">Log in</a>
+
+            </div>
+          </li>
+        </ul>
+
+
+      </div>
+</nav>

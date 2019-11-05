@@ -1,4 +1,0 @@
-In the beginning when we were discussing what sensors to use, I first looked up similar projects that determined occupancy in rooms. Different projects used various sensors for different purposes. We looked up different sensors and narrowed it down to 3 sensors. We had IR (infrared) sensors, ultrasonic sensors, and pressure sensors.
-https://www.amazon.com/Qunqi-HC-SR501-Pyroelectric-Infrared-Microcontrollers/dp/B0140WFNYQ/ref=sr_1_1_sspa?ie=UTF8&qid=1548797385&sr=8-1-spons&keywords=wireless+infrared+sensor+microcontroller&psc=1
-We ended up finding a IR sensor array. It is essentially an array of multiple sensors. It was expensive but it did the job of pretty much everything. The original plan was to have the IR sensor as the main source of information and the ultrasonic sensor to retrieve more data.
-https://www.mouser.com/ProductDetail/Melexis/MLX90640ESF-BAA-000-TU?qs=y6ZabgHbY%252bzw6V3oA0shlQ%3D%3D
