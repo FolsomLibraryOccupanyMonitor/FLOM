@@ -1,12 +1,12 @@
 from django.shortcuts import render_to_response
-from stats.models import StatsLog, Hour, Day, Week, Month, Year
+from stats.models import StatsLog, Day, Week, Month, Year
 from datetime import datetime
 from django.core.cache import cache
 import time
 import datetime
 import threading
 from floor.models import Room
-from django.db.models import Sum
+from django.db.models import Sum, Avg, F
 
 def index(request):
 	'''
@@ -32,8 +32,8 @@ def createTimeObject(ID, duration, now):
 	timeObject.date = now
 	timeObject.roomID = ID
 	logList = importLog(ID, now, duration)
-	timeObject.totalOccupants = getOccupants(logList)
-	timeObject.avgOccLength = calcAvgOccLength(logList, ID)
+	timeObject.totalOccupants = getOccupants(logList, duration)
+	timeObject.avgOccLength = calcAvgOccLength(logList, duration)
 	timeObject.save()
 
 
@@ -107,16 +107,34 @@ def getOccupants(query, duration):
 	if duration == 'day':
 		return int(len(query)/2)
 	elif duration == 'month':
-		return query.aggregate(Sum('totalOccupants'))
+		return query.aggregate(Sum(F('totalOccupants')))
 	elif duration == 'year':
-		return query.aggregate(Sum('totalOccupants'))
+		return query.aggregate(Sum(F('totalOccupants')))
 	return 0
 
-def calcAvgOccLength(query):
+def calcTimeDifference(query):
+	timeDiff = []
+	tmp_entry = None
+	for log in query:
+		# if the log contains entry data
+		if log.event == 1:
+			tmp_entry = log
+		# else the log contains exit data
+		else:
+			timeDiff.append(log.timeStamp - tmp_entry.timeStamp)
+	return timeDiff
+
+def calcAvgOccLength(query, duration):
 	'''
 	Return the average amount of time
 	the room has spent occupied. 
 	Gets information from logs.
 	'''
-
-	return 1
+	if duration == 'day':
+		timeDiff = calcTimeDifference(query)
+		return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
+	elif duration == 'month':
+		return query.aggregate(Avg(F('avgOccLength')))
+	elif duration == 'year':
+		return query.aggregate(Avg(F('avgOccLength')))
+	return None
