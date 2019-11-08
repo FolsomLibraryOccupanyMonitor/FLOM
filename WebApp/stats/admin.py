@@ -1,17 +1,29 @@
 from django.contrib import admin
 
-from .models import OccupancyStats, RoomUsage, Room
+from .models import StatsLog, Day, Week, Month, Year
 # Register your models here.
 
-class OccupancyAdmin(admin.ModelAdmin):
-	list_display = ('totalOccupancy', 'averageDayOccupancy', 'averageWeekOccupancy', 'averageMonthOccupancy')
+class StatsLogAdmin(admin.ModelAdmin):
+	list_display = ('roomID', 'event', 'timeStamp')
 
-class UsageAdmin(admin.ModelAdmin):
-	list_display = ('room', 'occupancyStats', 'largestHoursInRoom', 'currentDate')
+class HourAdmin(admin.ModelAdmin):
+	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
 
-class RoomAdmin(admin.ModelAdmin):
-	list_display = ('roomID', 'occupied', 'lastEntered', 'lastExited', 'roomType')
+class DayAdmin(admin.ModelAdmin):
+	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
 
-admin.site.register(OccupancyStats, OccupancyAdmin)
-admin.site.register(RoomUsage, UsageAdmin)
-admin.site.register(Room, RoomAdmin)
+class WeekAdmin(admin.ModelAdmin):
+	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
+
+class MonthAdmin(admin.ModelAdmin):
+	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
+
+class YearAdmin(admin.ModelAdmin):
+	list_display = ('date', 'roomID', 'totalOccupants', 'avgOccLength')
+
+admin.site.register(StatsLog, StatsLogAdmin)
+# admin.site.register(Hour, HourAdmin)
+admin.site.register(Day, DayAdmin)
+admin.site.register(Week, WeekAdmin)
+admin.site.register(Month, MonthAdmin)
+admin.site.register(Year, YearAdmin)

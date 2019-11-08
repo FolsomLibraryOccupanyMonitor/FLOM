@@ -1,47 +1,56 @@
 from django.db import models
 from datetime import datetime
 
-class Room(models.Model):
-	'''
-	Model for a Room
-	@member (s)
-		string roomID - the number of the room (ex. 301-A, 324)
-		int occupied - occupation status of the room (0 = false, 1 = true)
-		DateTime lastExited - date of last exit
-		DateTime lastEntered - date of last entry
-		string roomType - single/group designation
-	'''
-	roomID = models.CharField(max_length = 5, default = 'default') # ID of room (Ex. 301, 324)
-	occupied = models.IntegerField(default = 0) # 0 for empty, 1 for occupied
-	lastExited = models.DateTimeField(auto_now_add=True, editable=True)
-	lastEntered = models.DateTimeField(auto_now_add=True, editable=True)
-	roomType = models.CharField(max_length=2, default = 'S') #single/group for now, could get more descriptive potentially
+from floor.models import Room
 
-
-class OccupancyStats(models.Model):
+class StatsLog(models.Model):
 	'''
 	Contains useful occupancy statistics
 	@member (s)
-		totalOccupancy - the total number of occupants since program launch
-		averageDayOccupancy - average number of occupants for each day
-		averageWeekOccupancy - average number of occupants for each week
-		averageMonthOccupancy - average number of occupants for each month
+		room - Room for which the logs are stored for
+		event - enter/exit-1/0
+		roomID = room ID of room
+		timeStamp - exact date time of the log
 	'''
-	totalOccupancy = models.IntegerField(default = 0)
-	averageDayOccupancy = models.IntegerField(default = 0)
-	averageWeekOccupancy = models.IntegerField(default = 0)
-	averageMonthOccupancy = models.IntegerField(default = 0)
-	
-class RoomUsage(models.Model):
-	'''
-	Model for holding statistics about room usage
+	event = models.IntegerField(default = 0)
+	roomID = models.CharField(max_length = 5)
+	timeStamp = models.DateTimeField(auto_now_add=True, editable=False)
+
+'''
+	These models are a representation of the usage statistics that have
+	been gathered within the span of the designated time.
 	@member (s)
-		room - uses Room model for room information
-		occupancy_stats - uses OccupancyStats model for useful fields for stats
-		largestHoursInRoom - the "high score" for most time spent in the room
-		currentDate - holds the current date and time for the room
-	'''
-	room = models.OneToOneField(Room, on_delete=models.CASCADE)
-	occupancyStats = models.OneToOneField(OccupancyStats, on_delete=models.CASCADE)
-	largestHoursInRoom = models.IntegerField(default=0)
-	currentDate = models.DateTimeField(auto_now_add=True, editable=True)
+		date - date on which TimeFrame was created
+		room - points to the room it refers to
+		roomID - individual room this applies to
+		totalOccupants - total number of occupants over the span
+		avgOccLength - average occupation length for a room (in minutes)
+'''
+# class Hour(models.Model):
+# 	date = models.DateTimeField()
+# 	roomID = models.CharField(max_length=5)
+# 	totalOccupants = models.IntegerField(default=0)
+
+class Day(models.Model):
+	date = models.DateTimeField()
+	roomID = models.CharField(max_length=5)
+	totalOccupants = models.IntegerField(default=0)
+	avgOccLength = models.DurationField()
+
+class Week(models.Model):
+	date = models.DateTimeField()
+	roomID = models.CharField(max_length=5)
+	totalOccupants = models.IntegerField(default=0)
+	avgOccLength = models.DurationField()
+
+class Month(models.Model):
+	date = models.DateTimeField()
+	roomID = models.CharField(max_length=5)
+	totalOccupants = models.IntegerField(default=0)
+	avgOccLength = models.DurationField()
+
+class Year(models.Model):
+	date = models.DateTimeField()
+	roomID = models.CharField(max_length=5)
+	totalOccupants = models.IntegerField(default=0)
+	avgOccLength = models.DurationField()
