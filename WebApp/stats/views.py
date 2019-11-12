@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
-from stats.models import StatsLog, Day, Week, Month, Year
+from stats.models import StatsLog, Day,  Month, Year
 from datetime import datetime
 from django.core.cache import cache
 import time
@@ -7,7 +7,7 @@ import datetime
 import threading
 from floor.models import Room
 from django.db.models import Sum, Avg, F
-
+from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
 	'''
@@ -57,12 +57,6 @@ def threadf(name):
 	while True:
 		time.sleep(5)
 		now = datetime.datetime.now()
-		if now.hour != lastHour:
-			lastHour = now.hour
-			for ID in floor3IDs:
-				createTimeObject(ID,"hour",now)
-			for ID in floor4IDs:
-				createTimeObject(ID,"hour",now)
 		if now.day != lastDay:
 			lastDay = now.day
 			for ID in floor3IDs:

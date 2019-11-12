@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core.cache import cache
 from django.template import RequestContext
 from datetime import datetime
-
+from stats.views import log
 from .models import Floor, Room
 # Create your views here. A view is a Python function that takes a web request and returns a web response.
 from django.contrib.auth.decorators import login_required
@@ -55,6 +55,7 @@ def enterRoom(request, floor, ID, password):
 			# modify current room to occupied = True and update current datetime
 			currRoom.occupied = True
 			currRoom.lastEntered = datetime.now()
+			log(ID,1)
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create the dictionary of rooms needed to update webpage
@@ -84,6 +85,7 @@ def exitRoom(request, floor, ID, password):
 			# modify current room to occupied = False and update current datetime
 			currRoom.occupied = False
 			currRoom.lastExited = datetime.now()
+			log(ID,0)
 			# save changes made to current room (to database)
 			currRoom.save()
 			# create dictionary of rooms needed to update webpage
