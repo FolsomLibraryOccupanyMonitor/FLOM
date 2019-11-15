@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from stats.models import StatsLog, Day,  Month, Year
+from django.http import HttpResponse
 from datetime import datetime
 from django.core.cache import cache
 import time
@@ -8,12 +9,35 @@ import threading
 from floor.models import Room
 from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
+
+
+def render_statistics(request, duration):
+	available_stats = {}
+	available_stats['titles'] = ['Date', 'Total Occupants', 'Average Occupancy Time']
+	available_stats['row_info'] = {'id':[], 'date':[], 'total_occupants':[], 'occupancy_time':[]}
+	query = None
+	if duration == 'day':
+		query = Day.objects.all();
+	elif duration == 'month':
+		query = Month.objects.all();
+	else:
+		query = Year.objects.all();
+	available_stats['range'] = range(len(query))
+	for obj in query:
+		available_stats['row_info']['id'].append(obj.roomID)
+		available_stats['row_info']['date'].append(obj.date)
+		available_stats['row_info']['total_occupants'].append(obj.totalOccupants)
+		available_stats['row_info']['occupancy_time'].append(obj.avgOccLength)
+	display = render_to_response('stats/templates/html/stats.html', available_stats)
+	cache.set('basic_stats_display', display)
+	return HttpResponse('Statistics displayed for ' + duration)
+
 @login_required
 def index(request):
 	'''
 	@return display of stats page
 	'''
-	return render_to_response('stats/templates/html/stats.html')
+	return cache.get('basic_stats_display')
 
 def log(rID, e):
 	currLog = StatsLog(event = e, roomID = rID)
