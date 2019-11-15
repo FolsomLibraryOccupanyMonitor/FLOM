@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.test import TestCase
 from .models import RoomUsage, Room, OccupancyStats
 from datetime import datetime

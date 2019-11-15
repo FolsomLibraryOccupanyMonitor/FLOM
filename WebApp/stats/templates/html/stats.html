@@ -1,34 +1,26 @@
 {# stats.html #}
+
 {% extends "html/main.html" %}
 {% load static %}
 {% block body %}
-{% with titles=available_stats.titles rooms=available_stats.rooms%} 
-
-
+{% with titles=available_stats.titles rows=available_stats.row_info range=available_stats.range %} 
 <table class="table table-hover stats_table">
 	<thead class = "thead-dark">
-		    <tr>
+		<tr>
 	    	{% for title in titles %} 
 	    		<th scope="col">{{title}}</th>
 	    	{%endfor%}
 	    </tr>
     </thead>
-    {% for room_num, obj in rooms.items %} 
-    	{% if obj.occupancy == 'Yes' %}
-			<tr class='text-danger'>
-		{% else %}
-			<tr class='text-success'>
-		{%endif%}
-			<td>{{ obj.floor }}</td>
-			<td>{{ obj.number }}</td>
-			<td >{{ obj.occupancy }}</td>
-			<td>{{ obj.last_enter }}</td>
-			<td>{{ obj.last_leave }}</td>
-			<td>{{ obj.dao }}</td>
-			<td>{{ obj.dau }}</td>
+    {% for i in range %}
+		<tr class='row_text'>
+			<td>{{ rows.id.i }}</td>
+			<td>{{ rows.date.i }}</td>
+			<td>{{ rows.total_occupants.i }}</td>
+			<td>{{ rows.occupancy_time.i }}</td>
 		</tr>
     {% endfor %}
- </table>
+</table>
 {% endwith %}
 
 {% endblock %}

@@ -4,9 +4,11 @@ from django.core.cache import cache
 from django.template import RequestContext
 from datetime import datetime
 from stats.views import log
-
 from .models import Floor, Room
 # Create your views here. A view is a Python function that takes a web request and returns a web response.
+from django.contrib.auth.decorators import login_required
+
+
 
 #TODO: learn what actually gets put in on a page request
 
@@ -25,16 +27,18 @@ def getUpdatedRoomsList(floor):
 	# 	get room data to add
 	# 	append room data to roomList
 	for room in floor.room_set.all():
-		add = {"ID": room.roomID, "occupied" : room.occupied} 
+		add = {"ID": room.roomID, "occupied" : room.occupied}
 		roomList["Rooms"].append(add)
 	return roomList
 
+@login_required
 def index(request, floor):
 	'''
 	@return the display for floor
 	'''
 	return cache.get("display" + floor)
 
+@login_required
 def enterRoom(request, floor, ID, password):
 	'''
 	This function is called when someone enters a room
@@ -51,10 +55,9 @@ def enterRoom(request, floor, ID, password):
 			# modify current room to occupied = True and update current datetime
 			currRoom.occupied = True
 			currRoom.lastEntered = datetime.now()
+			log(ID,1)
 			# save changes made to current room (to database)
 			currRoom.save()
-
-			log(ID,1)
 			# create the dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
@@ -65,6 +68,7 @@ def enterRoom(request, floor, ID, password):
 	else:
 		return HttpResponse("Room Not Found")
 
+@login_required
 def exitRoom(request, floor, ID, password):
 	'''
 	This function is called when someone exits a room
@@ -81,10 +85,9 @@ def exitRoom(request, floor, ID, password):
 			# modify current room to occupied = False and update current datetime
 			currRoom.occupied = False
 			currRoom.lastExited = datetime.now()
+			log(ID,0)
 			# save changes made to current room (to database)
 			currRoom.save()
-
-			log(ID,0)
 			# create dictionary of rooms needed to update webpage
 			roomList = getUpdatedRoomsList(floors[floor])
 			# set the cache with the new room display based on changes made
@@ -114,7 +117,6 @@ def createRooms(floor, IDs):
 	roomList = getUpdatedRoomsList(floor)
 	display = render_to_response('floor/templates/html/' + floor.name + '.html', roomList)
 	cache.set('display'+floor.name[-1], display, None)
-
 
 def populateFloors():
 	'''
