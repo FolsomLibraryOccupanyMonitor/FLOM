@@ -3,24 +3,24 @@
 {% extends "html/main.html" %}
 {% load static %}
 {% block body %}
-{% with titles=available_stats.titles rows=available_stats.row_info range=available_stats.range %} 
-<table class="table table-hover stats_table">
-	<thead class = "thead-dark">
-		<tr>
-	    	{% for title in titles %} 
-	    		<th scope="col">{{title}}</th>
-	    	{%endfor%}
-	    </tr>
+<table>
+    <thead>
+        <tr>
+        {% for item in stats %}
+            {% for h in item %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        {% endfor %}
+        </tr>
     </thead>
-    {% for i in range %}
-		<tr class='row_text'>
-			<td>{{ rows.id.i }}</td>
-			<td>{{ rows.date.i }}</td>
-			<td>{{ rows.total_occupants.i }}</td>
-			<td>{{ rows.occupancy_time.i }}</td>
-		</tr>
-    {% endfor %}
+    <tbody>
+        {% for item in stats %}
+            <tr>
+                {% for key,value in item.items %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
-{% endwith %}
-
 {% endblock %}
