@@ -107,17 +107,14 @@ def startThread():
 	t.setDaemon(True)
 	t.start()
 
-def importLog(ID, now, duration):
-	return 1
-	
-
+def importLog(ID, now, duration):	
 	query = None
 	if duration == 'day':
-		query = StatsLog.objects.filter(roomID=ID, date__year=now.year, date__month=now.month, date__day=now.day)
+		query = StatsLog.objects.filter(roomID=ID, timeStamp__year=now.year, timeStamp__month=now.month, timeStamp__day=now.day)
 	elif duration == 'month':
-		query = Day.objects.filter(roomID=ID, date__year=now.year, date__month=now.month)
+		query = Day.objects.filter(roomID=ID, timeStamp__year=now.year, timeStamp__month=now.month)
 	elif duration == 'year':
-		query = Month.objects.filter(roomID=ID, date__year=now.year)
+		query = Month.objects.filter(roomID=ID, timeStamp__year=now.year)
 	return query
 
 

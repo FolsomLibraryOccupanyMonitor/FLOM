@@ -1,7 +1,9 @@
-<<<<<<< HEAD
 from django.test import TestCase
-from .models import RoomUsage, Room, OccupancyStats
+import datetime
+from .models import *
+from .views import importLog
 from datetime import datetime
+from datetime import date
 
 class RoomUsageModelTest(TestCase):
 
@@ -19,9 +21,23 @@ class RoomUsageModelTest(TestCase):
 # 		# test default total occupancy
 # 		self.assertEqual(roomUsage.occupancyStats.totalOccupancy, 0)
 # 	}
+	@classmethod
+	def setUpTestData(cls):
+		print("SET UP")
+		# assert(False == True)
+		# print(beforeLog1.timeStamp)
+		# day301 = createTimeObject(301, "day", now)
+		# month301 = createTimeObject(301, "month", now)
+		# year301 = createTimeObject(301, "year", now)
+		# day302 = createTimeObject(302, "day", now)
+		# month302 = createTimeObject(302, "month", now)
+		# year302 = createTimeObject(302, "year", now)
 
-	def testDayObject(TestCase):
-		o = createTimeObject(301, "day", datetime.datetime.now()):
-	def testMonthObject(TestCase):
-
-	def testYearObject(TestCase):
+	#test logs are saved properly
+	@classmethod
+	def testLog(self):
+		d = date(2019, 11, 15)
+		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d)
+		log1.save()
+		afterLogs1 = importLog("311", datetime.now(), "day")
+		print(afterLogs1[len(afterLogs1)-1].timeStamp.day)
