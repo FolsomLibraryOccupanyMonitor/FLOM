@@ -9,7 +9,7 @@ const byte address[6] = "00001";
 
 void on_occupancy_msg(void* raw_msg){
     occupancy::Msg& o_msg = *static_cast<occupancy::Msg*>(raw_msg);
-    Serial.println(o_msg.body.occupied);
+    Serial.write((byte*)(&o_msg.body), sizeof(occupancy::Body));
 }
 
 void setup() {
@@ -23,6 +23,7 @@ void setup() {
 const unsigned int cycle_delay = 250;
 
 void loop() {
+    //Serial.println(sizeof(occupancy::Body));
     delay(cycle_delay);
     database.cycle();
     
@@ -103,7 +104,3 @@ void loop(){
     }
 }
 */
-
-
-
-

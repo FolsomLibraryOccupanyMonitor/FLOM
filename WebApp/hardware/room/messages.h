@@ -6,6 +6,7 @@
 
 #include <hive_map.hpp>
 #include <message.h>
+#include "locations.h"
 
 // message constants
 #define OCCUPANCY_MSG 12 //10 or higher
@@ -14,6 +15,7 @@ namespace occupancy {
 
 struct Body {
   bool occupied = false;
+  unsigned char roomID = ROOM_1;
 };
 
 struct Msg{
