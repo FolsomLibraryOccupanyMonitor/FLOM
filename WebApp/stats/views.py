@@ -12,9 +12,9 @@ from django.contrib.auth.decorators import login_required
 
 
 def render_statistics(request, duration):
-	available_stats = {}
-	available_stats['titles'] = ['Date', 'Total Occupants', 'Average Occupancy Time']
-	available_stats['row_info'] = {'id':[], 'date':[], 'total_occupants':[], 'occupancy_time':[]}
+	stats = {}
+	available_stats = []
+	titles = ['roomID', 'date', 'totalOccupants', 'avgOccLength']
 	query = None
 	if duration == 'day':
 		query = Day.objects.all();
@@ -22,22 +22,20 @@ def render_statistics(request, duration):
 		query = Month.objects.all();
 	else:
 		query = Year.objects.all();
-	available_stats['range'] = range(len(query))
 	for obj in query:
-		available_stats['row_info']['id'].append(obj.roomID)
-		available_stats['row_info']['date'].append(obj.date)
-		available_stats['row_info']['total_occupants'].append(obj.totalOccupants)
-		available_stats['row_info']['occupancy_time'].append(obj.avgOccLength)
-	display = render_to_response('stats/templates/html/stats.html', available_stats)
-	cache.set('basic_stats_display', display)
-	return HttpResponse('Statistics displayed for ' + duration)
+		for title in titles:
+			available_stats.append({title:getattr(obj, title)})
+	stats['stats'] = available_stats
+	print(stats)
+	display = render_to_response('stats/templates/html/stats.html', stats)
+	return display
 
 @login_required
 def index(request):
 	'''
 	@return display of stats page
 	'''
-	return cache.get('basic_stats_display')
+	return render_to_response('stats/templates/html/stats.html')
 
 def log(rID, e):
 	currLog = StatsLog(event = e, roomID = rID)
@@ -70,10 +68,7 @@ def threadf(name):
 	from logs for each room 
 	'''
 	start = datetime.datetime.now()
-	lastHour = start.hour
-	lastDay = start.day
-	lastMonth = start.month
-	lastYear = start.year
+	last = start
 
 	floor3IDs = cache.get('floor3')
 	floor4IDs = cache.get('floor4')
@@ -81,24 +76,27 @@ def threadf(name):
 	while True:
 		time.sleep(5)
 		now = datetime.datetime.now()
-		if now.day != lastDay:
-			lastDay = now.day
+		entered = False
+		if now.day != last.day:
 			for ID in floor3IDs:
-				createTimeObject(ID,"day",now)
+				createTimeObject(ID,"day", last)
 			for ID in floor4IDs:
-				createTimeObject(ID,"day",now)
-		if now.month != lastMonth:
-			lastMonth = now.month
+				createTimeObject(ID,"day", last)
+			entered = True
+		if now.month != last.month:
 			for ID in floor3IDs:
-				createTimeObject(ID,"month",now)				
+				createTimeObject(ID,"month", last)				
 			for ID in floor4IDs:
-				createTimeObject(ID,"month",now)
-		if now.year != lastYear:
-			lastYear = now.year
+				createTimeObject(ID,"month", last)
+			entered = True
+		if now.year != last.year:
 			for ID in floor3IDs:
-				createTimeObject(ID,"year",now)
+				createTimeObject(ID,"year", last)
 			for ID in floor4IDs:
-				createTimeObject(ID,"year",n)	
+				createTimeObject(ID,"year", last)
+			entered = True
+		if entered:
+			last = now
 
 
 def startThread():
