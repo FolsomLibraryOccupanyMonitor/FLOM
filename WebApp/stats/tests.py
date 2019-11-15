@@ -1,8 +1,8 @@
-# from django.test import TestCase
-# from .models import RoomUsage, Room, OccupancyStats
-# from datetime import datetime
+from django.test import TestCase
+from .models import RoomUsage, Room, OccupancyStats
+from datetime import datetime
 
-# class RoomUsageModelTest(TestCase):
+class RoomUsageModelTest(TestCase):
 
 # 	def testDefaultValues(self) {
 # 		'''
@@ -18,3 +18,9 @@
 # 		# test default total occupancy
 # 		self.assertEqual(roomUsage.occupancyStats.totalOccupancy, 0)
 # 	}
+
+	def testDayObject(TestCase):
+		o = createTimeObject(301, "day", datetime.datetime.now()):
+	def testMonthObject(TestCase):
+
+	def testYearObject(TestCase):
