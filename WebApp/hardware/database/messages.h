@@ -6,6 +6,7 @@
 
 #include <hive_map.hpp>
 #include <message.h>
+#include "locations.h"
 
 // message constants
 #define OCCUPANCY_MSG 12 //10 or higher
@@ -14,10 +15,10 @@ namespace occupancy {
 
 struct Body {
   bool occupied = false;
+  unsigned char roomID = 0;
 };
 
 struct Msg{
-  unsigned char type = OCCUPANCY_MSG; //hacky need to fix
   hmap::msg::Header header {
       .type = OCCUPANCY_MSG,
       .bcast_radius = 1,
@@ -25,6 +26,7 @@ struct Msg{
       .size = sizeof(Msg)
   };
   Body body;
+  unsigned char type = OCCUPANCY_MSG;
 };
 
 }

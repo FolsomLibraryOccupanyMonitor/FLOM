@@ -3,15 +3,21 @@
 #include "messages.h"
 #include "locations.h"
 
+#define analogPin 8
+
 hmap::Location room(ROOM_1);
 RadioEndPoint radio_endpoint;
 occupancy::Msg occupancy_msg;
 const byte address[6] = "00001";
 
-void setup() {
+int val;
+
+void setup()
+{
     radio_endpoint.setup(address);
     Serial.begin(9600);
     occupancy_msg.body.occupied = false; //not occupied
+    occupancy_msg.body.roomID = ROOM_1; //room 101
     room.bind(radio_endpoint);
 }
 
@@ -19,10 +25,22 @@ const unsigned int cycle_delay = 250;
 const unsigned int publish_delay_ratio = 4;
 unsigned int publish_count = 0;
 
-void loop() {
+void loop()
+{
     delay(cycle_delay);
     // Read "data" from potentiometers
-    if((publish_count%publish_delay_ratio) == 0){
+    /*
+
+    */
+    val = analogRead(analogPin);
+    if (val < 128) {
+      occupancy_msg.body.occupied = true;
+    }
+    else {
+      occupancy_msg.body.occupied = false;
+    }
+    if ((publish_count % publish_delay_ratio) == 0)
+    {
         room.destinations(DATABASE).publish(occupancy_msg);
     }
     room.cycle();
@@ -104,7 +122,3 @@ void loop(){
     }
 }
 */
-
-
-
-
