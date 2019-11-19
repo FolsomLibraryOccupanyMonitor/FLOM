@@ -38,6 +38,12 @@ class RoomUsageModelTest(TestCase):
 	def testLog(self):
 		d = date(2019, 11, 15)
 		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d)
+		log1.timeStamp = d
 		log1.save()
-		afterLogs1 = importLog("311", datetime.now(), "day")
-		print(afterLogs1[len(afterLogs1)-1].timeStamp.day)
+		d2 = date(2019, 12, 16)
+		log2 = StatsLog(event = 1, roomID = "311", timeStamp = d)
+		log2.timeStamp = d2
+		log2.save()
+		afterLogs1 = importLog("311", d2, "day")
+
+		print(afterLogs1[0].timeStamp.day)

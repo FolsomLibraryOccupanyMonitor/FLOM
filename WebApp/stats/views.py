@@ -38,7 +38,7 @@ def index(request):
 	return render_to_response('stats/templates/html/stats.html')
 
 def log(rID, e):
-	currLog = StatsLog(event = e, roomID = rID)
+	currLog = StatsLog(event = e, roomID = rID, timeStamp = datetime.now())
 	currLog.save()
 
 
