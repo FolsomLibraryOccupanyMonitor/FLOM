@@ -3,24 +3,74 @@
 {% extends "html/main.html" %}
 {% load static %}
 {% block body %}
-<table>
-    <thead>
-        <tr>
-        {% for item in stats %}
-            {% for h in item %}
-                <th>{{ h }}</th>
-            {% endfor %}
-        {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in stats %}
-            <tr>
-                {% for key,value in item.items %}
-                    <td>{{ value }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% if form %}
+	<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% endif %}
+{% if stats %}
+	<h1>Viewing Statistics For Room: {{ stats.ID }}</h1>
+	<!-- Day Table -->
+	<h2>Days</h2>
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for day in stats.day %}
+            	<tr>
+                    <td>{{ day.date }}</td>
+                    <td>{{ day.totalOccupants }}</td>
+                    <td>{{ day.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+	<!-- Month Table -->
+	<h2>Months</h2>
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for month in stats.month %}
+            	<tr>
+                    <td>{{ month.date }}</td>
+                    <td>{{ month.totalOccupants }}</td>
+                    <td>{{ month.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+	<!-- Year Table -->
+	<h2>Years</h2>
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for year in stats.year %}
+            	<tr>
+                    <td>{{ year.date }}</td>
+                    <td>{{ year.totalOccupants }}</td>
+                    <td>{{ year.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+{% endif %}
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from stats.models import StatsLog, Day,  Month, Year
 from django.http import HttpResponse
 from datetime import datetime
@@ -9,33 +9,29 @@ import threading
 from floor.models import Room
 from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
+from .forms import RoomRequestForm
 
-
-def render_statistics(request, duration):
+def get_stats(ID):
 	stats = {}
-	available_stats = []
-	titles = ['roomID', 'date', 'totalOccupants', 'avgOccLength']
-	query = None
-	if duration == 'day':
-		query = Day.objects.all();
-	elif duration == 'month':
-		query = Month.objects.all();
-	else:
-		query = Year.objects.all();
-	for obj in query:
-		for title in titles:
-			available_stats.append({title:getattr(obj, title)})
-	stats['stats'] = available_stats
-	print(stats)
-	display = render_to_response('stats/templates/html/stats.html', stats)
-	return display
+	stats['day'] = Day.objects.filter(roomID=ID)
+	stats['month'] = Month.objects.filter(roomID=ID)
+	stats['year'] = Year.objects.filter(roomID=ID)
+	stats['ID'] = ID
+	return stats
 
 @login_required
 def index(request):
 	'''
 	@return display of stats page
 	'''
-	return render_to_response('stats/templates/html/stats.html')
+	if request.method == 'POST':
+		form = RoomRequestForm(request.POST)
+		if form.is_valid():
+			stats = get_stats(form.data['room'])
+			return render_to_response('stats/templates/html/stats.html', {'stats':stats})
+	else:
+		form = RoomRequestForm()
+	return render(request, 'stats/templates/html/stats.html', {'form': form})
 
 def log(rID, e):
 	currLog = StatsLog(event = e, roomID = rID)
