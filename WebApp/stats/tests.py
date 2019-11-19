@@ -36,14 +36,14 @@ class RoomUsageModelTest(TestCase):
 	#test logs are saved properly
 	@classmethod
 	def testLog(self):
-		d = date(2019, 11, 15)
-		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d)
-		log1.timeStamp = d
+		d1 = datetime(2018, 11, 15, 3, 35, 2)
+		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
 		log1.save()
-		d2 = date(2019, 12, 16)
-		log2 = StatsLog(event = 1, roomID = "311", timeStamp = d)
-		log2.timeStamp = d2
+		d2 = datetime(2019, 11, 15, 1, 40, 3)
+		log2 = StatsLog(event = 1, roomID = "311", timeStamp = d2)
 		log2.save()
-		afterLogs1 = importLog("311", d2, "day")
-
-		print(afterLogs1[0].timeStamp.day)
+		d3 = datetime(2019, 11, 15, 2, 45, 4)
+		log3 = StatsLog(event = 1, roomID = "311", timeStamp = d3)
+		log3.save()
+		afterLogs1 = importLog("311", d1, "day")
+		print(afterLogs1[0].timeStamp)
