@@ -181,3 +181,10 @@ th {
 .table-form-request {
   text-align: center;
 }
+
+.stats-graph {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

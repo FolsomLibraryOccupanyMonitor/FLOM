@@ -6,10 +6,12 @@ from django.core.cache import cache
 import time
 import datetime
 import threading
+import matplotlib.pyplot as plt
 from floor.models import Room
 from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
 from .forms import RoomRequestForm
+import os
 
 def get_stats(ID):
 	stats = {}
@@ -18,6 +20,26 @@ def get_stats(ID):
 	stats['year'] = Year.objects.filter(roomID=ID)
 	stats['ID'] = ID
 	return stats
+
+def createGraph(stats, duration=''):
+	x = []
+	y = []
+	for obj in stats:
+		x.append(obj.date)
+		y.append(obj.totalOccupants)
+	plt.plot(x, y)
+	plt.xlabel('Date')
+	plt.ylabel('Total Occupants')
+	if duration == 'day':
+		plt.title('Total Occupants for Days')
+		plt.savefig('stats/static/days.png')
+	elif duration == 'month':
+		plt.title('Total Occupants for Months')
+		plt.savefig('stats/static/months.png')
+	elif duration == 'year':
+		plt.title('Total Occupants for Years')
+		plt.savefig('stats/static/years.png')
+	plt.close()
 
 @login_required
 def index(request):
@@ -28,6 +50,17 @@ def index(request):
 		form = RoomRequestForm(request.POST)
 		if form.is_valid():
 			stats = get_stats(form.data['room'])
+			# remove old graphs
+			if os.path.exists('stats/static/days.png'):
+				os.remove('stats/static/days.png')
+			if os.path.exists('stats/static/months.png'):
+				os.remove('stats/static/months.png')
+			if os.path.exists('stats/static/years.png'):
+				os.remove('stats/static/years.png')
+			# create and save new graphs
+			createGraph(stats['day'], duration='day')
+			createGraph(stats['month'], duration='month')
+			createGraph(stats['year'], duration='year')
 			return render_to_response('stats/templates/html/stats.html', {'stats':stats})
 	else:
 		form = RoomRequestForm()
