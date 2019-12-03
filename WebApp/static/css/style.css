@@ -61,7 +61,7 @@ body{
 
 a:hover {
   background-position: -99.99% 0;
-  background-color: #28577B;
+  /* background-color: #28577B; */
 }
 
 /* ABOUT PAGE STYLING - non-hover image area*/
