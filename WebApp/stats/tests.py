@@ -49,3 +49,4 @@ class RoomUsageModelTest(TestCase):
 		log3.save()
 		afterLogs1 = importLog("311", d1, "day")
 		print(afterLogs1[0].timeStamp)
+        print('hi')
