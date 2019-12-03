@@ -149,7 +149,10 @@ def calcAvgOccLength(query, duration):
 	'''
 	if duration == 'day':
 		timeDiff = calcTimeDifference(query)
-		return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
+		if len(timeDiff) != 0:
+			return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
+		else:
+			return 0
 	elif duration == 'month':
 		return query.aggregate(Avg(F('avgOccLength')))
 	elif duration == 'year':

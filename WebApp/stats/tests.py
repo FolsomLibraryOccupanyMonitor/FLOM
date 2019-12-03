@@ -1,9 +1,10 @@
 from django.test import TestCase
 import datetime
 from .models import *
-from .views import importLog
+from .views import *
 from datetime import datetime
 from datetime import date
+from stats.models import StatsLog, Day,  Month, Year
 import pytz
 
 class RoomUsageModelTest(TestCase):
@@ -37,16 +38,23 @@ class RoomUsageModelTest(TestCase):
 	#test logs are saved properly
 	@classmethod
 	def testLog(self):
-		d1 = datetime(2018, 11, 15, 4, 35, 2, tzinfo = pytz.timezone('America/New_York'))
-		print(d1)
+		d1 = datetime(2018, 11, 15, 2, 35, 2)
+		print("ORIGINAL: ",d1)
 		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
 		log1.save()
+		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
 		d2 = datetime(2019, 11, 15, 1, 40, 3)
 		log2 = StatsLog(event = 1, roomID = "311", timeStamp = d2)
 		log2.save()
-		d3 = datetime(2019, 11, 15, 2, 45, 4)
+		d3 = datetime(2019, 11, 15, 3, 30, 4)
 		log3 = StatsLog(event = 1, roomID = "311", timeStamp = d3)
 		log3.save()
-		afterLogs1 = importLog("311", d1, "day")
-		print(afterLogs1[0].timeStamp)
-        print('hi')
+		timeObject = Day()
+		timeObject.roomID = "311"
+		now = datetime(2018,11,15,5, 20, 4)
+		timeObject.date = now
+		duration = "day"
+		logList = importLog("311", now, duration)
+		timeObject.totalOccupants = getOccupants(logList, duration)
+		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
+		timeObject.save()
