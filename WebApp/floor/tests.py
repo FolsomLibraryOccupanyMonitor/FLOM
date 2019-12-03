@@ -13,10 +13,12 @@ class BasicTestCase(TestCase):
     response = c.get("http://127.0.0.1:8000/floor/enter/3/311/pass") #Response is of type byte
     response_string = (response.content).decode('ASCII') #To String
     assert(response_string == "Room successfully entered!")
+    print("Room successfully entered!")
     #Exit Room
     response = c.get("http://127.0.0.1:8000/floor/exit/3/311/pass") #Response is of type byte
     response_string = (response.content).decode('ASCII') #To String
     assert(response_string == "Room successfully exited!")
+    print("Room successfully exited!")
 
 # Create your tests here.
 class WrongRoom(TestCase):
@@ -28,7 +30,9 @@ class WrongRoom(TestCase):
     response = c.get("http://127.0.0.1:8000/floor/enter/3/300/pass") #Response is of type byte
     response_string = (response.content).decode('ASCII') #To String
     assert(response_string == "Room Not Found")
+    print("Room Not Found")
     #Exit Room
     response = c.get("http://127.0.0.1:8000/floor/exit/3/300/pass") #Response is of type byte
     response_string = (response.content).decode('ASCII') #To String
     assert(response_string == "Room Not Found")
+    print("Room Not Found")
