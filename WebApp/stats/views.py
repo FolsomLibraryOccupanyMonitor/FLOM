@@ -7,6 +7,7 @@ import time
 import datetime
 import threading
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from floor.models import Room
 from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
@@ -22,22 +23,37 @@ def get_stats(ID):
 	return stats
 
 def createGraph(stats, duration=''):
+	# remove old graphs
+	if os.path.exists('stats/static/days.png'):
+		os.remove('stats/static/days.png')
+	if os.path.exists('stats/static/months.png'):
+		os.remove('stats/static/months.png')
+	if os.path.exists('stats/static/years.png'):
+		os.remove('stats/static/years.png')
 	x = []
 	y = []
+	z = []
 	for obj in stats:
 		x.append(obj.date)
 		y.append(obj.totalOccupants)
-	plt.plot(x, y)
+		z.append(obj.avgOccLength.total_seconds())
+	fig, (ax1, ax2) = plt.subplots(1, 2)
+	ax1.bar(x, y, align='center', alpha=0.5)
+	ax2.bar(x, z, align='center', alpha=0.5)
+	fig.autofmt_xdate()
+	ax1.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+	ax2.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
 	plt.xlabel('Date')
-	plt.ylabel('Total Occupants')
+	ax1.set_ylabel('Total Occupants')
+	ax2.set_ylabel('Average Occupancy Time')
 	if duration == 'day':
-		plt.title('Total Occupants for Days')
+		plt.title('Total Occupants & Average Occupancy Time for Days')
 		plt.savefig('stats/static/days.png')
 	elif duration == 'month':
-		plt.title('Total Occupants for Months')
+		plt.title('Total Occupants & Average Occupancy Time for Months')
 		plt.savefig('stats/static/months.png')
 	elif duration == 'year':
-		plt.title('Total Occupants for Years')
+		plt.title('Total Occupants & Average Occupancy Time for Years')
 		plt.savefig('stats/static/years.png')
 	plt.close()
 
@@ -50,13 +66,6 @@ def index(request):
 		form = RoomRequestForm(request.POST)
 		if form.is_valid():
 			stats = get_stats(form.data['room'])
-			# remove old graphs
-			if os.path.exists('stats/static/days.png'):
-				os.remove('stats/static/days.png')
-			if os.path.exists('stats/static/months.png'):
-				os.remove('stats/static/months.png')
-			if os.path.exists('stats/static/years.png'):
-				os.remove('stats/static/years.png')
 			# create and save new graphs
 			createGraph(stats['day'], duration='day')
 			createGraph(stats['month'], duration='month')
