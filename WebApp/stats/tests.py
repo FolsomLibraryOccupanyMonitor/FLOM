@@ -4,6 +4,7 @@ from .models import *
 from .views import importLog
 from datetime import datetime
 from datetime import date
+import pytz
 
 class RoomUsageModelTest(TestCase):
 
@@ -36,7 +37,8 @@ class RoomUsageModelTest(TestCase):
 	#test logs are saved properly
 	@classmethod
 	def testLog(self):
-		d1 = datetime(2018, 11, 15, 3, 35, 2)
+		d1 = datetime(2018, 11, 15, 4, 35, 2, tzinfo = pytz.timezone('America/New_York'))
+		print(d1)
 		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
 		log1.save()
 		d2 = datetime(2019, 11, 15, 1, 40, 3)
