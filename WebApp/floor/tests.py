@@ -5,6 +5,7 @@ from django.http import HttpResponse
 
 # Create your tests here.
 class BasicTestCase(TestCase):
+    print("Testing simply entering and exiting a room that exists (311)")
     #Enter Room Success
     #Must Login to enter the room
     c = Client()
@@ -22,6 +23,7 @@ class BasicTestCase(TestCase):
 
 # Create your tests here.
 class WrongRoom(TestCase):
+    print("Testing entering and exiting a room that does not exist (300)")
     #Enter Room Success
     #Must Login to enter the room
     c = Client()
