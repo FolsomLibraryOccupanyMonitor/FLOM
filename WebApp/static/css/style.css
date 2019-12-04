@@ -66,11 +66,10 @@ a:hover {
 
 /* ABOUT PAGE STYLING - non-hover image area*/
 .about {
-    background-color: #fff;
+    background-color: white;
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    align-items: right;
     margin-left: 12%;
     margin-right: 12%;
     position: relative;
@@ -98,7 +97,7 @@ a:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color:#fff;
+  background-color: white;
   overflow: hidden;
   width: 95%;
   height:100%;
@@ -106,13 +105,13 @@ a:hover {
   transition: .5s ease;
   border-radius: 5px;
 }
-
+/* The actual hover event that triggers the text to appear */
 .about:hover .overlay {
   opacity:1;
 }
-
+/* how the text is displayed inside the overlay */
 .text {
-  font-size: 0.9vw;
+  font-size: 0.9vw;              /* responsive text size is 0.9% of the viewport */
   position: relative;
   top: 25%;
   left: 50%;
@@ -122,9 +121,10 @@ a:hover {
   text-align: center;
   font-weight: bold;
   padding-left: 20%;
-  padding-right: 20%;
+  padding-right: 20%;             /* paddings keep text pushed in center */
 }
-
+/* based on the size of the screen, change how the
+text is disaplyed as well as the size of the bow its in */
 @media screen and (max-width: 991px){
    .text{
       padding: 1px;
