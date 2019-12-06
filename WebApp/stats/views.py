@@ -7,7 +7,7 @@ import time
 import datetime
 import threading
 from floor.models import Room
-from django.db.models import Sum, Avg, F
+from django.db.models import Sum, Avg, F 
 from django.contrib.auth.decorators import login_required
 
 
@@ -38,7 +38,7 @@ def index(request):
 	return render_to_response('stats/templates/html/stats.html')
 
 def log(rID, e):
-	currLog = StatsLog(event = e, roomID = rID, timeStamp = datetime.now())
+	currLog = StatsLog(event = e, roomID = rID, date = datetime.now())
 	currLog.save()
 
 
@@ -108,11 +108,11 @@ def startThread():
 def importLog(ID, now, duration):	
 	query = None
 	if duration == 'day':
-		query = StatsLog.objects.filter(roomID=ID, timeStamp__year=now.year, timeStamp__month=now.month, timeStamp__day=now.day)
+		query = StatsLog.objects.filter(roomID=ID,date__month=now.month, date__day=now.day)
 	elif duration == 'month':
-		query = Day.objects.filter(roomID=ID, timeStamp__year=now.year, timeStamp__month=now.month)
+		query = Day.objects.filter(roomID=ID, date__year=now.year, date__month=now.month)
 	elif duration == 'year':
-		query = Month.objects.filter(roomID=ID, timeStamp__year=now.year)
+		query = Month.objects.filter(roomID=ID, date__year=now.year)
 	return query
 
 
@@ -124,9 +124,9 @@ def getOccupants(query, duration):
 	if duration == 'day':
 		return int(len(query)/2)
 	elif duration == 'month':
-		return query.aggregate(Sum(F('totalOccupants')))
+		return int(query.aggregate(Sum(F('totalOccupants'))))
 	elif duration == 'year':
-		return query.aggregate(Sum(F('totalOccupants')))
+		return int(query.aggregate(Sum(F('totalOccupants'))))
 	return 0
 
 def calcTimeDifference(query):
@@ -138,7 +138,7 @@ def calcTimeDifference(query):
 			tmp_entry = log
 		# else the log contains exit data
 		else:
-			timeDiff.append(log.timeStamp - tmp_entry.timeStamp)
+			timeDiff.append(log.date - tmp_entry.date)
 	return timeDiff
 
 def calcAvgOccLength(query, duration):

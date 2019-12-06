@@ -3,8 +3,6 @@ import datetime
 from .models import *
 from .views import *
 from datetime import datetime
-from datetime import date
-from stats.models import StatsLog, Day,  Month, Year
 import pytz
 
 class RoomUsageModelTest(TestCase):
@@ -40,21 +38,23 @@ class RoomUsageModelTest(TestCase):
 	def testLog(self):
 		d1 = datetime(2018, 11, 15, 2, 35, 2)
 		print("ORIGINAL: ",d1)
-		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
+		log1 = StatsLog(event = 1, roomID = "311", date = d1)
 		log1.save()
-		log1 = StatsLog(event = 1, roomID = "311", timeStamp = d1)
+		log1 = StatsLog(event = 1, roomID = "311", date = d1)
 		d2 = datetime(2019, 11, 15, 1, 40, 3)
-		log2 = StatsLog(event = 1, roomID = "311", timeStamp = d2)
+		log2 = StatsLog(event = 1, roomID = "311", date = d2)
 		log2.save()
 		d3 = datetime(2019, 11, 15, 3, 30, 4)
-		log3 = StatsLog(event = 1, roomID = "311", timeStamp = d3)
+		log3 = StatsLog(event = 1, roomID = "311", date = d3)
 		log3.save()
 		timeObject = Day()
 		timeObject.roomID = "311"
-		now = datetime(2018,11,15,5, 20, 4)
-		timeObject.date = now
+		#datetime(Year Month Day Hour Minute Seconds)
+		timenow = datetime.now()
+		print(timenow.day)
+		timeObject.date = timenow
 		duration = "day"
-		logList = importLog("311", now, duration)
+		logList = importLog("311", timenow, duration)
 		timeObject.totalOccupants = getOccupants(logList, duration)
 		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
 		timeObject.save()
