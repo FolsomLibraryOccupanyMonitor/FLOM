@@ -1,8 +1,11 @@
-# from django.test import TestCase
-# from .models import RoomUsage, Room, OccupancyStats
-# from datetime import datetime
+from django.test import TestCase
+import datetime
+from .models import *
+from .views import *
+from datetime import datetime
+import pytz
 
-# class RoomUsageModelTest(TestCase):
+class RoomUsageModelTest(TestCase):
 
 # 	def testDefaultValues(self) {
 # 		'''
@@ -18,3 +21,40 @@
 # 		# test default total occupancy
 # 		self.assertEqual(roomUsage.occupancyStats.totalOccupancy, 0)
 # 	}
+	@classmethod
+	def setUpTestData(cls):
+		print("SET UP")
+		# assert(False == True)
+		# print(beforeLog1.timeStamp)
+		# day301 = createTimeObject(301, "day", now)
+		# month301 = createTimeObject(301, "month", now)
+		# year301 = createTimeObject(301, "year", now)
+		# day302 = createTimeObject(302, "day", now)
+		# month302 = createTimeObject(302, "month", now)
+		# year302 = createTimeObject(302, "year", now)
+
+	#test logs are saved properly
+	@classmethod
+	def testLog(self):
+		d1 = datetime(2018, 11, 15, 2, 35, 2)
+		print("ORIGINAL: ",d1)
+		log1 = StatsLog(event = 1, roomID = "311", date = d1)
+		log1.save()
+		log1 = StatsLog(event = 1, roomID = "311", date = d1)
+		d2 = datetime(2019, 11, 15, 1, 40, 3)
+		log2 = StatsLog(event = 1, roomID = "311", date = d2)
+		log2.save()
+		d3 = datetime(2019, 11, 15, 3, 30, 4)
+		log3 = StatsLog(event = 1, roomID = "311", date = d3)
+		log3.save()
+		timeObject = Day()
+		timeObject.roomID = "311"
+		#datetime(Year Month Day Hour Minute Seconds)
+		timenow = datetime.now()
+		print(timenow.day)
+		timeObject.date = timenow
+		duration = "day"
+		logList = importLog("311", timenow, duration)
+		timeObject.totalOccupants = getOccupants(logList, duration)
+		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
+		timeObject.save()
