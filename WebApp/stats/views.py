@@ -8,11 +8,11 @@ import datetime
 import threading
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import os
 from floor.models import Room
 from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
 from .forms import RoomRequestForm
-import os
 
 def get_stats(ID):
 	stats = {}
@@ -24,11 +24,11 @@ def get_stats(ID):
 
 def createGraph(stats, duration=''):
 	# remove old graphs
-	if os.path.exists('stats/static/days.png'):
+	if os.path.exists('stats/static/days.png') and duration == 'day':
 		os.remove('stats/static/days.png')
-	if os.path.exists('stats/static/months.png'):
+	if os.path.exists('stats/static/months.png') and duration == 'month':
 		os.remove('stats/static/months.png')
-	if os.path.exists('stats/static/years.png'):
+	if os.path.exists('stats/static/years.png') and duration == 'year':
 		os.remove('stats/static/years.png')
 	x = []
 	y = []
@@ -36,24 +36,28 @@ def createGraph(stats, duration=''):
 	for obj in stats:
 		x.append(obj.date)
 		y.append(obj.totalOccupants)
-		z.append(obj.avgOccLength.total_seconds())
+		z.append(obj.avgOccLength.total_seconds()/60.0)
 	fig, (ax1, ax2) = plt.subplots(1, 2)
+	plt.subplots_adjust(left=.125, right=.9, bottom=.1, top=.9, wspace=.2, hspace=.2)
 	ax1.bar(x, y, align='center', alpha=0.5)
 	ax2.bar(x, z, align='center', alpha=0.5)
 	fig.autofmt_xdate()
+	fig.set_figheight(10)
+	fig.set_figwidth(15)
 	ax1.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
 	ax2.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
-	plt.xlabel('Date')
+	ax1.set_xlabel('Date')
+	ax2.set_xlabel('Date')
 	ax1.set_ylabel('Total Occupants')
-	ax2.set_ylabel('Average Occupancy Time')
+	ax2.set_ylabel('Average Occupancy Time (minutes)')
 	if duration == 'day':
-		plt.title('Total Occupants & Average Occupancy Time for Days')
+		fig.suptitle('Total Occupants & Average Occupancy Time for Days')
 		plt.savefig('stats/static/days.png')
 	elif duration == 'month':
-		plt.title('Total Occupants & Average Occupancy Time for Months')
+		fig.suptitle('Total Occupants & Average Occupancy Time for Months')
 		plt.savefig('stats/static/months.png')
 	elif duration == 'year':
-		plt.title('Total Occupants & Average Occupancy Time for Years')
+		fig.suptitle('Total Occupants & Average Occupancy Time for Years')
 		plt.savefig('stats/static/years.png')
 	plt.close()
 
