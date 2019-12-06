@@ -1,1 +1,0 @@
-/usr/bin/c++    -Wall -std=c++11   CMakeFiles/MLX90640.dir/sensor.cpp.o CMakeFiles/MLX90640.dir/main.cpp.o  -o MLX90640 -rdynamic -lm -lbcm2835 
