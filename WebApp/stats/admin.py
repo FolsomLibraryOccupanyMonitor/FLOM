@@ -4,7 +4,7 @@ from .models import StatsLog, Day, Month, Year
 # Register your models here.
 
 class StatsLogAdmin(admin.ModelAdmin):
-	list_display = ('roomID', 'event', 'timeStamp')
+	list_display = ('roomID', 'event', 'date')
 
 
 class DayAdmin(admin.ModelAdmin):

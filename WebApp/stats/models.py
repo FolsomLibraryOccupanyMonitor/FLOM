@@ -14,7 +14,8 @@ class StatsLog(models.Model):
 	'''
 	event = models.IntegerField(default = 0)
 	roomID = models.CharField(max_length = 5)
-	timeStamp = models.DateTimeField(auto_now_add=True, editable=False)
+	#CHANGE THIS BACK TO editable = False AFTER TESTING
+	date = models.DateTimeField()
 
 '''
 	These models are a representation of the usage statistics that have
