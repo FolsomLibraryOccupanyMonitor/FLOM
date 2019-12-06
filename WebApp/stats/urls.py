@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
 	path('',views.index, name="index"),
-	path('<duration>', views.render_statistics, name='basic_stats'),
 ]
 
 views.startThread()

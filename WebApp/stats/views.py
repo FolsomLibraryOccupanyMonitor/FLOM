@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from stats.models import StatsLog, Day,  Month, Year
 from django.http import HttpResponse
 from datetime import datetime
@@ -6,36 +6,78 @@ from django.core.cache import cache
 import time
 import datetime
 import threading
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import os
 from floor.models import Room
 from django.db.models import Sum, Avg, F 
 from django.contrib.auth.decorators import login_required
+from .forms import RoomRequestForm
 
-
-def render_statistics(request, duration):
+def get_stats(ID):
 	stats = {}
-	available_stats = []
-	titles = ['roomID', 'date', 'totalOccupants', 'avgOccLength']
-	query = None
+	stats['day'] = Day.objects.filter(roomID=ID)
+	stats['month'] = Month.objects.filter(roomID=ID)
+	stats['year'] = Year.objects.filter(roomID=ID)
+	stats['ID'] = ID
+	return stats
+
+def createGraph(stats, duration=''):
+	# remove old graphs
+	if os.path.exists('stats/static/days.png') and duration == 'day':
+		os.remove('stats/static/days.png')
+	if os.path.exists('stats/static/months.png') and duration == 'month':
+		os.remove('stats/static/months.png')
+	if os.path.exists('stats/static/years.png') and duration == 'year':
+		os.remove('stats/static/years.png')
+	x = []
+	y = []
+	z = []
+	for obj in stats:
+		x.append(obj.date)
+		y.append(obj.totalOccupants)
+		z.append(obj.avgOccLength.total_seconds()/60.0)
+	fig, (ax1, ax2) = plt.subplots(1, 2)
+	plt.subplots_adjust(left=.125, right=.9, bottom=.1, top=.9, wspace=.2, hspace=.2)
+	ax1.bar(x, y, align='center', alpha=0.5)
+	ax2.bar(x, z, align='center', alpha=0.5)
+	fig.autofmt_xdate()
+	fig.set_figheight(10)
+	fig.set_figwidth(15)
+	ax1.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+	ax2.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
+	ax1.set_xlabel('Date')
+	ax2.set_xlabel('Date')
+	ax1.set_ylabel('Total Occupants')
+	ax2.set_ylabel('Average Occupancy Time (minutes)')
 	if duration == 'day':
-		query = Day.objects.all();
+		fig.suptitle('Total Occupants & Average Occupancy Time for Days')
+		plt.savefig('stats/static/days.png')
 	elif duration == 'month':
-		query = Month.objects.all();
-	else:
-		query = Year.objects.all();
-	for obj in query:
-		for title in titles:
-			available_stats.append({title:getattr(obj, title)})
-	stats['stats'] = available_stats
-	print(stats)
-	display = render_to_response('stats/templates/html/stats.html', stats)
-	return display
+		fig.suptitle('Total Occupants & Average Occupancy Time for Months')
+		plt.savefig('stats/static/months.png')
+	elif duration == 'year':
+		fig.suptitle('Total Occupants & Average Occupancy Time for Years')
+		plt.savefig('stats/static/years.png')
+	plt.close()
 
 @login_required
 def index(request):
 	'''
 	@return display of stats page
 	'''
-	return render_to_response('stats/templates/html/stats.html')
+	if request.method == 'POST':
+		form = RoomRequestForm(request.POST)
+		if form.is_valid():
+			stats = get_stats(form.data['room'])
+			# create and save new graphs
+			createGraph(stats['day'], duration='day')
+			createGraph(stats['month'], duration='month')
+			createGraph(stats['year'], duration='year')
+			return render_to_response('stats/templates/html/stats.html', {'stats':stats})
+	else:
+		form = RoomRequestForm()
+	return render(request, 'stats/templates/html/stats.html', {'form': form})
 
 def log(rID, e):
 	currLog = StatsLog(event = e, roomID = rID, date = datetime.now())
