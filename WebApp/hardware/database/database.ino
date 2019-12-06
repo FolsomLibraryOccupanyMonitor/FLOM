@@ -7,25 +7,28 @@ hmap::Location database(DATABASE);
 RadioEndPoint radio_endpoint;
 const byte address[6] = "00001";
 
-void on_occupancy_msg(void* raw_msg){
-    occupancy::Msg& o_msg = *static_cast<occupancy::Msg*>(raw_msg);
-    Serial.println(o_msg.body.occupied);
+void on_occupancy_msg(void *raw_msg)
+{
+    occupancy::Msg &o_msg = *static_cast<occupancy::Msg *>(raw_msg);
+    Serial.write((byte *)(&o_msg.body), sizeof(occupancy::Body)); //writing a message
 }
 
-void setup() {
+void setup()
+{
     radio_endpoint.setup(address);
     Serial.begin(9600);
 
     database.subscribe<occupancy::Msg>(&on_occupancy_msg);
-    database.bind(radio_endpoint);
+    database.bind(radio_endpoint); //setting up radio channel for communication
 }
 
 const unsigned int cycle_delay = 250;
 
-void loop() {
+void loop()
+{
+    //Serial.println(sizeof(occupancy::Body));
     delay(cycle_delay);
     database.cycle();
-    
 }
 
 /*
@@ -103,7 +106,3 @@ void loop(){
     }
 }
 */
-
-
-
-
