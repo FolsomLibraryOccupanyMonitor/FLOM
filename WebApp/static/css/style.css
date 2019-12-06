@@ -1,12 +1,10 @@
 html {
   font-family:'IBM Plex Sans', sans-serif !important;
-  color: #b3252c;
 }
 
 body{
-    /* background-color: rgba(255, 0, 0, 0.0) !important; */
+    /* RED BACKGROUND */
     background-color: #b3252c;
-    opacity:0.9;
 }
 
 .home-bg {
@@ -63,16 +61,15 @@ body{
 
 a:hover {
   background-position: -99.99% 0;
-  background-color: #28577B;
+  /* background-color: #28577B; */
 }
 
-/* ABOUT PAGE STYLING */
+/* ABOUT PAGE STYLING - non-hover image area*/
 .about {
-    background-color: #D7D9D7;
+    background-color: white;
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    align-items: right;
     margin-left: 12%;
     margin-right: 12%;
     position: relative;
@@ -92,7 +89,7 @@ a:hover {
   padding-bottom: 30px;
   padding-top: 30px;
 }
-
+/* HOVER OVER LIBRARY IMAGE */
 .overlay {
   margin: auto;
   position: absolute;
@@ -100,7 +97,7 @@ a:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color:#D7D9D7;
+  background-color: white;
   overflow: hidden;
   width: 95%;
   height:100%;
@@ -108,13 +105,13 @@ a:hover {
   transition: .5s ease;
   border-radius: 5px;
 }
-
+/* The actual hover event that triggers the text to appear */
 .about:hover .overlay {
   opacity:1;
 }
-
+/* how the text is displayed inside the overlay */
 .text {
-  font-size: 1.1vw;
+  font-size: 0.9vw;              /* responsive text size is 0.9% of the viewport */
   position: relative;
   top: 25%;
   left: 50%;
@@ -124,9 +121,10 @@ a:hover {
   text-align: center;
   font-weight: bold;
   padding-left: 20%;
-  padding-right: 20%;
+  padding-right: 20%;             /* paddings keep text pushed in center */
 }
-
+/* based on the size of the screen, change how the
+text is disaplyed as well as the size of the bow its in */
 @media screen and (max-width: 991px){
    .text{
       padding: 1px;
