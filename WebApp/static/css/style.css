@@ -1,0 +1,240 @@
+html {
+  font-family:'IBM Plex Sans', sans-serif !important;
+}
+
+body{
+    /* RED BACKGROUND */
+    background-color: #b3252c;
+}
+
+.home-bg {
+  background-color: white;
+}
+
+.navbar{
+  font-size: 18.5px;
+  margin: 0px 0px 0px 0px;
+  /* background-color: #092638; */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+  color: black;
+.dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #7e8e41;
+}
+
+/* when hovering, changes background to gray */
+.gray a {
+  background-image: linear-gradient(to right, rgba(255,255,255,0) 50%, rgba(210, 215, 811, 1) 50%);
+  background-position: -0% 0;
+  background-size: 200% auto;
+  color: #222;
+  line-height: 1em;
+  /* text-decoration-color: #D7D9D7; */
+  transition: background-position .6s ease-out;
+}
+
+a:hover {
+  background-position: -99.99% 0;
+  /* background-color: #28577B; */
+}
+
+/* ABOUT PAGE STYLING - non-hover image area*/
+.about {
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 12%;
+    margin-right: 12%;
+    position: relative;
+    height: auto;
+}
+
+.container {
+  background-color: rgba(255, 0, 0, 0.0) !important;
+}
+
+.image {
+  display: block;
+  margin: auto;
+  width: 95%;
+  height: auto;
+  border-radius: 5px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+/* HOVER OVER LIBRARY IMAGE */
+.overlay {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  overflow: hidden;
+  width: 95%;
+  height:100%;
+  opacity: 0;
+  transition: .5s ease;
+  border-radius: 5px;
+}
+/* The actual hover event that triggers the text to appear */
+.about:hover .overlay {
+  opacity:1;
+}
+/* how the text is displayed inside the overlay */
+.text {
+  font-size: 0.9vw;              /* responsive text size is 0.9% of the viewport */
+  position: relative;
+  top: 25%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -25%);
+  -ms-transform: translate(-50%, -25%);
+  transform: translate(-50%, -25%);
+  text-align: center;
+  font-weight: bold;
+  padding-left: 20%;
+  padding-right: 20%;             /* paddings keep text pushed in center */
+}
+/* based on the size of the screen, change how the
+text is disaplyed as well as the size of the bow its in */
+@media screen and (max-width: 991px){
+   .text{
+      padding: 1px;
+   }
+   .about{
+      height:400px;
+   }
+}
+
+
+.fixed-arrow {
+  position: absolute;
+  bottom: 25px;
+  left: 49%;
+  align: center;
+}
+
+div .landing {
+  height: 100vh;
+}
+
+.big {
+  font-size: 20px;
+}
+
+.footer {
+  font-size: 12px;
+  color: #092638;
+  margin-bottom: 50px;
+}
+
+.center {
+  text-align: center;
+  text-decoration-color: #D7D9D7;
+}
+
+.stats_table {
+  padding: 100px;
+}
+
+/* LOGIN PAGE  CSSS */
+.login-main{
+    position: relative;
+    top: 10%;
+    background-color: white;
+    display: block;
+    border-radius: 5px;
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    padding: 10px;
+}
+
+.login-img {
+    margin: auto;
+    width: 55%;
+    padding: 10px;
+}
+
+.login-sub{
+    background-color: #b3252c;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 3px;
+    cursor: pointer;
+    border-radius: 50px;
+    text-decoration: none;
+}
+.login-sub:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+/* LOGOUT PAGE CSS */
+.logout {
+   background-color: white;
+   color: #b3252c;
+   padding: 50px;
+   margin: auto;
+   width: 50%;
+   margin-top: 50px;
+   text-align: center;
+   border-radius: 5px;
+}
+
+/* STATS PAGE CSS */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+td {
+  background-color: #c1c1c1;
+}
+
+th {
+  background-color: #f1f1f1;
+  color: black;
+  text-shadow: 2px;
+}
+
+.table-form-request {
+  text-align: center;
+}
