@@ -38,6 +38,7 @@ class RoomUsageModelTest(TestCase):
 	def testLog(self):
 		d1 = dt(2019, 11, 15, 2, 35, 2)
 		print("ORIGINAL: ",d1)
+		#Creates test events that occurr
 		log1 = StatsLog(event = 1, roomID = "311", date = d1)
 		log1.save()
 		d2 = dt(2019, 11, 15, 2, 40, 3)
@@ -52,14 +53,12 @@ class RoomUsageModelTest(TestCase):
 		timeObject = Day()
 		timeObject.roomID = "311"
 		#datetime(Year Month Day Hour Minute Seconds)
-		#timenow = dt.now()
 		timenow = dt(2019, 11, 15, 5, 37, 23)
-		print(timenow.day)
+		#Creates the test day to create statistics for
 		timeObject.date = timenow
 		duration = "day"
 		logList = importLog("311", timenow, duration)
-		#print(logList)
+		#Calculates the statistics for that day and then saves
 		timeObject.totalOccupants = getOccupants(logList, duration)
 		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
-		#print(timeObject.avgOccLength)
 		timeObject.save()

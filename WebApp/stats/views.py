@@ -149,12 +149,7 @@ def startThread():
 
 def importLog(ID, now, duration):	
 	query = None
-	'''
-	print("Printing importLog parameters")
-	print(ID)
-	print(now)
-	print(duration)
-	'''
+	#Finds different events depending on the RoomID and the day/month/year and then returns those events
 	if duration == 'day':
 		query = StatsLog.objects.filter(roomID=ID,date__month=now.month, date__day=now.day)
 	elif duration == 'month':
@@ -183,11 +178,9 @@ def calcTimeDifference(query):
 	for log in query:
 		# if the log contains entry data
 		if log.event == 1:
-			#print("Enter")
 			tmp_entry = log
 		# else the log contains exit data
 		else:
-			#print("Exit")
 			timeDiff.append(log.date - tmp_entry.date)
 	return timeDiff
 
@@ -197,13 +190,11 @@ def calcAvgOccLength(query, duration):
 	the room has spent occupied. 
 	Gets information from logs.
 	'''
-	#print(query)
 	if duration == 'day':
 		timeDiff = calcTimeDifference(query)
 		if len(timeDiff) != 0:
 			return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
 		else:
-			#print("Im returning 0")
 			return 0
 	elif duration == 'month':
 		return query.aggregate(Avg(F('avgOccLength')))
