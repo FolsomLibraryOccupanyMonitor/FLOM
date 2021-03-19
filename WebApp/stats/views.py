@@ -153,7 +153,7 @@ def importLog(ID, now, duration):
 	if duration == 'day':
 		query = StatsLog.objects.filter(roomID=ID,date__month=now.month, date__day=now.day)
 	elif duration == 'month':
-		query = Day.objects.filter(roomID=ID, date__year=now.year, date__month=now.month)
+		query = StatsLog.objects.filter(roomID=ID, date__year=now.year, date__month=now.month)
 	elif duration == 'year':
 		query = Month.objects.filter(roomID=ID, date__year=now.year)
 	return query
@@ -167,21 +167,24 @@ def getOccupants(query, duration):
 	if duration == 'day':
 		return int(len(query)/2)
 	elif duration == 'month':
-		return int(query.aggregate(Sum(F('totalOccupants'))))
+		return int(len(query)/2)
+		#return int(query.aggregate(Sum(F('totalOccupants'))))
 	elif duration == 'year':
 		return int(query.aggregate(Sum(F('totalOccupants'))))
 	return 0
 
 def calcTimeDifference(query):
+	#calculates the time difference between the FIRST person entering the room and when the first person leaves the room
 	timeDiff = []
 	tmp_entry = None
 	for log in query:
-		# if the log contains entry data
-		if log.event == 1:
+		# if the log contains entry data 
+		if log.event == 1 and tmp_entry == None:
 			tmp_entry = log
-		# else the log contains exit data
-		else:
+		# else the log contains exit data (and doesn't start with exit data)
+		elif log.event != 0 and tmp_entry != None:
 			timeDiff.append(log.date - tmp_entry.date)
+			tmp_entry = None
 	return timeDiff
 
 def calcAvgOccLength(query, duration):

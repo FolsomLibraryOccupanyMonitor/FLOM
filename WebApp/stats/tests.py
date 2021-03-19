@@ -48,17 +48,59 @@ class RoomUsageModelTest(TestCase):
 		log3 = StatsLog(event = 1, roomID = "311", date = d3)
 		log3.save()
 		d4 = dt(2019, 11, 15, 4, 37, 23)
-		log4 = StatsLog(event = 0, roomID = "311", date = d4)
+		log4 = StatsLog(event = 1, roomID = "311", date = d4)
 		log4.save()
+		d5 = dt(2019, 11, 15, 8, 23, 12)
+		log5 = StatsLog(event = 0, roomID = "311", date = d5)
+		log5.save()
+		d6 = dt(2019, 11, 15, 0, 20, 5)
+		log6 = StatsLog(event = 0, roomID = "311", date = d6)
+		log6.save()
+		#End of creating test events
 		timeObject = Day()
 		timeObject.roomID = "311"
-		#datetime(Year Month Day Hour Minute Seconds)
-		timenow = dt(2019, 11, 15, 5, 37, 23)
+		#dt(Year Month Day Hour Minute Seconds)
+		timenow = dt(2019, 11, 15, 10, 37, 23)
 		#Creates the test day to create statistics for
 		timeObject.date = timenow
 		duration = "day"
 		logList = importLog("311", timenow, duration)
+		print(logList)
 		#Calculates the statistics for that day and then saves
 		timeObject.totalOccupants = getOccupants(logList, duration)
 		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
+		print(timeObject.avgOccLength)
 		timeObject.save()
+
+		"""
+		#Testing month statistics
+		#Begin creating test events
+		month1 = dt(2021, 2, 3, 5, 13, 6)
+		logMonth1 = StatsLog(event = 1, roomID = "311", date = month1)
+		logMonth1.save()
+		month2 = dt(2021, 2, 3, 6, 34, 32)
+		logMonth2 = StatsLog(event = 0, roomID = "311", date = month2)
+		logMonth2.save()
+		month3 = dt(2021, 2, 5, 7, 12, 53)
+		logMonth3 = StatsLog(event = 1, roomID = "311", date = month3)
+		logMonth3.save()
+		month4 = dt(2021, 2, 5, 8, 31, 13)
+		logMonth4 = StatsLog(event = 0, roomID = "311", date = month4)
+		logMonth4.save()
+		#End of creating test events
+		timeObject2 = Month()
+		timeObject2.roomID = "311"
+		#dt(Year Month Day Hour Minute Seconds)
+		timenow2 = dt(2021, 2, 15, 12, 32, 9)
+		timeObject2.date = timenow2
+		duration2 = "month"
+		logList2 = importLog("311", timenow2, duration2)
+		print(logList2)
+		print("Time object2 date:", timeObject2.date)
+		timeObject2.totalOccupants = getOccupants(logList2, duration2)
+		timeObject2.avgOccLength = calcAvgOccLength(logList2, duration2)
+		print(timeObject2.avgOccLength)
+		print("Saving time")
+		timeObject2.save()
+		"""
+		
