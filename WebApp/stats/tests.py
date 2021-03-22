@@ -67,10 +67,11 @@ class RoomUsageModelTest(TestCase):
 		logList = importLog("311", timenow, duration)
 		print(logList)
 		#Calculates the statistics for that day and then saves
-		timeObject.totalOccupants = getOccupants(logList, duration)
-		timeObject.avgOccLength = calcAvgOccLength(logList, duration)
+		timeObject.totalOccupants = getOccupants(logList)
+		timeObject.avgOccLength = calcAvgOccLength(logList)
 		print(timeObject.avgOccLength)
 		timeObject.save()
+		print(timeObject.avgOccLength)
 
 		#Testing month statistics
 		#Begin creating test events
@@ -94,7 +95,33 @@ class RoomUsageModelTest(TestCase):
 		timeObject2.date = timenow2
 		duration2 = "month"
 		logList2 = importLog("311", timenow2, duration2)
-		timeObject2.totalOccupants = getOccupants(logList2, duration2)
-		timeObject2.avgOccLength = calcAvgOccLength(logList2, duration2)
+		timeObject2.totalOccupants = getOccupants(logList2)
+		timeObject2.avgOccLength = calcAvgOccLength(logList2)
+		print(timeObject2.avgOccLength)
 		timeObject2.save()
+
+
+		#Year test events
+		year1 = dt(2020, 4, 5, 12, 32, 13)
+		logYear1 = StatsLog(event = 1, roomID = "311", date = year1)
+		logYear1.save()
+		year2 = dt(2020, 4, 5, 14, 5, 34)
+		logYear2 = StatsLog(event = 0, roomID = "311", date = year2)
+		logYear2.save()
+		year3 = dt(2020, 5, 20, 5, 23, 34)
+		logYear3 = StatsLog(event = 1, roomID = "311", date = year3)
+		logYear3.save()
+		year4 = dt(2020, 5, 20, 7, 12, 9)
+		logYear4 = StatsLog(event = 0, roomID = "311", date = year4)
+		logYear4.save()
+		timeObject3 = Year()
+		timeObject3.roomID = "311"
+		timenow3 = dt(2020, 6, 28, 5, 2, 1)
+		timeObject3.date = timenow3
+		duration3 = "year"
+		logList3 = importLog("311", timenow3, duration3)
+		timeObject3.totalOccupants = getOccupants(logList3)
+		print("totalOccupants:", timeObject3.totalOccupants)
+		timeObject3.avgOccLength = calcAvgOccLength(logList3)
+		print("avgOccLength:", timeObject3.avgOccLength)
 		

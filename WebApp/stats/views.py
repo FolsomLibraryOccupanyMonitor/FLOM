@@ -159,19 +159,12 @@ def importLog(ID, now, duration):
 	return query
 
 
-def getOccupants(query, duration):
+def getOccupants(query):
 	'''
 	Return the number of people in the room.
 	Gets information from logs.
 	'''
-	if duration == 'day':
-		return int(len(query)/2)
-	elif duration == 'month':
-		return int(len(query)/2)
-		#return int(query.aggregate(Sum(F('totalOccupants'))))
-	elif duration == 'year':
-		return int(query.aggregate(Sum(F('totalOccupants'))))
-	return 0
+	return int(len(query)/2)
 
 def calcTimeDifference(query):
 	#calculates the time difference between the FIRST person entering the room and when the first person leaves the room
@@ -187,25 +180,15 @@ def calcTimeDifference(query):
 			tmp_entry = None
 	return timeDiff
 
-def calcAvgOccLength(query, duration):
+def calcAvgOccLength(query):
 	'''
 	Return the average amount of time
 	the room has spent occupied. 
 	Gets information from logs.
 	'''
-	if duration == 'day':
-		timeDiff = calcTimeDifference(query)
-		if len(timeDiff) != 0:
-			return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
-		else:
-			return 0
-	elif duration == 'month':
-		#return query.aggregate(Avg(F('avgOccLength')))
-		timeDiff = calcTimeDifference(query)
-		if len(timeDiff) != 0:
-			return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
-		else:
-			return 0
-	elif duration == 'year':
-		return query.aggregate(Avg(F('avgOccLength')))
+	timeDiff = calcTimeDifference(query)
+	if len(timeDiff) != 0:
+		return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
+	else:
+		return 0
 	return None
