@@ -155,7 +155,7 @@ def importLog(ID, now, duration):
 	elif duration == 'month':
 		query = StatsLog.objects.filter(roomID=ID, date__year=now.year, date__month=now.month)
 	elif duration == 'year':
-		query = Month.objects.filter(roomID=ID, date__year=now.year)
+		query = StatsLog.objects.filter(roomID=ID, date__year=now.year)
 	return query
 
 
@@ -182,7 +182,7 @@ def calcTimeDifference(query):
 		if log.event == 1 and tmp_entry == None:
 			tmp_entry = log
 		# else the log contains exit data (and doesn't start with exit data)
-		elif log.event != 0 and tmp_entry != None:
+		elif log.event == 0 and tmp_entry != None:
 			timeDiff.append(log.date - tmp_entry.date)
 			tmp_entry = None
 	return timeDiff
@@ -200,7 +200,12 @@ def calcAvgOccLength(query, duration):
 		else:
 			return 0
 	elif duration == 'month':
-		return query.aggregate(Avg(F('avgOccLength')))
+		#return query.aggregate(Avg(F('avgOccLength')))
+		timeDiff = calcTimeDifference(query)
+		if len(timeDiff) != 0:
+			return sum(timeDiff, datetime.timedelta(0)) / len(timeDiff)
+		else:
+			return 0
 	elif duration == 'year':
 		return query.aggregate(Avg(F('avgOccLength')))
 	return None

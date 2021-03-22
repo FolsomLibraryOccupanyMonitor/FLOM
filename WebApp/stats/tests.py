@@ -72,7 +72,6 @@ class RoomUsageModelTest(TestCase):
 		print(timeObject.avgOccLength)
 		timeObject.save()
 
-		"""
 		#Testing month statistics
 		#Begin creating test events
 		month1 = dt(2021, 2, 3, 5, 13, 6)
@@ -95,12 +94,7 @@ class RoomUsageModelTest(TestCase):
 		timeObject2.date = timenow2
 		duration2 = "month"
 		logList2 = importLog("311", timenow2, duration2)
-		print(logList2)
-		print("Time object2 date:", timeObject2.date)
 		timeObject2.totalOccupants = getOccupants(logList2, duration2)
 		timeObject2.avgOccLength = calcAvgOccLength(logList2, duration2)
-		print(timeObject2.avgOccLength)
-		print("Saving time")
 		timeObject2.save()
-		"""
 		
