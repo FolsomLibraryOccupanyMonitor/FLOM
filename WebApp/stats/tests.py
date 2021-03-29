@@ -23,7 +23,7 @@ class RoomUsageModelTest(TestCase):
 # 	}
 	@classmethod
 	def setUpTestData(cls):
-		print("SET UP")
+		# print("SET UP")
 		# assert(False == True)
 		# print(beforeLog1.timeStamp)
 		# day301 = createTimeObject(301, "day", now)
@@ -36,9 +36,8 @@ class RoomUsageModelTest(TestCase):
 	#test logs are saved properly
 	@classmethod
 	def testLog(self):
-		d1 = dt(2019, 11, 15, 2, 35, 2)
-		print("ORIGINAL: ",d1)
 		#Creates test events that occurr
+		d1 = dt(2019, 11, 15, 2, 35, 2)
 		log1 = StatsLog(event = 1, roomID = "311", date = d1)
 		log1.save()
 		d2 = dt(2019, 11, 15, 2, 40, 3)
