@@ -121,6 +121,7 @@ class RoomUsageModelTest(TestCase):
 		duration3 = "year"
 		logList3 = importLog("311", timenow3, duration3)
 		timeObject3.totalOccupants = getOccupants(logList3)
+		#Outputting Year Statistics
 		print("totalOccupants:", timeObject3.totalOccupants)
 		timeObject3.avgOccLength = calcAvgOccLength(logList3)
 		print("avgOccLength:", timeObject3.avgOccLength)
