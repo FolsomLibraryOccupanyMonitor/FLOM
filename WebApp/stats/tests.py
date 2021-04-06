@@ -4,6 +4,7 @@ from .models import *
 from .views import *
 from datetime import datetime as dt
 import pytz
+from freezegun import freeze_time
 
 class RoomUsageModelTest(TestCase):
 
@@ -21,6 +22,7 @@ class RoomUsageModelTest(TestCase):
 # 		# test default total occupancy
 # 		self.assertEqual(roomUsage.occupancyStats.totalOccupancy, 0)
 # 	}
+	'''
 	@classmethod
 	def setUpTestData(cls):
 		# print("SET UP")
@@ -32,8 +34,8 @@ class RoomUsageModelTest(TestCase):
 		# day302 = createTimeObject(302, "day", now)
 		# month302 = createTimeObject(302, "month", now)
 		# year302 = createTimeObject(302, "year", now)
+	'''
 
-	#test logs are saved properly
 	@classmethod
 	def testLog(self):
 		#Creates test events that occurr
@@ -124,4 +126,10 @@ class RoomUsageModelTest(TestCase):
 		print("totalOccupants:", timeObject3.totalOccupants)
 		timeObject3.avgOccLength = calcAvgOccLength(logList3)
 		print("avgOccLength:", timeObject3.avgOccLength)
+	
+	@classmethod
+	def simulateTime(self):
+		#my first time playing with freezegun
+		#i feel powerful i can control time
+		pass
 		
