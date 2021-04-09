@@ -97,8 +97,11 @@ def createTimeObject(ID, duration, now):
 	timeObject.date = now
 	timeObject.roomID = ID
 	logList = importLog(ID, now, duration)
-	timeObject.totalOccupants = getOccupants(logList, duration)
-	timeObject.avgOccLength = calcAvgOccLength(logList, duration)
+	print("New timeObject time:", timeObject.date)
+	print("Duration:", duration)
+	print("timeObject type:", type(timeObject))
+	timeObject.totalOccupants = getOccupants(logList)
+	timeObject.avgOccLength = calcAvgOccLength(logList)
 	timeObject.save()
 
 
@@ -125,13 +128,13 @@ def threadf(name):
 			for ID in floor4IDs:
 				createTimeObject(ID,"day", last)
 			entered = True
-		if now.month != last.month:
+		elif now.month != last.month:
 			for ID in floor3IDs:
 				createTimeObject(ID,"month", last)				
 			for ID in floor4IDs:
 				createTimeObject(ID,"month", last)
 			entered = True
-		if now.year != last.year:
+		elif now.year != last.year:
 			for ID in floor3IDs:
 				createTimeObject(ID,"year", last)
 			for ID in floor4IDs:
