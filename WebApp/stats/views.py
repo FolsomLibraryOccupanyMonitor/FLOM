@@ -130,13 +130,13 @@ def threadf(name):
 			for ID in floor4IDs:
 				createTimeObject(ID,"day", last)
 			entered = True
-		elif now.month != last.month:
+		if now.month != last.month:
 			for ID in floor3IDs:
 				createTimeObject(ID,"month", last)				
 			for ID in floor4IDs:
 				createTimeObject(ID,"month", last)
 			entered = True
-		elif now.year != last.year:
+		if now.year != last.year:
 			for ID in floor3IDs:
 				createTimeObject(ID,"year", last)
 			for ID in floor4IDs:
