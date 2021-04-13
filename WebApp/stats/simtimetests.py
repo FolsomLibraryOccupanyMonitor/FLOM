@@ -13,13 +13,12 @@ class simulateTime(TestCase):
     c = Client()
     c.login(username='admin', password='admin')
     with freeze_time("2021-04-06 12:00:01"):
-        c.get("http://127.0.0.1:8000/floor/enter/3/311/pass")
+        c.get("http://127.0.0.1:8000/floor/enter/3/323C/pass")
     with freeze_time("2021-04-06 12:30:01"):
-        c.get("http://127.0.0.1:8000/floor/exit/3/311/pass")
+        c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
     with freeze_time("2021-04-07 12:00:01"):
         time.sleep(10)
-        stats = get_stats(311)
-        print(stats['day'])
+
 
 # class simulateTime(TestCase):
 # 	c = Client()

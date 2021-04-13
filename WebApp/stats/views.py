@@ -97,11 +97,13 @@ def createTimeObject(ID, duration, now):
 	timeObject.date = now
 	timeObject.roomID = ID
 	logList = importLog(ID, now, duration)
-	print("New timeObject time:", timeObject.date)
-	print("Duration:", duration)
-	print("timeObject type:", type(timeObject))
+	# print("New timeObject time:", timeObject.date)
+	# print("Duration:", duration)
+	# print("timeObject type:", type(timeObject))
 	timeObject.totalOccupants = getOccupants(logList)
 	timeObject.avgOccLength = calcAvgOccLength(logList)
+	if timeObject.avgOccLength == 0:
+		timeObject.avgOccLength = datetime.timedelta()
 	timeObject.save()
 
 
