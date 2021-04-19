@@ -9,14 +9,22 @@ import pytz
 from freezegun import freeze_time
 
 
+"""
+@call  'python3 manage.py test stats.simtimetests'
+
+"""
 class simulateTime(TestCase):
     #this only works if run on an empty database
     #for some reason uses the production database
     #clear it to run with python3 manage.py flush
 
+    #if you need to access the webapp when running the server after flushing
+    #create a user with 'python3 manage.py createsuperuser'
+    #'admin admin' user will not exist after flushing
+
     '''
-    I plan on adding asserts but struggling to 
-    access the database through get_stats
+    killing it 
+    assert(this works)
     '''
 
     c = Client()
@@ -29,6 +37,8 @@ class simulateTime(TestCase):
         c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
     with freeze_time("2021-04-07 12:00:01"):
         time.sleep(5)
+    temp = (get_stats('323C'))['day']
+    assert(temp.count() == 1) #only 1 day object
 
     #month
     with freeze_time("2021-04-07 12:30:01"):
@@ -39,6 +49,10 @@ class simulateTime(TestCase):
         time.sleep(5)
     with freeze_time("2021-05-01 12:00:01"):
         time.sleep(5)
+    temp = (get_stats('323C'))['month']
+    assert(temp.count() == 1) #only 1 month object
+    temp = (get_stats('323C'))['day']
+    assert(temp.count() == 2) #only 2 days actually exist so far
 
     #year
     with freeze_time("2021-05-06 12:00:01"):
@@ -53,3 +67,13 @@ class simulateTime(TestCase):
         time.sleep(5)
     with freeze_time("2022-01-01 12:00:01"):
         time.sleep(10)
+    temp = (get_stats('323C'))['year']
+    assert(temp.count() == 1) #1 year created for 2021
+    temp = (get_stats('323C'))['month']
+    assert(temp.count() == 3) #3 months visited so far with freezegun
+    temp = (get_stats('323C'))['day']
+    assert(temp.count() == 4) #4 actual days visited with freezegun
+
+    temp = "threadf works"
+    assert(temp == "threadf works")
+    print("Woohoo")
