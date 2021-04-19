@@ -75,7 +75,7 @@ class simulateTime(TestCase):
     print("Year object successfully created")
     temp = (get_stats('323C'))['month']
     assert(temp.count() == 3) #3 months visited so far with freezegun
-    print("Multip[le months created successfully")
+    print("Multiple months created successfully")
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 4) #4 actual days visited with freezegun
 
