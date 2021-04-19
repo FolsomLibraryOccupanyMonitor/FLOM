@@ -39,6 +39,7 @@ class simulateTime(TestCase):
         time.sleep(5)
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 1) #only 1 day object
+    print("Day object successfully created")
 
     #month
     with freeze_time("2021-04-07 12:30:01"):
@@ -53,6 +54,8 @@ class simulateTime(TestCase):
     assert(temp.count() == 1) #only 1 month object
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 2) #only 2 days actually exist so far
+    print("Month object successfully created")
+    print("Multiple days created successfully")
 
     #year
     with freeze_time("2021-05-06 12:00:01"):
@@ -69,11 +72,13 @@ class simulateTime(TestCase):
         time.sleep(10)
     temp = (get_stats('323C'))['year']
     assert(temp.count() == 1) #1 year created for 2021
+    print("Year object successfully created")
     temp = (get_stats('323C'))['month']
     assert(temp.count() == 3) #3 months visited so far with freezegun
+    print("Multip[le months created successfully")
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 4) #4 actual days visited with freezegun
 
     temp = "threadf works"
     assert(temp == "threadf works")
-    print("Woohoo")
+    print("Woohoo, it works")
