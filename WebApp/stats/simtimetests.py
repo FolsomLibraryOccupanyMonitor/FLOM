@@ -36,7 +36,7 @@ class simulateTime(TestCase):
     with freeze_time("2021-04-06 12:30:01"):
         c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
     with freeze_time("2021-04-07 12:00:01"):
-        time.sleep(5)
+        time.sleep(10)
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 1) #only 1 day object
     print("Day object successfully created")
@@ -46,10 +46,8 @@ class simulateTime(TestCase):
         c.get("http://127.0.0.1:8000/floor/enter/3/323C/pass")
     with freeze_time("2021-04-07 12:45:01"):
         c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
-    with freeze_time("2021-04-30 11:59:59"): #this would be the theoretical last date passed in april
-        time.sleep(5)
     with freeze_time("2021-05-01 12:00:01"):
-        time.sleep(5)
+        time.sleep(10)
     temp = (get_stats('323C'))['month']
     assert(temp.count() == 1) #only 1 month object
     temp = (get_stats('323C'))['day']
@@ -63,18 +61,17 @@ class simulateTime(TestCase):
     with freeze_time("2021-05-06 12:30:01"):
         c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
     with freeze_time("2021-05-07 12:30:01"):
+        time.sleep(10)
         c.get("http://127.0.0.1:8000/floor/enter/3/323C/pass")
     with freeze_time("2021-05-07 12:45:01"):
         c.get("http://127.0.0.1:8000/floor/exit/3/323C/pass")
-    with freeze_time("2021-12-31 11:59:59"): #this would be the theoretical last date passed in 2021
-        time.sleep(5)
     with freeze_time("2022-01-01 12:00:01"):
         time.sleep(10)
     temp = (get_stats('323C'))['year']
-    assert(temp.count() == 1) #1 year created for 2021
+    assert(temp.count() == 1) #1 year created for 323C in 2021
     print("Year object successfully created")
     temp = (get_stats('323C'))['month']
-    assert(temp.count() == 3) #3 months visited so far with freezegun
+    assert(temp.count() == 2) #2 months visited so far with freezegun
     print("Multiple months created successfully")
     temp = (get_stats('323C'))['day']
     assert(temp.count() == 4) #4 actual days visited with freezegun
