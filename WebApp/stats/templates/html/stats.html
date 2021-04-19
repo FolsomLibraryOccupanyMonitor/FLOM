@@ -1,0 +1,79 @@
+{# stats.html #}
+
+{% extends "html/main.html" %}
+{% load static %}
+{% block body %}
+{% if form %}
+	<form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input class="stats-input" type="submit" value="Submit">
+    </form>
+{% endif %}
+{% if stats %}
+	<h1 class="table-form-request">Viewing Statistics For Room {{ stats.ID }}</h1>
+	<!-- Day Table -->
+	<h2>Days</h2>
+    <img class="stats-graph" src="{% static "days.png" %}">
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for day in stats.day %}
+            	<tr>
+                    <td>{{ day.date }}</td>
+                    <td>{{ day.totalOccupants }}</td>
+                    <td>{{ day.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+	<!-- Month Table -->
+	<h2>Months</h2>
+    <img class="stats-graph" src="{% static "months.png" %}">
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for month in stats.month %}
+            	<tr>
+                    <td>{{ month.date }}</td>
+                    <td>{{ month.totalOccupants }}</td>
+                    <td>{{ month.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+	<!-- Year Table -->
+	<h2>Years</h2>
+    <img class="stats-graph" src="{% static "years.png" %}">
+	<table>
+    	<thead>
+        	<tr>
+                <th>Date</th>
+                <th>Total Occupants</th>
+                <th>Average Occupancy Length</th>
+        	</tr>
+    	</thead>
+    	<tbody>
+        	{% for year in stats.year %}
+            	<tr>
+                    <td>{{ year.date }}</td>
+                    <td>{{ year.totalOccupants }}</td>
+                    <td>{{ year.avgOccLength }}</td>
+           		</tr>
+        	{% endfor %}
+    	</tbody>
+	</table>
+{% endif %}
+{% endblock %}
