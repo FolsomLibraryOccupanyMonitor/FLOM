@@ -66,13 +66,11 @@ class RoomUsageModelTest(TestCase):
 	timeObject.date = timenow
 	duration = "day"
 	logList = importLog("311", timenow, duration)
-	print(logList)
 	#Calculates the statistics for that day and then saves
 	timeObject.totalOccupants = getOccupants(logList)
 	timeObject.avgOccLength = calcAvgOccLength(logList)
-	print(timeObject.avgOccLength)
 	timeObject.save()
-	print(timeObject.avgOccLength)
+	assert(str(timeObject.avgOccLength) == "2:29:04.500000")
 
 	#Testing month statistics
 	#Begin creating test events
@@ -98,7 +96,8 @@ class RoomUsageModelTest(TestCase):
 	logList2 = importLog("311", timenow2, duration2)
 	timeObject2.totalOccupants = getOccupants(logList2)
 	timeObject2.avgOccLength = calcAvgOccLength(logList2)
-	print(timeObject2.avgOccLength)
+	#Making sure the average occupancy length is correct
+	assert(str(timeObject2.avgOccLength) == "1:19:53")
 	timeObject2.save()
 
 
@@ -122,22 +121,8 @@ class RoomUsageModelTest(TestCase):
 	duration3 = "year"
 	logList3 = importLog("311", timenow3, duration3)
 	timeObject3.totalOccupants = getOccupants(logList3)
-	#Outputting Year Statistics
-	print("totalOccupants:", timeObject3.totalOccupants)
+	#Making sure the average occupancy length is correct
 	timeObject3.avgOccLength = calcAvgOccLength(logList3)
-	print("avgOccLength:", timeObject3.avgOccLength)
+	assert(str(timeObject3.avgOccLength) == "1:40:58")
 
 
-
-class simulateTime(TestCase):
-	c = Client()
-	c.login(username='admin', password='admin')
-	with freeze_time("2021-01-01 12:00:01"):
-		#Enter Room
-		c.get("http://127.0.0.1:8000/floor/enter/3/311/pass")
-	with freeze_time("2021-01-01 12:30:01"):
-		c.get("http://127.0.0.1:8000/floor/exit/3/311/pass")
-	with freeze_time("2021-01-02 12:00:01"):
-		time.sleep(10)
-
-		stats = get_stats(311)
