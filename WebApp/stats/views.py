@@ -168,11 +168,15 @@ def getOccupants(query):
 	'''
 	Return the number of people in the room.
 	Gets information from logs.
+	Returns the amount of events in the log 
+	divided by two since everyone that enters a
+	room has to exit the room.
 	'''
 	return int(len(query)/2)
 
 def calcTimeDifference(query):
 	#calculates the time difference between the FIRST person entering the room and when the first person leaves the room
+	#This is to help handle the issue of multiple people entering and then leaving a room
 	timeDiff = []
 	tmp_entry = None
 	for log in query:

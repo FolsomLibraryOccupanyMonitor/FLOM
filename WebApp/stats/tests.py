@@ -114,6 +114,7 @@ class RoomUsageModelTest(TestCase):
 	year4 = dt(2020, 5, 20, 7, 12, 9)
 	logYear4 = StatsLog(event = 0, roomID = "311", date = year4)
 	logYear4.save()
+	#Creating the time object
 	timeObject3 = Year()
 	timeObject3.roomID = "311"
 	timenow3 = dt(2020, 6, 28, 5, 2, 1)
