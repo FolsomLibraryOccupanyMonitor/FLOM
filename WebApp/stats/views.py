@@ -126,8 +126,16 @@ def threadf(name):
 		entered = False
 		if now.day != last.day:
 			for ID in floor3IDs:
+				loglist = importLog(ID, now, "day")
+				if (len(loglist) > 0):
+					if loglist.reverse()[0].event == 1:
+						continue
 				createTimeObject(ID,"day", last)
 			for ID in floor4IDs:
+				loglist = importLog(ID, now, "day")
+				if (len(loglist) > 0):
+					if loglist.reverse()[0].event == 1:
+						continue
 				createTimeObject(ID,"day", last)
 			entered = True
 		if now.month != last.month:
