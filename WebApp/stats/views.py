@@ -14,6 +14,7 @@ from django.db.models import Sum, Avg, F
 from django.contrib.auth.decorators import login_required
 from .forms import RoomRequestForm
 
+
 def get_stats(ID):
 	stats = {}
 	stats['day'] = Day.objects.filter(roomID=ID)
@@ -97,6 +98,8 @@ def createTimeObject(ID, duration, now):
 	timeObject.date = now
 	timeObject.roomID = ID
 	logList = importLog(ID, now, duration)
+	if len(logList) % 2 == 1 and duration == "day":
+		newlogList = midnightErrorHandle(logList, now, ID)
 	# print("New timeObject time:", timeObject.date)
 	# print("Duration:", duration)
 	# print("timeObject type:", type(timeObject))
@@ -105,6 +108,13 @@ def createTimeObject(ID, duration, now):
 	if timeObject.avgOccLength == 0:
 		timeObject.avgOccLength = datetime.timedelta()
 	timeObject.save()
+
+
+#sirr uhh
+def midnightErrorHandle(log, dt, id):
+	l = StatsLog(event = 0, roomID = id, date = dt)
+	l.save()
+	return importLog(id, dt, 'day')
 
 
 def threadf(name):

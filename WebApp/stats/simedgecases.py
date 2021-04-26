@@ -15,5 +15,13 @@ from freezegun import freeze_time
 """
 class simulateEdgeCases(TestCase):
     #flush the databse
+    c = Client()
+    c.login(username='admin', password='admin')
 
-    pass
+    #day
+    with freeze_time("2021-04-06 12:00:01"):
+        c.get("http://127.0.0.1:8000/floor/enter/3/323C/pass")
+    with freeze_time("2021-04-06 23:59:59"):
+        time.sleep(8)
+    with freeze_time("2021-04-07 12:00:01"):
+        time.sleep(8)
